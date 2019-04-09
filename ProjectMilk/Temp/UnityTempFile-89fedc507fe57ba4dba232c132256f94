@@ -161,6 +161,7 @@
 -define:ENABLE_NATIVE_ARRAY_CHECKS
 -define:UNITY_TEAM_LICENSE
 Assets/Kiyohito/DropMover.cs
+Assets/Kiyohito/TimeManager.cs
 Assets/Kiyohito/TinAnagoMover.cs
 -r:"C:\Program Files\Unity_2017.4.14f\Editor\Data\Mono\lib\mono\unity\System.Runtime.Serialization.dll"
 -r:"C:\Program Files\Unity_2017.4.14f\Editor\Data\Mono\lib\mono\unity\System.Xml.Linq.dll"

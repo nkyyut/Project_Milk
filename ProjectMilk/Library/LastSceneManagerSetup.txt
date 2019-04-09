@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Main/Main.unity
+- path: Assets/Kiyohito/KiyohitoTestScene.unity
   isLoaded: 1
   isActive: 1

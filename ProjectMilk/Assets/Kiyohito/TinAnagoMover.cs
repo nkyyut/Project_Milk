@@ -1,4 +1,7 @@
-﻿using System.Collections;
+﻿//與儀清仁　2019/4/9
+//チンアナゴの動きを管理
+//このCSの一番下にReadmeあるよ
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,41 +9,45 @@ using UnityEngine.UI;
 public class TinAnagoMover : MonoBehaviour {
 
     
-    float PullBackSpeed;
-    float PullBackLimit;
+    float PullBackSpeed;/*引っ込むスピード*/
+    float PullBackLimit;/*引っ込む限界値*/
 
     Vector3 TinAnagoInitialPos;/*チンアナゴの初期位置*/
 
-    enum TinAnagoState
+    enum TINANAGO_STATE/*チンアナゴのステート*/
     {
-        IDLE,
-        HIDE,
-        SHOW
-    } TinAnagoState NowTinAnagoState;
+        IDLE,/*待機*/
+        HIDE,/*隠れる*/
+        SHOW/*出てくる*/
+    } TINANAGO_STATE NowTinAnagoState;
 
     // Use this for initialization
     void Start() {
+        /*以下いろいろ初期化*/
         PullBackSpeed = 1.0f;
-        PullBackLimit = 20.0f;
+        PullBackLimit = 55.0f;
         TinAnagoInitialPos = this.transform.position;
-        NowTinAnagoState = TinAnagoState.IDLE;
+        NowTinAnagoState = TINANAGO_STATE.IDLE;
+        /*以上*/
     }
 
     // Update is called once per frame
     void Update() {
-        TinAnagoMoveManegement();
+        Switching();
+        /*以下テスト用*/
         if (Input.GetMouseButton(1)) SetTinAnagoState_HIDE();
         if (Input.GetMouseButton(0)) SetTinAnagoState_SHOW();
+        /*以上*/
     }
 
     //TinAnagoのステートによる動きをマネジメント
-    void TinAnagoMoveManegement()
+    void Switching()
     {
         switch (NowTinAnagoState)
         {
-            case TinAnagoState.IDLE:
+            case TINANAGO_STATE.IDLE:
                 break;
-            case TinAnagoState.HIDE:
+            case TINANAGO_STATE.HIDE:
                 if (!CheckHyde())
                 {
                     SetTinAnagoState_IDLE();
@@ -49,7 +56,7 @@ public class TinAnagoMover : MonoBehaviour {
                 if (CheckPullBackLimit()) PullBacker();
                 if (CheckDisappearLimit()) Disappear();
                 break;
-            case TinAnagoState.SHOW:
+            case TINANAGO_STATE.SHOW:
                 Debug.Log("Push" + CheckPushOutLimit());
                 Debug.Log("App" + CheckAppearLimit());
                 if (!CheckShow())
@@ -162,14 +169,27 @@ public class TinAnagoMover : MonoBehaviour {
     //TinAnagoのステートセット関数
     public void SetTinAnagoState_IDLE()
     {
-        NowTinAnagoState = TinAnagoState.IDLE;
+        NowTinAnagoState = TINANAGO_STATE.IDLE;
     }
     public void SetTinAnagoState_HIDE()
     {
-        NowTinAnagoState = TinAnagoState.HIDE;
+        NowTinAnagoState = TINANAGO_STATE.HIDE;
     }
     public void SetTinAnagoState_SHOW()
     {
-        NowTinAnagoState = TinAnagoState.SHOW;
+        NowTinAnagoState = TINANAGO_STATE.SHOW;
     }
+
+
+
+    /*Readme*************************************************************************************/
+    //1.UIオブジェクトで任意でチンアナゴを並べる
+    //2.すべてのチンアナゴオブジェクトにこのCSをアタッチする
+    //
+    //
+    //引っ込み方に違和感がある場合はPullBackSpeedとPullBackLimitをいじってね
+    //
+    //
+    /*******************************************************************************************/
+
 }
