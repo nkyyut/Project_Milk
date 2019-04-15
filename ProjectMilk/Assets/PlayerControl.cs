@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerControl : MonoBehaviour {
+public class PlayerControl : MonoBehaviour
+{
 
     Vector3 target;
     Vector3 Gravity;
-    
+
     public GameObject chilld;
 
     public bool gravityFlg = false;
@@ -15,18 +16,20 @@ public class PlayerControl : MonoBehaviour {
 
 
 
-	// Use this for initialization
-	void Start () {
-        
+    // Use this for initialization
+    void Start()
+    {
+
     }
-	
-	// Update is called once per frame
-	void Update () {
-        
+
+    // Update is called once per frame
+    void Update()
+    {
+
         float InputH = Input.GetAxisRaw("Horizontal");
         float InputV = Input.GetAxisRaw("Vertical");
 
-       // Debug.Log(InputH + "          " + InputV);
+        // Debug.Log(InputH + "          " + InputV);
 
         Vector3 cameraForward = Vector3.Scale(Camera.main.transform.forward, new Vector3(1, 0, 1)).normalized;
         Vector3 moveForward = cameraForward * InputV + Camera.main.transform.right * InputH;
@@ -40,42 +43,38 @@ public class PlayerControl : MonoBehaviour {
         {
             if (moveForward != Vector3.zero)
                 GravityChang();
-
         }
-        if (colliderFlg == false)
+        if (colliderFlg == false && gravityFlg == false)
             transform.position += new Vector3(0, -0.098f, 0);
-        else if (colliderFlg == true && gravityFlg == true)
+        else if (colliderFlg == false && gravityFlg == true)
         {
-            transform.position += new Vector3((target.x - transform.position.x) * 2 * 0.001f,0, (target.z - transform.position.z) * 2 * 0.001f) ;
+            transform.position += new Vector3((target.x - transform.position.x) * 2 * 0.005f, 0, (target.z - transform.position.z) * 2 * 0.005f);
         }
-        TransformChange(moveForward);
-        
+        TransformChange(moveForward, cameraForward);
+
     }
-    private void TransformChange(Vector3 MForward)
+    private void TransformChange(Vector3 MForward, Vector3 CForward)
     {
         if (MForward != Vector3.zero)
         {
             transform.position += MForward * movespeed;
-            transform.rotation = Quaternion.LookRotation(MForward);
-
+            if (gravityFlg == false)
+                transform.rotation = Quaternion.LookRotation(MForward);
+            else
+            {
+                transform.rotation = Quaternion.LookRotation(MForward);
+                transform.Rotate(0, 0, 90);
+            }
         }
-     //   else Debug.Log(Physics.gravity.z);
-        
+        //   else Debug.Log(Physics.gravity.z);
+
     }
     private void GravityChang()
     {
-       
+
         Gravity = target - transform.position;
+        Physics.gravity = new Vector3(Gravity.x, (target.y - Gravity.y), Gravity.z);
 
-        
-
-        Physics.gravity = new Vector3(Gravity.x,(target.y - Gravity.y),Gravity.z);
-        //Debug.Log(Gravity.y + "    " + transform.position.y + "     " + Physics.gravity.y);
-       // Debug.Log(Gravity.x + "    " + transform.position.x + "     " + target.x + "     " + Physics.gravity.x);
-        //if (Physics.gravity.y == transform.position.y)
-        //    Debug.Log("一緒");
-        //else Debug.Log("違う");
-        //Debug.Log(Physics.gravity);
 
     }
     private void OnCollisionStay(Collision other)
@@ -84,7 +83,7 @@ public class PlayerControl : MonoBehaviour {
         {
             target = other.transform.position;
             gravityFlg = true;
-           
+
         }
         colliderFlg = true;
     }
