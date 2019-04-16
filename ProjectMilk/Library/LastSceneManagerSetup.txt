@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-sceneSetups: []
-=======
 sceneSetups:
-- path: Assets/CharMove.unity
+- path: Assets/Kazuki/CharMove.unity
   isLoaded: 1
   isActive: 1
->>>>>>> Kazuki
