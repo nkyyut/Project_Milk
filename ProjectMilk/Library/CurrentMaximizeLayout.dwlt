@@ -18,6 +18,7 @@ MonoBehaviour:
     x: 0
     y: 30
 <<<<<<< HEAD
+<<<<<<< HEAD
     width: 950
     height: 732
   m_MinSize: {x: 785, y: 342}
@@ -32,6 +33,14 @@ MonoBehaviour:
   vertical: 1
   controlID: 522
 >>>>>>> Kiyohito
+=======
+    width: 1536
+    height: 731
+  m_MinSize: {x: 783, y: 471}
+  m_MaxSize: {x: 16008, y: 14021}
+  vertical: 1
+  controlID: 143
+>>>>>>> Jin
 --- !u!114 &2
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -55,6 +64,7 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
 <<<<<<< HEAD
+<<<<<<< HEAD
     x: 1043
     y: 100
     width: 213
@@ -74,10 +84,21 @@ MonoBehaviour:
   m_Stats: 0
   m_SelectedSizes: 05000000000000000000000010000000000000000000000000000000000000000000000000000000
 >>>>>>> Kiyohito
+=======
+    x: 742
+    y: 92
+    width: 349
+    height: 428
+  m_MaximizeOnPlay: 1
+  m_Gizmos: 0
+  m_Stats: 0
+  m_SelectedSizes: 05000000000000000000000011000000000000000000000000000000000000000000000000000000
+>>>>>>> Jin
   m_TargetDisplay: 0
   m_ZoomArea:
     m_HRangeLocked: 0
     m_VRangeLocked: 0
+<<<<<<< HEAD
 <<<<<<< HEAD
     m_HBaseRangeMin: -106.5
     m_HBaseRangeMax: 106.5
@@ -89,6 +110,12 @@ MonoBehaviour:
     m_VBaseRangeMin: -106.3125
     m_VBaseRangeMax: 106.3125
 >>>>>>> Kiyohito
+=======
+    m_HBaseRangeMin: -174.5
+    m_HBaseRangeMax: 174.5
+    m_VBaseRangeMin: -98.15625
+    m_VBaseRangeMax: 98.15625
+>>>>>>> Jin
     m_HAllowExceedBaseRangeMin: 1
     m_HAllowExceedBaseRangeMax: 1
     m_VAllowExceedBaseRangeMin: 1
@@ -106,6 +133,7 @@ MonoBehaviour:
       x: 0
       y: 17
 <<<<<<< HEAD
+<<<<<<< HEAD
       width: 213
       height: 411
     m_Scale: {x: 1, y: 1}
@@ -116,12 +144,19 @@ MonoBehaviour:
     m_Scale: {x: 1, y: 1}
     m_Translation: {x: 189, y: 205.5}
 >>>>>>> Kiyohito
+=======
+      width: 349
+      height: 411
+    m_Scale: {x: 1, y: 1}
+    m_Translation: {x: 174.5, y: 205.5}
+>>>>>>> Jin
     m_MarginLeft: 0
     m_MarginRight: 0
     m_MarginTop: 0
     m_MarginBottom: 0
     m_LastShownAreaInsideMargins:
       serializedVersion: 2
+<<<<<<< HEAD
 <<<<<<< HEAD
       x: -106.5
       y: -205.5
@@ -131,16 +166,25 @@ MonoBehaviour:
       y: -205.5
       width: 378
 >>>>>>> Kiyohito
+=======
+      x: -174.5
+      y: -205.5
+      width: 349
+>>>>>>> Jin
       height: 411
     m_MinimalGUI: 1
   m_defaultScale: 1
   m_TargetTexture: {fileID: 0}
   m_CurrentColorSpace: 0
 <<<<<<< HEAD
+<<<<<<< HEAD
   m_LastWindowPixelSize: {x: 213, y: 428}
 =======
   m_LastWindowPixelSize: {x: 378, y: 428}
 >>>>>>> Kiyohito
+=======
+  m_LastWindowPixelSize: {x: 349, y: 428}
+>>>>>>> Jin
   m_ClearInEditMode: 1
   m_NoCameraWarning: 1
   m_LowResolutionForAspectRatios: 01000000000000000100
@@ -163,6 +207,7 @@ MonoBehaviour:
     x: 0
     y: 0
 <<<<<<< HEAD
+<<<<<<< HEAD
     width: 950
     height: 732
   m_MinSize: {x: 785, y: 342}
@@ -177,6 +222,14 @@ MonoBehaviour:
   vertical: 0
   controlID: 523
 >>>>>>> Kiyohito
+=======
+    width: 1536
+    height: 731
+  m_MinSize: {x: 783, y: 471}
+  m_MaxSize: {x: 16008, y: 14021}
+  vertical: 0
+  controlID: 144
+>>>>>>> Jin
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -196,6 +249,7 @@ MonoBehaviour:
     x: 0
     y: 0
 <<<<<<< HEAD
+<<<<<<< HEAD
     width: 673
     height: 732
   m_MinSize: {x: 508, y: 342}
@@ -210,6 +264,14 @@ MonoBehaviour:
   vertical: 1
   controlID: 524
 >>>>>>> Kiyohito
+=======
+    width: 1093
+    height: 731
+  m_MinSize: {x: 506, y: 471}
+  m_MaxSize: {x: 12006, y: 14021}
+  vertical: 1
+  controlID: 102
+>>>>>>> Jin
 --- !u!114 &5
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -230,6 +292,7 @@ MonoBehaviour:
     x: 0
     y: 0
 <<<<<<< HEAD
+<<<<<<< HEAD
     width: 673
 =======
     width: 1155
@@ -243,6 +306,14 @@ MonoBehaviour:
 =======
   controlID: 525
 >>>>>>> Kiyohito
+=======
+    width: 1093
+    height: 449
+  m_MinSize: {x: 506, y: 221}
+  m_MaxSize: {x: 12006, y: 4021}
+  vertical: 0
+  controlID: 79
+>>>>>>> Jin
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -260,6 +331,7 @@ MonoBehaviour:
     x: 0
     y: 0
 <<<<<<< HEAD
+<<<<<<< HEAD
     width: 202
     height: 449
   m_MinSize: {x: 200, y: 200}
@@ -270,6 +342,12 @@ MonoBehaviour:
   m_MinSize: {x: 202, y: 221}
   m_MaxSize: {x: 4002, y: 4021}
 >>>>>>> Kiyohito
+=======
+    width: 321
+    height: 449
+  m_MinSize: {x: 202, y: 221}
+  m_MaxSize: {x: 4002, y: 4021}
+>>>>>>> Jin
   m_ActualView: {fileID: 7}
   m_Panes:
   - {fileID: 7}
@@ -298,6 +376,7 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
 <<<<<<< HEAD
+<<<<<<< HEAD
     x: 585
     y: 100
     width: 200
@@ -319,6 +398,17 @@ MonoBehaviour:
     m_LastClickedID: 0
     m_ExpandedIDs: 9efbffff00000000
 >>>>>>> Kiyohito
+=======
+    x: 0
+    y: 92
+    width: 319
+    height: 428
+  m_TreeViewState:
+    scrollPos: {x: 0, y: 0}
+    m_SelectedIDs: 
+    m_LastClickedID: 0
+    m_ExpandedIDs: a6fbffff00000000
+>>>>>>> Jin
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -338,10 +428,14 @@ MonoBehaviour:
     m_SearchString: 
   m_ExpandedScenes:
 <<<<<<< HEAD
+<<<<<<< HEAD
   - Main
 =======
   - KiyohitoTestScene
 >>>>>>> Kiyohito
+=======
+  - MeshCut
+>>>>>>> Jin
   m_CurrenRootInstanceID: 0
   m_Locked: 0
   m_CurrentSortingName: TransformSorting
@@ -360,6 +454,7 @@ MonoBehaviour:
   m_Position:
     serializedVersion: 2
 <<<<<<< HEAD
+<<<<<<< HEAD
     x: 202
     y: 0
     width: 254
@@ -374,6 +469,14 @@ MonoBehaviour:
   m_MinSize: {x: 204, y: 221}
   m_MaxSize: {x: 4004, y: 4021}
 >>>>>>> Kiyohito
+=======
+    x: 321
+    y: 0
+    width: 419
+    height: 449
+  m_MinSize: {x: 204, y: 221}
+  m_MaxSize: {x: 4004, y: 4021}
+>>>>>>> Jin
   m_ActualView: {fileID: 9}
   m_Panes:
   - {fileID: 9}
@@ -404,6 +507,7 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
 <<<<<<< HEAD
+<<<<<<< HEAD
     x: 789
     y: 100
     width: 250
@@ -419,10 +523,19 @@ MonoBehaviour:
   m_SceneLighting: 1
   lastFramingTime: 345943.79471936164
 >>>>>>> Kiyohito
+=======
+    x: 323
+    y: 92
+    width: 415
+    height: 428
+  m_SceneLighting: 1
+  lastFramingTime: 9660.936238322982
+>>>>>>> Jin
   m_2DMode: 0
   m_isRotationLocked: 0
   m_AudioPlay: 0
   m_Position:
+<<<<<<< HEAD
 <<<<<<< HEAD
     m_Target: {x: 0, y: 0, z: 0}
     speed: 2
@@ -432,6 +545,11 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 44.788418, y: 189.64381, z: -2.47818}
 >>>>>>> Kiyohito
+=======
+    m_Target: {x: 0, y: 0, z: 0}
+    speed: 2
+    m_Value: {x: 0, y: 0, z: 0}
+>>>>>>> Jin
   m_RenderMode: 0
   m_ValidateTrueMetals: 0
   m_SceneViewState:
@@ -441,9 +559,12 @@ MonoBehaviour:
     showFlares: 1
     showImageEffects: 1
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     showParticleSystems: 1
 >>>>>>> Kiyohito
+=======
+>>>>>>> Jin
   grid:
     xGrid:
       m_Target: 0
@@ -459,6 +580,9 @@ MonoBehaviour:
       m_Value: 0
   m_Rotation:
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> Jin
     m_Target: {x: -0.08717229, y: 0.89959055, z: -0.21045254, w: -0.3726226}
     speed: 2
     m_Value: {x: -0.08717229, y: 0.89959055, z: -0.21045254, w: -0.3726226}
@@ -466,6 +590,7 @@ MonoBehaviour:
     m_Target: 10
     speed: 2
     m_Value: 10
+<<<<<<< HEAD
 =======
     m_Target: {x: -0.06292311, y: -0.033529315, z: 0.0021150282, w: -0.9974528}
     speed: 2
@@ -475,6 +600,8 @@ MonoBehaviour:
     speed: 2
     m_Value: 63.125084
 >>>>>>> Kiyohito
+=======
+>>>>>>> Jin
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -513,9 +640,12 @@ MonoBehaviour:
     width: 502
     height: 422
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
   m_PersistentViewDataDictionary: {fileID: 0}
 >>>>>>> Kiyohito
+=======
+>>>>>>> Jin
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -543,11 +673,15 @@ MonoBehaviour:
     width: 838
     height: 439
 <<<<<<< HEAD
+<<<<<<< HEAD
   m_ViewPositions:
 =======
   m_PersistentViewDataDictionary: {fileID: 0}
   m_ViewTransforms:
 >>>>>>> Kiyohito
+=======
+  m_ViewPositions:
+>>>>>>> Jin
     m_KeySerializationHelper: []
     m_ValueSerializationHelper: []
   m_PreviewAnimator: {fileID: 0}
@@ -578,6 +712,7 @@ MonoBehaviour:
   m_Position:
     serializedVersion: 2
 <<<<<<< HEAD
+<<<<<<< HEAD
     x: 456
     y: 0
     width: 217
@@ -589,6 +724,14 @@ MonoBehaviour:
     height: 449
   m_MinSize: {x: 104, y: 121}
   m_MaxSize: {x: 4004, y: 4021}
+=======
+    x: 740
+    y: 0
+    width: 353
+    height: 449
+  m_MinSize: {x: 100, y: 100}
+  m_MaxSize: {x: 4000, y: 4000}
+>>>>>>> Jin
   m_ActualView: {fileID: 2}
   m_Panes:
   - {fileID: 2}
@@ -611,6 +754,7 @@ MonoBehaviour:
     x: 0
     y: 449
 <<<<<<< HEAD
+<<<<<<< HEAD
     width: 673
     height: 283
   m_MinSize: {x: 100, y: 100}
@@ -618,15 +762,22 @@ MonoBehaviour:
   m_ActualView: {fileID: 15}
 =======
     width: 1155
+=======
+    width: 1093
+>>>>>>> Jin
     height: 282
   m_MinSize: {x: 230, y: 250}
   m_MaxSize: {x: 10000, y: 10000}
   m_ActualView: {fileID: 14}
+<<<<<<< HEAD
 >>>>>>> Kiyohito
+=======
+>>>>>>> Jin
   m_Panes:
   - {fileID: 14}
   - {fileID: 15}
   - {fileID: 16}
+<<<<<<< HEAD
 <<<<<<< HEAD
   m_Selected: 1
   m_LastSelected: 0
@@ -634,6 +785,10 @@ MonoBehaviour:
   m_Selected: 0
   m_LastSelected: 1
 >>>>>>> Kiyohito
+=======
+  m_Selected: 0
+  m_LastSelected: 1
+>>>>>>> Jin
 --- !u!114 &14
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -657,6 +812,7 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
 <<<<<<< HEAD
+<<<<<<< HEAD
     x: 8
     y: 545
     width: 1080
@@ -668,6 +824,12 @@ MonoBehaviour:
     height: 261
   m_PersistentViewDataDictionary: {fileID: 0}
 >>>>>>> Kiyohito
+=======
+    x: 0
+    y: 541
+    width: 1091
+    height: 261
+>>>>>>> Jin
   m_SearchFilter:
     m_NameFilter: 
     m_ClassNames: []
@@ -681,12 +843,16 @@ MonoBehaviour:
     m_SearchArea: 0
     m_Folders:
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> Jin
     - Assets
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
   - Assets
   m_LastFoldersGridSize: -1
+<<<<<<< HEAD
   m_LastProjectPath: C:\Users\inali\Desktop\Asuta\ProjectMilk
   m_IsLocked: 0
   m_FolderTreeState:
@@ -709,6 +875,15 @@ MonoBehaviour:
     m_LastClickedID: 10172
     m_ExpandedIDs: 000000008827000000ca9a3bffffff7f
 >>>>>>> Kiyohito
+=======
+  m_LastProjectPath: C:\UnityProject2017\AsutaKunProject\ProjectMilk
+  m_IsLocked: 0
+  m_FolderTreeState:
+    scrollPos: {x: 0, y: 0}
+    m_SelectedIDs: 44270000
+    m_LastClickedID: 10052
+    m_ExpandedIDs: 0000000044270000a0270000aa270000c227000000ca9a3bffffff7f
+>>>>>>> Jin
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -737,10 +912,14 @@ MonoBehaviour:
     m_SelectedIDs: 
     m_LastClickedID: 0
 <<<<<<< HEAD
+<<<<<<< HEAD
     m_ExpandedIDs: 000000003e27000000ca9a3bffffff7f
 =======
     m_ExpandedIDs: 000000008827000000ca9a3bffffff7f
 >>>>>>> Kiyohito
+=======
+    m_ExpandedIDs: 0000000044270000a0270000aa270000c2270000
+>>>>>>> Jin
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -766,12 +945,17 @@ MonoBehaviour:
       m_ResourceFile: 
   m_ListAreaState:
 <<<<<<< HEAD
+<<<<<<< HEAD
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
 =======
     m_SelectedInstanceIDs: 32070000
     m_LastClickedInstanceID: 1842
 >>>>>>> Kiyohito
+=======
+    m_SelectedInstanceIDs: 
+    m_LastClickedInstanceID: 0
+>>>>>>> Jin
     m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs: c62300001c280000000000002c3600002a340000142b0000dc270000a4270000
     m_RenameOverlay:
@@ -823,6 +1007,7 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
 <<<<<<< HEAD
+<<<<<<< HEAD
     x: 585
     y: 549
     width: 671
@@ -834,6 +1019,12 @@ MonoBehaviour:
     height: 261
   m_PersistentViewDataDictionary: {fileID: 0}
 >>>>>>> Kiyohito
+=======
+    x: 0
+    y: 541
+    width: 1091
+    height: 261
+>>>>>>> Jin
 --- !u!114 &16
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -861,9 +1052,12 @@ MonoBehaviour:
     width: 1082
     height: 258
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
   m_PersistentViewDataDictionary: {fileID: 0}
 >>>>>>> Kiyohito
+=======
+>>>>>>> Jin
   m_AnimEditor: {fileID: 0}
   m_Locked: 0
 --- !u!114 &17
@@ -881,6 +1075,7 @@ MonoBehaviour:
   m_Position:
     serializedVersion: 2
 <<<<<<< HEAD
+<<<<<<< HEAD
     x: 673
     y: 0
     width: 277
@@ -895,16 +1090,28 @@ MonoBehaviour:
   m_MinSize: {x: 277, y: 71}
   m_MaxSize: {x: 4002, y: 4021}
 >>>>>>> Kiyohito
+=======
+    x: 1093
+    y: 0
+    width: 443
+    height: 731
+  m_MinSize: {x: 277, y: 71}
+  m_MaxSize: {x: 4002, y: 4021}
+>>>>>>> Jin
   m_ActualView: {fileID: 19}
   m_Panes:
   - {fileID: 18}
   - {fileID: 19}
   m_Selected: 1
 <<<<<<< HEAD
+<<<<<<< HEAD
   m_LastSelected: 1
 =======
   m_LastSelected: 0
 >>>>>>> Kiyohito
+=======
+  m_LastSelected: 1
+>>>>>>> Jin
 --- !u!114 &18
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -927,10 +1134,14 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> Jin
     x: 1209.6
     y: 92.8
     width: 327
     height: 710
+<<<<<<< HEAD
 =======
     x: 1095
     y: 92
@@ -938,6 +1149,8 @@ MonoBehaviour:
     height: 710
   m_PersistentViewDataDictionary: {fileID: 0}
 >>>>>>> Kiyohito
+=======
+>>>>>>> Jin
   m_InitialOpenURL: https://public-cdn.cloud.unity3d.com/editor/production/cloud/hub
   m_GlobalObjectTypeName: 
   m_RegisteredViewURLs:
@@ -967,6 +1180,7 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
 <<<<<<< HEAD
+<<<<<<< HEAD
     x: 1260
     y: 100
     width: 275
@@ -978,6 +1192,12 @@ MonoBehaviour:
     height: 710
   m_PersistentViewDataDictionary: {fileID: 0}
 >>>>>>> Kiyohito
+=======
+    x: 1095
+    y: 92
+    width: 441
+    height: 710
+>>>>>>> Jin
   m_ScrollPosition: {x: 0, y: 0}
   m_InspectorMode: 0
   m_PreviewResizer:

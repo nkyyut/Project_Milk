@@ -1,4 +1,8 @@
 sceneSetups:
+<<<<<<< HEAD
 - path: Assets/Kiyohito/KiyohitoTestScene.unity
+=======
+- path: Assets/MeshCut.unity
+>>>>>>> Jin
   isLoaded: 1
   isActive: 1
