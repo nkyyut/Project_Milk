@@ -1,4 +1,8 @@
 sceneSetups:
+<<<<<<< HEAD
 - path: Assets/Shota/astar.unity
+=======
+- path: Assets/Main/Main.unity
+>>>>>>> Shota
   isLoaded: 1
   isActive: 1
