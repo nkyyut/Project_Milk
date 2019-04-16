@@ -1,1 +1,8 @@
+<<<<<<< HEAD
 sceneSetups: []
+=======
+sceneSetups:
+- path: Assets/CharMove.unity
+  isLoaded: 1
+  isActive: 1
+>>>>>>> Kazuki
