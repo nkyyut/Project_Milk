@@ -19,6 +19,7 @@ MonoBehaviour:
     y: 30
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     width: 950
     height: 732
   m_MinSize: {x: 785, y: 342}
@@ -27,10 +28,14 @@ MonoBehaviour:
   controlID: 298
 =======
     width: 1536
+=======
+    width: 1520
+>>>>>>> Shota
     height: 731
   m_MinSize: {x: 785, y: 492}
   m_MaxSize: {x: 16010, y: 14042}
   vertical: 1
+<<<<<<< HEAD
   controlID: 522
 >>>>>>> Kiyohito
 =======
@@ -41,6 +46,9 @@ MonoBehaviour:
   vertical: 1
   controlID: 143
 >>>>>>> Jin
+=======
+  controlID: 141
+>>>>>>> Shota
 --- !u!114 &2
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -65,6 +73,7 @@ MonoBehaviour:
     serializedVersion: 2
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     x: 1043
     y: 100
     width: 213
@@ -77,11 +86,17 @@ MonoBehaviour:
     x: 775
     y: 92
     width: 378
+=======
+    x: 743
+    y: 124
+    width: 345
+>>>>>>> Shota
     height: 428
   m_PersistentViewDataDictionary: {fileID: 0}
   m_MaximizeOnPlay: 1
   m_Gizmos: 0
   m_Stats: 0
+<<<<<<< HEAD
   m_SelectedSizes: 05000000000000000000000010000000000000000000000000000000000000000000000000000000
 >>>>>>> Kiyohito
 =======
@@ -94,10 +109,14 @@ MonoBehaviour:
   m_Stats: 0
   m_SelectedSizes: 05000000000000000000000011000000000000000000000000000000000000000000000000000000
 >>>>>>> Jin
+=======
+  m_SelectedSizes: 05000000000000000000000011000000000000000000000000000000000000000000000000000000
+>>>>>>> Shota
   m_TargetDisplay: 0
   m_ZoomArea:
     m_HRangeLocked: 0
     m_VRangeLocked: 0
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     m_HBaseRangeMin: -106.5
@@ -116,6 +135,12 @@ MonoBehaviour:
     m_VBaseRangeMin: -98.15625
     m_VBaseRangeMax: 98.15625
 >>>>>>> Jin
+=======
+    m_HBaseRangeMin: -172.5
+    m_HBaseRangeMax: 172.5
+    m_VBaseRangeMin: -97.03125
+    m_VBaseRangeMax: 97.03125
+>>>>>>> Shota
     m_HAllowExceedBaseRangeMin: 1
     m_HAllowExceedBaseRangeMax: 1
     m_VAllowExceedBaseRangeMin: 1
@@ -134,6 +159,7 @@ MonoBehaviour:
       y: 17
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       width: 213
       height: 411
     m_Scale: {x: 1, y: 1}
@@ -150,12 +176,19 @@ MonoBehaviour:
     m_Scale: {x: 1, y: 1}
     m_Translation: {x: 174.5, y: 205.5}
 >>>>>>> Jin
+=======
+      width: 345
+      height: 411
+    m_Scale: {x: 1, y: 1}
+    m_Translation: {x: 172.5, y: 205.5}
+>>>>>>> Shota
     m_MarginLeft: 0
     m_MarginRight: 0
     m_MarginTop: 0
     m_MarginBottom: 0
     m_LastShownAreaInsideMargins:
       serializedVersion: 2
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
       x: -106.5
@@ -171,11 +204,17 @@ MonoBehaviour:
       y: -205.5
       width: 349
 >>>>>>> Jin
+=======
+      x: -172.5
+      y: -205.5
+      width: 345
+>>>>>>> Shota
       height: 411
     m_MinimalGUI: 1
   m_defaultScale: 1
   m_TargetTexture: {fileID: 0}
   m_CurrentColorSpace: 0
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
   m_LastWindowPixelSize: {x: 213, y: 428}
@@ -185,6 +224,9 @@ MonoBehaviour:
 =======
   m_LastWindowPixelSize: {x: 349, y: 428}
 >>>>>>> Jin
+=======
+  m_LastWindowPixelSize: {x: 345, y: 428}
+>>>>>>> Shota
   m_ClearInEditMode: 1
   m_NoCameraWarning: 1
   m_LowResolutionForAspectRatios: 01000000000000000100
@@ -208,6 +250,7 @@ MonoBehaviour:
     y: 0
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     width: 950
     height: 732
   m_MinSize: {x: 785, y: 342}
@@ -216,10 +259,14 @@ MonoBehaviour:
   controlID: 299
 =======
     width: 1536
+=======
+    width: 1520
+>>>>>>> Shota
     height: 731
   m_MinSize: {x: 785, y: 492}
   m_MaxSize: {x: 16010, y: 14042}
   vertical: 0
+<<<<<<< HEAD
   controlID: 523
 >>>>>>> Kiyohito
 =======
@@ -230,6 +277,9 @@ MonoBehaviour:
   vertical: 0
   controlID: 144
 >>>>>>> Jin
+=======
+  controlID: 142
+>>>>>>> Shota
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -250,6 +300,7 @@ MonoBehaviour:
     y: 0
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     width: 673
     height: 732
   m_MinSize: {x: 508, y: 342}
@@ -258,10 +309,14 @@ MonoBehaviour:
   controlID: 276
 =======
     width: 1155
+=======
+    width: 1082
+>>>>>>> Shota
     height: 731
   m_MinSize: {x: 508, y: 492}
   m_MaxSize: {x: 12008, y: 14042}
   vertical: 1
+<<<<<<< HEAD
   controlID: 524
 >>>>>>> Kiyohito
 =======
@@ -272,6 +327,9 @@ MonoBehaviour:
   vertical: 1
   controlID: 102
 >>>>>>> Jin
+=======
+  controlID: 103
+>>>>>>> Shota
 --- !u!114 &5
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -293,14 +351,19 @@ MonoBehaviour:
     y: 0
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     width: 673
 =======
     width: 1155
 >>>>>>> Kiyohito
+=======
+    width: 1082
+>>>>>>> Shota
     height: 449
   m_MinSize: {x: 508, y: 221}
   m_MaxSize: {x: 12008, y: 4021}
   vertical: 0
+<<<<<<< HEAD
 <<<<<<< HEAD
   controlID: 277
 =======
@@ -314,6 +377,9 @@ MonoBehaviour:
   vertical: 0
   controlID: 79
 >>>>>>> Jin
+=======
+  controlID: 80
+>>>>>>> Shota
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -332,6 +398,7 @@ MonoBehaviour:
     y: 0
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     width: 202
     height: 449
   m_MinSize: {x: 200, y: 200}
@@ -348,6 +415,12 @@ MonoBehaviour:
   m_MinSize: {x: 202, y: 221}
   m_MaxSize: {x: 4002, y: 4021}
 >>>>>>> Jin
+=======
+    width: 318
+    height: 449
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
+>>>>>>> Shota
   m_ActualView: {fileID: 7}
   m_Panes:
   - {fileID: 7}
@@ -377,6 +450,7 @@ MonoBehaviour:
     serializedVersion: 2
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     x: 585
     y: 100
     width: 200
@@ -390,10 +464,16 @@ MonoBehaviour:
     x: 0
     y: 92
     width: 329
+=======
+    x: 8
+    y: 124
+    width: 316
+>>>>>>> Shota
     height: 428
   m_PersistentViewDataDictionary: {fileID: 0}
   m_TreeViewState:
     scrollPos: {x: 0, y: 0}
+<<<<<<< HEAD
     m_SelectedIDs: 32070000
     m_LastClickedID: 0
     m_ExpandedIDs: 9efbffff00000000
@@ -409,6 +489,11 @@ MonoBehaviour:
     m_LastClickedID: 0
     m_ExpandedIDs: a6fbffff00000000
 >>>>>>> Jin
+=======
+    m_SelectedIDs: 76290000
+    m_LastClickedID: 0
+    m_ExpandedIDs: eeefffff86fbffff00000000
+>>>>>>> Shota
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -429,6 +514,7 @@ MonoBehaviour:
   m_ExpandedScenes:
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   - Main
 =======
   - KiyohitoTestScene
@@ -436,6 +522,9 @@ MonoBehaviour:
 =======
   - MeshCut
 >>>>>>> Jin
+=======
+  - dango
+>>>>>>> Shota
   m_CurrenRootInstanceID: 0
   m_Locked: 0
   m_CurrentSortingName: TransformSorting
@@ -453,6 +542,7 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     x: 202
@@ -477,6 +567,14 @@ MonoBehaviour:
   m_MinSize: {x: 204, y: 221}
   m_MaxSize: {x: 4004, y: 4021}
 >>>>>>> Jin
+=======
+    x: 318
+    y: 0
+    width: 415
+    height: 449
+  m_MinSize: {x: 204, y: 221}
+  m_MaxSize: {x: 4004, y: 4021}
+>>>>>>> Shota
   m_ActualView: {fileID: 9}
   m_Panes:
   - {fileID: 9}
@@ -508,6 +606,7 @@ MonoBehaviour:
     serializedVersion: 2
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     x: 789
     y: 100
     width: 250
@@ -531,10 +630,20 @@ MonoBehaviour:
   m_SceneLighting: 1
   lastFramingTime: 9660.936238322982
 >>>>>>> Jin
+=======
+    x: 328
+    y: 124
+    width: 411
+    height: 428
+  m_PersistentViewDataDictionary: {fileID: 0}
+  m_SceneLighting: 1
+  lastFramingTime: 9660.936238322982
+>>>>>>> Shota
   m_2DMode: 0
   m_isRotationLocked: 0
   m_AudioPlay: 0
   m_Position:
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     m_Target: {x: 0, y: 0, z: 0}
@@ -550,6 +659,11 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0}
 >>>>>>> Jin
+=======
+    m_Target: {x: 1.9292383, y: 2.321853, z: -8.215566}
+    speed: 2
+    m_Value: {x: 1.9292383, y: 2.321853, z: -8.215566}
+>>>>>>> Shota
   m_RenderMode: 0
   m_ValidateTrueMetals: 0
   m_SceneViewState:
@@ -560,11 +674,15 @@ MonoBehaviour:
     showImageEffects: 1
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     showParticleSystems: 1
 >>>>>>> Kiyohito
 =======
 >>>>>>> Jin
+=======
+    showParticleSystems: 1
+>>>>>>> Shota
   grid:
     xGrid:
       m_Target: 0
@@ -579,6 +697,7 @@ MonoBehaviour:
       speed: 2
       m_Value: 0
   m_Rotation:
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -602,6 +721,15 @@ MonoBehaviour:
 >>>>>>> Kiyohito
 =======
 >>>>>>> Jin
+=======
+    m_Target: {x: -0.12404104, y: 0.73856914, z: -0.14151283, w: -0.6473822}
+    speed: 2
+    m_Value: {x: -0.12404104, y: 0.73856914, z: -0.14151283, w: -0.6473822}
+  m_Size:
+    m_Target: 8.709839
+    speed: 2
+    m_Value: 8.709839
+>>>>>>> Shota
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -641,11 +769,15 @@ MonoBehaviour:
     height: 422
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
   m_PersistentViewDataDictionary: {fileID: 0}
 >>>>>>> Kiyohito
 =======
 >>>>>>> Jin
+=======
+  m_PersistentViewDataDictionary: {fileID: 0}
+>>>>>>> Shota
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -674,6 +806,7 @@ MonoBehaviour:
     height: 439
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   m_ViewPositions:
 =======
   m_PersistentViewDataDictionary: {fileID: 0}
@@ -682,6 +815,10 @@ MonoBehaviour:
 =======
   m_ViewPositions:
 >>>>>>> Jin
+=======
+  m_PersistentViewDataDictionary: {fileID: 0}
+  m_ViewTransforms:
+>>>>>>> Shota
     m_KeySerializationHelper: []
     m_ValueSerializationHelper: []
   m_PreviewAnimator: {fileID: 0}
@@ -713,6 +850,7 @@ MonoBehaviour:
     serializedVersion: 2
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     x: 456
     y: 0
     width: 217
@@ -732,6 +870,14 @@ MonoBehaviour:
   m_MinSize: {x: 100, y: 100}
   m_MaxSize: {x: 4000, y: 4000}
 >>>>>>> Jin
+=======
+    x: 733
+    y: 0
+    width: 349
+    height: 449
+  m_MinSize: {x: 104, y: 121}
+  m_MaxSize: {x: 4004, y: 4021}
+>>>>>>> Shota
   m_ActualView: {fileID: 2}
   m_Panes:
   - {fileID: 2}
@@ -755,6 +901,7 @@ MonoBehaviour:
     y: 449
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     width: 673
     height: 283
   m_MinSize: {x: 100, y: 100}
@@ -765,18 +912,25 @@ MonoBehaviour:
 =======
     width: 1093
 >>>>>>> Jin
+=======
+    width: 1082
+>>>>>>> Shota
     height: 282
   m_MinSize: {x: 230, y: 250}
   m_MaxSize: {x: 10000, y: 10000}
   m_ActualView: {fileID: 14}
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> Kiyohito
 =======
 >>>>>>> Jin
+=======
+>>>>>>> Shota
   m_Panes:
   - {fileID: 14}
   - {fileID: 15}
   - {fileID: 16}
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
   m_Selected: 1
@@ -789,6 +943,10 @@ MonoBehaviour:
   m_Selected: 0
   m_LastSelected: 1
 >>>>>>> Jin
+=======
+  m_Selected: 0
+  m_LastSelected: 1
+>>>>>>> Shota
 --- !u!114 &14
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -813,6 +971,7 @@ MonoBehaviour:
     serializedVersion: 2
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     x: 8
     y: 545
     width: 1080
@@ -830,6 +989,13 @@ MonoBehaviour:
     width: 1091
     height: 261
 >>>>>>> Jin
+=======
+    x: 8
+    y: 573
+    width: 1080
+    height: 261
+  m_PersistentViewDataDictionary: {fileID: 0}
+>>>>>>> Shota
   m_SearchFilter:
     m_NameFilter: 
     m_ClassNames: []
@@ -844,14 +1010,18 @@ MonoBehaviour:
     m_Folders:
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> Jin
+=======
+>>>>>>> Shota
     - Assets
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
   - Assets
   m_LastFoldersGridSize: -1
+<<<<<<< HEAD
 <<<<<<< HEAD
   m_LastProjectPath: C:\Users\inali\Desktop\Asuta\ProjectMilk
   m_IsLocked: 0
@@ -884,6 +1054,15 @@ MonoBehaviour:
     m_LastClickedID: 10052
     m_ExpandedIDs: 0000000044270000a0270000aa270000c227000000ca9a3bffffff7f
 >>>>>>> Jin
+=======
+  m_LastProjectPath: "C:\\Users\\\u30E6\u30FC\u30B6\u30FC1\\Documents\\Project_Milk\\ProjectMilk"
+  m_IsLocked: 0
+  m_FolderTreeState:
+    scrollPos: {x: 0, y: 0}
+    m_SelectedIDs: 82270000
+    m_LastClickedID: 10114
+    m_ExpandedIDs: 0000000082270000ffffff7f
+>>>>>>> Shota
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -913,6 +1092,7 @@ MonoBehaviour:
     m_LastClickedID: 0
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     m_ExpandedIDs: 000000003e27000000ca9a3bffffff7f
 =======
     m_ExpandedIDs: 000000008827000000ca9a3bffffff7f
@@ -920,6 +1100,9 @@ MonoBehaviour:
 =======
     m_ExpandedIDs: 0000000044270000a0270000aa270000c2270000
 >>>>>>> Jin
+=======
+    m_ExpandedIDs: 0000000082270000
+>>>>>>> Shota
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -946,6 +1129,7 @@ MonoBehaviour:
   m_ListAreaState:
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
 =======
@@ -957,6 +1141,11 @@ MonoBehaviour:
     m_LastClickedInstanceID: 0
 >>>>>>> Jin
     m_HadKeyboardFocusLastEvent: 0
+=======
+    m_SelectedInstanceIDs: 76290000
+    m_LastClickedInstanceID: 10614
+    m_HadKeyboardFocusLastEvent: 1
+>>>>>>> Shota
     m_ExpandedInstanceIDs: c62300001c280000000000002c3600002a340000142b0000dc270000a4270000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -1008,6 +1197,7 @@ MonoBehaviour:
     serializedVersion: 2
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     x: 585
     y: 549
     width: 671
@@ -1025,6 +1215,13 @@ MonoBehaviour:
     width: 1091
     height: 261
 >>>>>>> Jin
+=======
+    x: 68
+    y: 546
+    width: 1080
+    height: 255
+  m_PersistentViewDataDictionary: {fileID: 0}
+>>>>>>> Shota
 --- !u!114 &16
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -1053,11 +1250,15 @@ MonoBehaviour:
     height: 258
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
   m_PersistentViewDataDictionary: {fileID: 0}
 >>>>>>> Kiyohito
 =======
 >>>>>>> Jin
+=======
+  m_PersistentViewDataDictionary: {fileID: 0}
+>>>>>>> Shota
   m_AnimEditor: {fileID: 0}
   m_Locked: 0
 --- !u!114 &17
@@ -1074,6 +1275,7 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     x: 673
@@ -1098,11 +1300,20 @@ MonoBehaviour:
   m_MinSize: {x: 277, y: 71}
   m_MaxSize: {x: 4002, y: 4021}
 >>>>>>> Jin
+=======
+    x: 1082
+    y: 0
+    width: 438
+    height: 731
+  m_MinSize: {x: 277, y: 71}
+  m_MaxSize: {x: 4002, y: 4021}
+>>>>>>> Shota
   m_ActualView: {fileID: 19}
   m_Panes:
   - {fileID: 18}
   - {fileID: 19}
   m_Selected: 1
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
   m_LastSelected: 1
@@ -1112,6 +1323,9 @@ MonoBehaviour:
 =======
   m_LastSelected: 1
 >>>>>>> Jin
+=======
+  m_LastSelected: 1
+>>>>>>> Shota
 --- !u!114 &18
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -1135,12 +1349,16 @@ MonoBehaviour:
     serializedVersion: 2
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> Jin
+=======
+>>>>>>> Shota
     x: 1209.6
     y: 92.8
     width: 327
     height: 710
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
     x: 1095
@@ -1151,6 +1369,9 @@ MonoBehaviour:
 >>>>>>> Kiyohito
 =======
 >>>>>>> Jin
+=======
+  m_PersistentViewDataDictionary: {fileID: 0}
+>>>>>>> Shota
   m_InitialOpenURL: https://public-cdn.cloud.unity3d.com/editor/production/cloud/hub
   m_GlobalObjectTypeName: 
   m_RegisteredViewURLs:
@@ -1181,6 +1402,7 @@ MonoBehaviour:
     serializedVersion: 2
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     x: 1260
     y: 100
     width: 275
@@ -1198,6 +1420,13 @@ MonoBehaviour:
     width: 441
     height: 710
 >>>>>>> Jin
+=======
+    x: 1092
+    y: 124
+    width: 436
+    height: 710
+  m_PersistentViewDataDictionary: {fileID: 0}
+>>>>>>> Shota
   m_ScrollPosition: {x: 0, y: 0}
   m_InspectorMode: 0
   m_PreviewResizer:

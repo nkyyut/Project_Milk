@@ -1,8 +1,12 @@
 sceneSetups:
 <<<<<<< HEAD
+<<<<<<< HEAD
 - path: Assets/Kiyohito/KiyohitoTestScene.unity
 =======
 - path: Assets/MeshCut.unity
 >>>>>>> Jin
+=======
+- path: Assets/astar.unity
+>>>>>>> Shota
   isLoaded: 1
   isActive: 1
