@@ -1,13 +1,7 @@
 ﻿
-<<<<<<< HEAD
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectMilk", "ProjectMilk.csproj", "{0B16D41B-643A-79C3-A179-AF50422B43C9}"
-=======
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{C553C83B-315A-9359-4B1D-DB2DEE63C21B}"
->>>>>>> Kiyohito
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,25 +9,12 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-<<<<<<< HEAD
 		{0B16D41B-643A-79C3-A179-AF50422B43C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0B16D41B-643A-79C3-A179-AF50422B43C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0B16D41B-643A-79C3-A179-AF50422B43C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0B16D41B-643A-79C3-A179-AF50422B43C9}.Release|Any CPU.Build.0 = Release|Any CPU
-=======
-		{C553C83B-315A-9359-4B1D-DB2DEE63C21B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C553C83B-315A-9359-4B1D-DB2DEE63C21B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C553C83B-315A-9359-4B1D-DB2DEE63C21B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C553C83B-315A-9359-4B1D-DB2DEE63C21B}.Release|Any CPU.Build.0 = Release|Any CPU
->>>>>>> Kiyohito
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-<<<<<<< HEAD
-=======
-	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = Assembly-CSharp.csproj
-	EndGlobalSection
->>>>>>> Kiyohito
 EndGlobal

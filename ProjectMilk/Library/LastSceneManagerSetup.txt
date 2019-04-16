@@ -1,8 +1,4 @@
 sceneSetups:
-<<<<<<< HEAD
-- path: Assets/Kazuki/CharMove.unity
-=======
 - path: Assets/Kiyohito/KiyohitoTestScene.unity
->>>>>>> Kiyohito
   isLoaded: 1
   isActive: 1

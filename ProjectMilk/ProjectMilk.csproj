@@ -236,6 +236,9 @@
     <Compile Include="Assets\Kazuki\CameraControl.cs" />
     <Compile Include="Assets\Kazuki\CharMove.cs" />
     <Compile Include="Assets\Kazuki\PlayerControl.cs" />
+    <Compile Include="Assets\Kiyohito\DropMover.cs" />
+    <Compile Include="Assets\Kiyohito\TimeManager.cs" />
+    <Compile Include="Assets\Kiyohito\TinAnagoMover.cs" />
     <Compile Include="Assets\Yuuto\UserTool.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
