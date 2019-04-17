@@ -242,10 +242,19 @@
     <Compile Include="Assets\Kazuki\CameraControl.cs" />
     <Compile Include="Assets\Kazuki\CharMove.cs" />
     <Compile Include="Assets\Kazuki\PlayerControl.cs" />
-    <Compile Include="Assets\Kiyohito\DropMover.cs" />
-    <Compile Include="Assets\Kiyohito\TimeManager.cs" />
-    <Compile Include="Assets\Kiyohito\TinAnagoMover.cs" />
+    <Compile Include="Assets\Kiyohito\CoralStatus.cs" />
+    <Compile Include="Assets\Kiyohito\DurableValueManager.cs" />
+    <Compile Include="Assets\Kiyohito\Script\DropMover.cs" />
+    <Compile Include="Assets\Kiyohito\Script\FauxGravityAttracter.cs" />
+    <Compile Include="Assets\Kiyohito\Script\FauxGravityBody.cs" />
+    <Compile Include="Assets\Kiyohito\Script\GravityNormal.cs" />
+    <Compile Include="Assets\Kiyohito\Script\KiyohitoConst.cs" />
+    <Compile Include="Assets\Kiyohito\Script\PlayerController.cs" />
+    <Compile Include="Assets\Kiyohito\Script\TimeManager.cs" />
+    <Compile Include="Assets\Kiyohito\Script\TinAnagoMover.cs" />
+    <Compile Include="Assets\Kiyohito\TestCS.cs" />
     <Compile Include="Assets\Yuuto\ChangeGravity.cs" />
+    <Compile Include="Assets\Yuuto\OnihitodeMover.cs" />
     <Compile Include="Assets\Yuuto\UserTool.cs" />
   </ItemGroup>
   <ItemGroup>
