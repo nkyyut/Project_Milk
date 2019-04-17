@@ -1,4 +1,8 @@
 sceneSetups:
+<<<<<<< HEAD
 - path: Assets/Yuuto/TestStageScene.unity
+=======
+- path: Assets/astar.unity
+>>>>>>> Shota
   isLoaded: 1
   isActive: 1
