@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class CharMove : MonoBehaviour {
 
-    GameObject Player;
-    float Angle = 3f;
-	// Use this for initialization
+   
 	void Start () {
         
 	}
@@ -14,7 +12,6 @@ public class CharMove : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        if(Input.GetKey(KeyCode.LeftArrow))
-        transform.Rotate(0,Angle,0);
+       
 	}
 }
