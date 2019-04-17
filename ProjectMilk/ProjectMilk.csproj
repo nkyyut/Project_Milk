@@ -245,6 +245,7 @@
     <Compile Include="Assets\Kiyohito\DropMover.cs" />
     <Compile Include="Assets\Kiyohito\TimeManager.cs" />
     <Compile Include="Assets\Kiyohito\TinAnagoMover.cs" />
+    <Compile Include="Assets\Yuuto\ChangeGravity.cs" />
     <Compile Include="Assets\Yuuto\UserTool.cs" />
   </ItemGroup>
   <ItemGroup>
