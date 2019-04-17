@@ -220,15 +220,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\CutManager.cs" />
-    <Compile Include="Assets\DrawMesh.cs" />
-    <Compile Include="Assets\Jin_Const.cs" />
-    <Compile Include="Assets\MeshCut.cs" />
-    <Compile Include="Assets\MeshInfo.cs" />
-    <Compile Include="Assets\PointDrawer.cs" />
+    <Compile Include="Assets\Jin\CutManager.cs" />
+    <Compile Include="Assets\Jin\DrawMesh.cs" />
+    <Compile Include="Assets\Jin\Jin_Const.cs" />
+    <Compile Include="Assets\Jin\MeshCut.cs" />
+    <Compile Include="Assets\Jin\MeshInfo.cs" />
+    <Compile Include="Assets\Jin\PointDrawer.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\MeshInfo.shader" />
+    <None Include="Assets\Jin\MeshInfo.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
