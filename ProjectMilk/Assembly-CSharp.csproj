@@ -51,8 +51,19 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Jin\CutManager.cs" />
+     <Compile Include="Assets\Jin\DrawMesh.cs" />
+     <Compile Include="Assets\Jin\Jin_Const.cs" />
+     <Compile Include="Assets\Jin\MeshCut.cs" />
+     <Compile Include="Assets\Jin\MeshInfo.cs" />
+     <Compile Include="Assets\Jin\PointDrawer.cs" />
+     <Compile Include="Assets\Kazuki\AnimationScript.cs" />
+     <Compile Include="Assets\Kazuki\CameraControl.cs" />
+     <Compile Include="Assets\Kazuki\CharMove.cs" />
+     <Compile Include="Assets\Kazuki\PlayerControl.cs" />
      <Compile Include="Assets\Kiyohito\CoralStatus.cs" />
      <Compile Include="Assets\Kiyohito\DurableValueManager.cs" />
+     <Compile Include="Assets\Kiyohito\Script\CameraController.cs" />
      <Compile Include="Assets\Kiyohito\Script\DropMover.cs" />
      <Compile Include="Assets\Kiyohito\Script\FauxGravityAttracter.cs" />
      <Compile Include="Assets\Kiyohito\Script\FauxGravityBody.cs" />
@@ -62,6 +73,9 @@
      <Compile Include="Assets\Kiyohito\Script\TimeManager.cs" />
      <Compile Include="Assets\Kiyohito\Script\TinAnagoMover.cs" />
      <Compile Include="Assets\Kiyohito\TestCS.cs" />
+     <Compile Include="Assets\Yuuto\ChangeGravity.cs" />
+     <Compile Include="Assets\Yuuto\UserTool.cs" />
+     <None Include="Assets\Jin\MeshInfo.shader" />
  <Reference Include="UnityEngine.CoreModule">
  <HintPath>C:/Program Files/Unity_2017.4.14f/Editor/Data/Managed/UnityEngine/UnityEngine.CoreModule.dll</HintPath>
  </Reference>
