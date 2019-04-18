@@ -1,7 +1,6 @@
 <<<<<<< HEAD
-.csproj
-.sln
-.vs
+ProjectMilk/.vs/
+ProjectMilk/ProjectSettings/ProjectVersion.txt
 ProjectMilk/ProjectMilk.sln
 ProjectMilk/ProjectMilk.csproj
 =======
