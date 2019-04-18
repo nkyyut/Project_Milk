@@ -222,6 +222,7 @@
   <ItemGroup>
     <Compile Include="Assets\Jin\CutManager.cs" />
     <Compile Include="Assets\Jin\DrawMesh.cs" />
+    <Compile Include="Assets\Jin\HitPoint.cs" />
     <Compile Include="Assets\Jin\Jin_Const.cs" />
     <Compile Include="Assets\Jin\MeshCut.cs" />
     <Compile Include="Assets\Jin\MeshInfo.cs" />
