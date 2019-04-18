@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/CharMove.unity
+- path: Assets/Scene/Map.unity
   isLoaded: 1
   isActive: 1
