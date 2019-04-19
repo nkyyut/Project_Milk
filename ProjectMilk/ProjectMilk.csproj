@@ -232,16 +232,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\audio\AudioScript.cs" />
     <Compile Include="Assets\Jin\CutManager.cs" />
     <Compile Include="Assets\Jin\DrawMesh.cs" />
     <Compile Include="Assets\Jin\Jin_Const.cs" />
     <Compile Include="Assets\Jin\MeshCut.cs" />
     <Compile Include="Assets\Jin\MeshInfo.cs" />
     <Compile Include="Assets\Jin\PointDrawer.cs" />
-    <Compile Include="Assets\Kazuki\AnimationScript.cs" />
-    <Compile Include="Assets\Kazuki\CameraControl.cs" />
-    <Compile Include="Assets\Kazuki\CharMove.cs" />
-    <Compile Include="Assets\Kazuki\PlayerControl.cs" />
+    <Compile Include="Assets\Kazuki\Script\AnimationScript.cs" />
+    <Compile Include="Assets\Kazuki\Script\CameraControl.cs" />
+    <Compile Include="Assets\Kazuki\Script\CharMove.cs" />
+    <Compile Include="Assets\Kazuki\Script\MiniMap.cs" />
+    <Compile Include="Assets\Kazuki\Script\PlayerControl.cs" />
     <Compile Include="Assets\Kiyohito\CoralStatus.cs" />
     <Compile Include="Assets\Kiyohito\DurableValueManager.cs" />
     <Compile Include="Assets\Kiyohito\Script\DropMover.cs" />
@@ -258,16 +260,7 @@
     <Compile Include="Assets\Yuuto\UserTool.cs" />
   </ItemGroup>
   <ItemGroup>
-<<<<<<< HEAD
     <None Include="Assets\Jin\MeshInfo.shader" />
-=======
-    <Compile Include="Assets\audio\AudioScript.cs" />
-    <Compile Include="Assets\Script\AnimationScript.cs" />
-    <Compile Include="Assets\Script\CameraControl.cs" />
-    <Compile Include="Assets\Script\CharMove.cs" />
-    <Compile Include="Assets\Script\MiniMap.cs" />
-    <Compile Include="Assets\Script\PlayerControl.cs" />
->>>>>>> Kazuki
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
