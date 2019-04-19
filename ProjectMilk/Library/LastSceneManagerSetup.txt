@@ -1,4 +1,8 @@
 sceneSetups:
+<<<<<<< HEAD
 - path: Assets/Yuuto/TestStageScene.unity
+=======
+- path: Assets/Jin/MeshCut.unity
+>>>>>>> origin/Jin
   isLoaded: 1
   isActive: 1

@@ -232,13 +232,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <Compile Include="Assets\audio\AudioScript.cs" />
     <Compile Include="Assets\Jin\CutManager.cs" />
     <Compile Include="Assets\Jin\DrawMesh.cs" />
+=======
+    <Compile Include="Assets\Jin\CutManager.cs" />
+    <Compile Include="Assets\Jin\DrawMesh.cs" />
+    <Compile Include="Assets\Jin\HitPoint.cs" />
+>>>>>>> origin/Jin
     <Compile Include="Assets\Jin\Jin_Const.cs" />
     <Compile Include="Assets\Jin\MeshCut.cs" />
     <Compile Include="Assets\Jin\MeshInfo.cs" />
     <Compile Include="Assets\Jin\PointDrawer.cs" />
+<<<<<<< HEAD
     <Compile Include="Assets\Kazuki\Script\AnimationScript.cs" />
     <Compile Include="Assets\Kazuki\Script\CameraControl.cs" />
     <Compile Include="Assets\Kazuki\Script\CharMove.cs" />
@@ -258,6 +265,8 @@
     <Compile Include="Assets\Yuuto\ChangeGravity.cs" />
     <Compile Include="Assets\Yuuto\OnihitodeMover.cs" />
     <Compile Include="Assets\Yuuto\UserTool.cs" />
+=======
+>>>>>>> origin/Jin
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Jin\MeshInfo.shader" />
