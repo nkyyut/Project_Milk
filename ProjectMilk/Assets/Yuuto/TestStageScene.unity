@@ -3218,6 +3218,10 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 5fc63b11fbdb6694f8f0d321e707d558, type: 2}
+    - target: {fileID: 100000, guid: 38d0a21173f931e4498c854beacdd2b7, type: 3}
+      propertyPath: m_TagString
+      value: Coral
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 38d0a21173f931e4498c854beacdd2b7, type: 3}
   m_IsPrefabParent: 0
@@ -4034,7 +4038,7 @@ GameObject:
   - component: {fileID: 1787089070}
   m_Layer: 0
   m_Name: astar_alpha
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
