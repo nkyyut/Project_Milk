@@ -204,14 +204,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8ce8688e71934e4380e59eba5d3f6ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  capMaterial: {fileID: 10756, guid: 0000000000000000e000000000000000, type: 0}
+  capMaterial: {fileID: 10756, guid: 0000000000000000e000000000000000, type: 3}
   Line: {fileID: 1921527470484842, guid: 324e4248051da534e896c3b8624de730, type: 2}
-  CutScale: 0
+  IsMeshCreate: 0
+  CutScaleZ: 0
   _drawMesh: {fileID: 1844326405}
   _dotMat: {fileID: 2100000, guid: c027d393d0aff874db79999b135667c3, type: 2}
   _dotSize: 0.05
   _material: {fileID: 2100000, guid: 0a1fef63a04dc2c4da17b2fec3460f1c, type: 2}
   _threshold: 0.1
+  _vertices: []
+  back_vertices: []
   _lineList: []
 --- !u!4 &648882534
 Transform:
