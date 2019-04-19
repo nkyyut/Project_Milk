@@ -1,4 +1,0 @@
-sceneSetups:
-- path: Assets/Jin/MeshCut.unity
-  isLoaded: 1
-  isActive: 1

@@ -1,8 +1,8 @@
 <<<<<<< HEAD
 ProjectMilk/.vs/
-ProjectMilk/ProjectSettings/ProjectVersion.txt
-ProjectMilk/ProjectMilk.sln
-ProjectMilk/ProjectMilk.csproj
+ProjectMilk/Library/
+ProjectMilk/*.sln
+ProjectMilk/*.csproj
 =======
 ProjectMilk/.vs/ProjectMilk/v15/Server/sqlite3/storage.ide-shm
 ProjectMilk/.vs/ProjectMilk/v15/Server/sqlite3/storage.ide
