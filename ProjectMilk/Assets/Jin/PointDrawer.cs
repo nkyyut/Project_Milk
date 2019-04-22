@@ -24,6 +24,8 @@ namespace BLINDED_AM_ME
         bool IsChangeDirection;
         public bool IsMeshCreate = false;
 
+        private int AllList_Index;
+
         [SerializeField]
         public float CutScaleZ;
 
@@ -57,6 +59,9 @@ namespace BLINDED_AM_ME
 
         public List<GameObject> _lineList = new List<GameObject>();
         private List<List<GameObject>> All_lineList = new List<List<GameObject>>();
+        private List<List<Vector3>> All_verticesList = new List<List<Vector3>>();
+
+        private List<Vector3> _target_vertices = new List<Vector3>();
 
 
         private void Start()
@@ -100,17 +105,78 @@ namespace BLINDED_AM_ME
 
             if (Input.GetMouseButtonUp(0))
             {
-                List<GameObject> Sample_lineList = new List<GameObject>();
 
-                Sample_lineList = _lineList;
+                MeshFilter filter = MARUTA.GetComponent<MeshFilter>();
+                //Mesh _targetMesh = MARUTA.GetComponent<Mesh>();
+                _target_vertices.AddRange(filter.mesh.vertices);
 
-                All_lineList.Add(Sample_lineList);
+                Vector3 center = Vector3.zero;
+
+                foreach (Vector3 point in _vertices)
+                {
+                    center += point;
+                }
+                center = center / _vertices.Count;
+
+                _vertices.Add(center);
+
+                int _target_verticesNum = _target_vertices.Count;
+
+                for (int i = 0; i < _vertices.Count; i++)
+                {
+                    _target_vertices.Add(_vertices[i]);
+                }
+
+                filter.mesh.SetVertices(_target_vertices);
+
+                int[] triangles = filter.mesh.triangles;
+
+                //for (int i = 0; i < _vertices.Count; i += 3)
+                //{
+                triangles[_target_verticesNum] = (_target_verticesNum - 1) + (_vertices.Count - 1);
+                Debug.Log(triangles[_target_verticesNum]);
+
+                triangles[_target_verticesNum + 1] = _target_verticesNum;
+                Debug.Log(triangles[_target_verticesNum + 1]);
+
+                triangles[_target_verticesNum + 2] = _target_verticesNum + 1;
+                Debug.Log(triangles[_target_verticesNum + 2]);
+                //}
+
+                Debug.Log(center);
+                Debug.Log(_target_vertices[_target_vertices.Count - 1]);
+                Debug.Log(triangles[(_target_verticesNum - 1) + (_vertices.Count - 1)]);
+                //Debug.Log(triangles[_target_verticesNum + 1]);
+
+                filter.mesh.SetTriangles(triangles, 0);
+
+                Destroy(MARUTA.GetComponent<MeshCollider>());
+                MARUTA.AddComponent<MeshCollider>();
+
+                Debug.Log(_target_vertices.Count);
+
+                //List<GameObject> Sample_lineList = _lineList;
+                //List<Vector3> Sample_verticesList = _vertices;
+
+                //All_lineList.Add(Sample_lineList);
+                //All_verticesList.Add(Sample_verticesList);
+
+                //for(int i = 0; i < _vertices.Count; i++)
+                //{
+                //    //Vector3[][] vec = new Vector3[AllList_Index][i];
+
+
+                //}
 
                 //if (IsMeshCreate)
                 //    MeshCreate();
 
                 //Debug.Log(All_lineList[0].Count);
 
+                //Debug.Log(All_lineList[0]);
+                //Debug.Log(All_lineList[1]);
+                //Debug.Log(All_verticesList[0]);
+                //Debug.Log(All_verticesList[1]);
                 Initialize();
             }
 
@@ -128,9 +194,9 @@ namespace BLINDED_AM_ME
             _dotList.Clear();
             _lineList.Clear();
         }
-/// <summary>
-/// Meshの生成
-/// </summary>
+        /// <summary>
+        /// Meshの生成
+        /// </summary>
         public void MeshCreate()
         {
             dotnum = 0;
@@ -199,9 +265,9 @@ namespace BLINDED_AM_ME
             //_vertices.Clear();
             //back_dotList.Clear();
         }
-/// <summary>
-/// 三角頂点の順番決め
-/// </summary>       
+        /// <summary>
+        /// 三角頂点の順番決め
+        /// </summary>       
         private int[] OrderTriangles()
         {
             //頂点を結ぶのに必要な数
@@ -249,9 +315,9 @@ namespace BLINDED_AM_ME
             return meshTriangles;
         }
 
-/// <summary>
-/// クリックした位置に点を打ち、ドラッグで一定間隔に点を打っていく
-/// </summary>
+        /// <summary>
+        /// クリックした位置に点を打ち、ドラッグで一定間隔に点を打っていく
+        /// </summary>
         private void TryRaycast()
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -296,9 +362,9 @@ namespace BLINDED_AM_ME
                 }
             }
         }
-/// <summary>
-/// 囲むための判定用に頂点間にCube(線)を生成
-/// </summary>   
+        /// <summary>
+        /// 囲むための判定用に頂点間にCube(線)を生成
+        /// </summary>   
         private void LineCreate()
         {
             List<Vector3> myPoint = new List<Vector3>();
@@ -324,10 +390,10 @@ namespace BLINDED_AM_ME
             obj.AddComponent<HitPoint>();
         }
 
-/// <summary>
-/// 頂点リストに追加
-/// </summary>
-/// <param name="point"></param>
+        /// <summary>
+        /// 頂点リストに追加
+        /// </summary>
+        /// <param name="point"></param>
         private void AddVertex(Vector3 point)
         {
             CreateDot(point);
@@ -335,10 +401,10 @@ namespace BLINDED_AM_ME
             _samplingVertices.Clear();
         }
 
-/// <summary>
-/// 点（頂点）を生成
-/// </summary>
-/// <returns>Dot GameObject.</returns>
+        /// <summary>
+        /// 点（頂点）を生成
+        /// </summary>
+        /// <returns>Dot GameObject.</returns>
         private GameObject CreateDot(Vector3 position)
         {
             //Debug.Log("Create dot.");
@@ -356,7 +422,7 @@ namespace BLINDED_AM_ME
             dot.transform.position = position;
             dot.GetComponent<MeshRenderer>().material = _dotMat;
             Destroy(dot.GetComponent<Collider>());
-            if(!IsChangeDirection)
+            if (!IsChangeDirection)
                 _dotList.Add(dot);
             else
                 back_dotList.Add(dot);
