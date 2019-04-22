@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class DurableValueManager : MonoBehaviour {
     public GameObject[] CoralPartsArray;
-    float[] InitEachCoralVolumeArray;
-    float[] EachCoralVolumeArray;
     float InitCoralVolume;
     float NowDurableValue;
     public GameObject DurableIMG;
@@ -33,8 +31,6 @@ public class DurableValueManager : MonoBehaviour {
     /*いろいろ初期化*/
     void Initialize()
     {
-        InitEachCoralVolumeArray = new float[CoralPartsArray.Length];
-        EachCoralVolumeArray = new float[CoralPartsArray.Length];
         InitCoralVolume = 0;
         NowDurableValue = KiyohitoConst.Const.DurableValueMax;
 
@@ -47,14 +43,12 @@ public class DurableValueManager : MonoBehaviour {
         {
 
             float MeshVolume = CalculateMeshVolume(CoralPartsArray[i]);
-            InitEachCoralVolumeArray[i] = MeshVolume;
-            EachCoralVolumeArray[i] = MeshVolume;
             InitCoralVolume += MeshVolume;
         }
     }
 
     /*メッシュの体積を算出*/
-    float CalculateMeshVolume(GameObject Parts)
+    public float CalculateMeshVolume(GameObject Parts)
     {
         if (Parts == null)
         {
@@ -102,8 +96,5 @@ public class DurableValueManager : MonoBehaviour {
         DurableTxt.color = NewColor.color;
     }
 
-    public void EntryDurable(GameObject ShavedCoral)
-    {
-        CalculateMeshVolume(ShavedCoral);
-    }
+
 }

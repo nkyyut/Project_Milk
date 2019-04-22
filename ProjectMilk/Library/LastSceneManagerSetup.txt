@@ -1,4 +1,0 @@
-sceneSetups:
-- path: Assets/Yuuto/TestStageScene.unity
-  isLoaded: 1
-  isActive: 1
