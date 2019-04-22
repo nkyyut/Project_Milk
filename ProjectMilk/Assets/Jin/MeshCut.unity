@@ -204,13 +204,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8ce8688e71934e4380e59eba5d3f6ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  capMaterial: {fileID: 10756, guid: 0000000000000000e000000000000000, type: 0}
-  CutScale: 0
+  capMaterial: {fileID: 10756, guid: 0000000000000000e000000000000000, type: 3}
+  Line: {fileID: 1921527470484842, guid: 324e4248051da534e896c3b8624de730, type: 2}
+  IsMeshCreate: 0
+  CutScaleZ: 0
   _drawMesh: {fileID: 1844326405}
   _dotMat: {fileID: 2100000, guid: c027d393d0aff874db79999b135667c3, type: 2}
   _dotSize: 0.05
   _material: {fileID: 2100000, guid: 0a1fef63a04dc2c4da17b2fec3460f1c, type: 2}
   _threshold: 0.1
+  _vertices: []
+  back_vertices: []
+  _lineList: []
 --- !u!4 &648882534
 Transform:
   m_ObjectHideFlags: 0
@@ -223,34 +228,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1545571750
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1545571751}
-  m_Layer: 0
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1545571751
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1545571750}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.162631, y: -0.038155556, z: 26.49801}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1785422085
 GameObject:

@@ -27,23 +27,24 @@ public class CameraControl : MonoBehaviour
         float InputH = Input.GetAxisRaw("HorizontalR");
         float InputV = Input.GetAxisRaw("VerticalR");
 
-        if (Player.GetComponent<PlayerControl>().gravityFlg == false)
-        {
+        //if (Player.GetComponent<PlayerControl>().gravityFlg == false)
+        //{
             transform.RotateAround(targetPos, Vector3.up, InputH);
-        }
-        else
-        {
-            if (Flg == 0)
-            {
-                posPuls = new Vector3(0, 1f, -0.3f);
-                transform.RotateAround(targetPos, Vector3.forward, -InputH);
-                transform.RotateAround(targetPos, Vector3.up, InputV);
-                transform.Rotate(-90, -90, 90);
-                Flg = 1;
-            }
-            transform.RotateAround(targetPos + posPuls, Vector3.forward, -InputH);
-            transform.RotateAround(targetPos + posPuls, Vector3.up, -InputV);
-        }
+            transform.RotateAround(targetPos + posPuls, Vector3.right, InputV);
+        //}
+        //else
+        //{
+        //    if (Flg == 0)
+        //    {
+        //        posPuls = new Vector3(0, 1f, -0.3f);
+        //        transform.RotateAround(targetPos, Vector3.forward, -InputH);
+        //        transform.RotateAround(targetPos, Vector3.up, InputV);
+        //        transform.Rotate(-90, -90, 90);
+        //        Flg = 1;
+        //    }
+        //    transform.RotateAround(targetPos + posPuls, Vector3.forward, -InputH);
+        //    transform.RotateAround(targetPos + posPuls, Vector3.up, -InputV);
+        //}
     }
 
 }

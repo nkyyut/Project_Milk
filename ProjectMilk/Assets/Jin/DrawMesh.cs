@@ -82,7 +82,7 @@ public class DrawMesh : MonoBehaviour {
             }
         }
 
-        Debug.Log("Done chekcing.");
+        //Debug.Log("Done chekcing.");
 
         Mesh mesh = new Mesh();
         mesh.vertices = _vertices.ToArray();

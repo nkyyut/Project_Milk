@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 using Jin_Const;
 
 namespace BLINDED_AM_ME
@@ -13,14 +14,20 @@ namespace BLINDED_AM_ME
         //切断面に適用するマテリアル
         public Material capMaterial;
 
+        [SerializeField]
+        GameObject Line;
+
         //切断するオブジェクト
         GameObject MARUTA;
 
         int dotnum;
         bool IsChangeDirection;
+        public bool IsMeshCreate = false;
+
+        private int AllList_Index;
 
         [SerializeField]
-        private float CutScale;
+        public float CutScaleZ;
 
         [SerializeField]
         private DrawMesh _drawMesh;
@@ -43,17 +50,23 @@ namespace BLINDED_AM_ME
         private List<Vector3> _samplingVertices = new List<Vector3>();
 
         private List<GameObject> _dotList = new List<GameObject>();
-        private List<Vector3> _vertices = new List<Vector3>();
+        private List<GameObject> back_dotList = new List<GameObject>();
+        public List<Vector3> _vertices = new List<Vector3>();
         private List<GameObject> _meshList = new List<GameObject>();
-        private List<Vector3> _Mesh_vertices = new List<Vector3>();
         private List<Vector3> _subMesh_vertices = new List<Vector3>();
-
         //奥の頂点リスト
-        private List<Vector3> back_vertices = new List<Vector3>();
+        public List<Vector3> back_vertices = new List<Vector3>();
+
+        public List<GameObject> _lineList = new List<GameObject>();
+        private List<List<GameObject>> All_lineList = new List<List<GameObject>>();
+        private List<List<Vector3>> All_verticesList = new List<List<Vector3>>();
+
+        private List<Vector3> _target_vertices = new List<Vector3>();
+
 
         private void Start()
         {
-            CutScale = 0.2f;
+            CutScaleZ = 0.2f;
         }
 
 
@@ -86,95 +99,85 @@ namespace BLINDED_AM_ME
         {
             if (Input.GetMouseButton(0))
             {
+                //_lineList = new List<GameObject>();
                 TryRaycast();
             }
 
             if (Input.GetMouseButtonUp(0))
             {
-                dotnum = 0;
-                IsChangeDirection = true;
 
-                int _verticesNum = _vertices.Count;
-                int poriNum = (_vertices.Count + back_vertices.Count) * 3;
+                MeshFilter filter = MARUTA.GetComponent<MeshFilter>();
+                //Mesh _targetMesh = MARUTA.GetComponent<Mesh>();
+                _target_vertices.AddRange(filter.mesh.vertices);
 
+                Vector3 center = Vector3.zero;
 
-                for (int i = 0; i < back_vertices.Count; i++)
+                foreach (Vector3 point in _vertices)
                 {
-                    //奥のMeshObjectを作るための頂点を打つ
-                    CreateDot(back_vertices[i]);
+                    center += point;
+                }
+                center = center / _vertices.Count;
+
+                _vertices.Add(center);
+
+                int _target_verticesNum = _target_vertices.Count;
+
+                for (int i = 0; i < _vertices.Count; i++)
+                {
+                    _target_vertices.Add(_vertices[i]);
                 }
 
-                _subMesh_vertices.AddRange(_vertices);
-                _subMesh_vertices.AddRange(back_vertices);
+                filter.mesh.SetVertices(_target_vertices);
 
-                //手前と奥の間にメッシュを作るための準備
-                Mesh mesh = new Mesh();
-                //頂点群の位置座標
-                mesh.vertices = new Vector3[poriNum];
-                mesh.SetVertices(_subMesh_vertices);
+                int[] triangles = filter.mesh.triangles;
 
-                //決めた順番をセット
-                mesh.SetTriangles(OrderTriangles(), 0);
-
-
-                //meshob.AddComponent<Rigidbody>();
-
-                //for (int i = 0; i < poriNum; i += 3)
+                //for (int i = 0; i < _vertices.Count; i += 3)
                 //{
-                //    Vector3 side1 = mesh.vertices[i + 1] - mesh.vertices[i];
-                //    Vector3 side2 = mesh.vertices[i + 2] - mesh.vertices[i];
-                //    Vector3 normal = Vector3.Cross(side1, side2);
-                //    normal = normal.normalized;
-                //    if (normal.y < 0)
-                //    {
-                //        //頂点の順番の入れ替え
-                //        //for (int m = 0; m < mesh.subMeshCount; m++)
-                //        //{ //ポリゴンのインデックスを取得する
-                //        int[] triangles = mesh.GetTriangles(0);
-                //        //for (int i = 0; i < triangles.Length; i += 3)//ポリゴンなので３つずつインクリメントしてループ
-                //        //{ //２番目と３番目の頂点インデックスを入れ替えて三角形を反転する
-                //        int index = triangles[0 + 1];
-                //        triangles[0 + 1] = triangles[0 + 2];
-                //        triangles[0 + 2] = index;
-                //        //} //ポリゴンのインデックスをメッシュに戻す
-                //        mesh.SetTriangles(triangles, 0);
-                //        //} //法線を再計算する 
-                //        mesh.RecalculateNormals();
+                triangles[_target_verticesNum] = (_target_verticesNum - 1) + (_vertices.Count - 1);
+                Debug.Log(triangles[_target_verticesNum]);
 
-                //    }
+                triangles[_target_verticesNum + 1] = _target_verticesNum;
+                Debug.Log(triangles[_target_verticesNum + 1]);
+
+                triangles[_target_verticesNum + 2] = _target_verticesNum + 1;
+                Debug.Log(triangles[_target_verticesNum + 2]);
+                //}
+
+                Debug.Log(center);
+                Debug.Log(_target_vertices[_target_vertices.Count - 1]);
+                Debug.Log(triangles[(_target_verticesNum - 1) + (_vertices.Count - 1)]);
+                //Debug.Log(triangles[_target_verticesNum + 1]);
+
+                filter.mesh.SetTriangles(triangles, 0);
+
+                Destroy(MARUTA.GetComponent<MeshCollider>());
+                MARUTA.AddComponent<MeshCollider>();
+
+                Debug.Log(_target_vertices.Count);
+
+                //List<GameObject> Sample_lineList = _lineList;
+                //List<Vector3> Sample_verticesList = _vertices;
+
+                //All_lineList.Add(Sample_lineList);
+                //All_verticesList.Add(Sample_verticesList);
+
+                //for(int i = 0; i < _vertices.Count; i++)
+                //{
+                //    //Vector3[][] vec = new Vector3[AllList_Index][i];
+
 
                 //}
 
+                //if (IsMeshCreate)
+                //    MeshCreate();
 
+                //Debug.Log(All_lineList[0].Count);
 
-
-                //手前のオブジェクト生成
-                GameObject go = _drawMesh.CreateMesh(_vertices);
-                go.GetComponent<MeshRenderer>().material = _material;
-                go.transform.position += go.transform.forward * -0.001f;
-                _meshList.Add(go);
-                //go.AddComponent<Rigidbody>();
-
-                //奥のオブジェクト生成
-                GameObject go2 = _drawMesh.CreateMesh(back_vertices);
-                go2.GetComponent<MeshRenderer>().material = _material;
-                go2.transform.position += go2.transform.forward * -0.001f;
-                //go2.AddComponent<Rigidbody>();
-                _meshList.Add(go2);
-
-                //手前と奥の間にメッシュオブジェクトを作成
-                GameObject meshob = new GameObject("MeshObject", typeof(MeshFilter), typeof(MeshRenderer));
-                mesh.RecalculateNormals();//法線の再設定
-                meshob.GetComponent<MeshRenderer>().material = _material;
-                MeshFilter filter = meshob.GetComponent<MeshFilter>();
-                filter.mesh = mesh;
-                _meshList.Add(meshob);
-
-                //メッシュを表示するため
-                go.gameObject.AddComponent<MeshInfo>();
-                go2.gameObject.AddComponent<MeshInfo>();
-                meshob.gameObject.AddComponent<MeshInfo>();
-
+                //Debug.Log(All_lineList[0]);
+                //Debug.Log(All_lineList[1]);
+                //Debug.Log(All_verticesList[0]);
+                //Debug.Log(All_verticesList[1]);
+                Initialize();
             }
 
             if (Input.GetKeyDown(KeyCode.Q))
@@ -183,7 +186,88 @@ namespace BLINDED_AM_ME
             }
         }
 
-        //三角頂点の順番決め
+        public void Initialize()
+        {
+            _vertices.Clear();
+            back_vertices.Clear();
+
+            _dotList.Clear();
+            _lineList.Clear();
+        }
+        /// <summary>
+        /// Meshの生成
+        /// </summary>
+        public void MeshCreate()
+        {
+            dotnum = 0;
+            IsChangeDirection = true;
+
+            int _verticesNum = _vertices.Count;
+            int poriNum = (_vertices.Count + back_vertices.Count) * 3;
+
+            for (int i = 0; i < back_vertices.Count; i++)
+            {
+                //奥のMeshObjectを作るための頂点を打つ
+                CreateDot(back_vertices[i]);
+            }
+
+            _subMesh_vertices.AddRange(_vertices);
+            _subMesh_vertices.AddRange(back_vertices);
+
+            //手前と奥の間にメッシュを作るための準備
+            Mesh mesh = new Mesh();
+            //頂点群の位置座標
+            mesh.vertices = new Vector3[poriNum];
+            mesh.SetVertices(_subMesh_vertices);
+
+            //決めた順番をセット
+            mesh.SetTriangles(OrderTriangles(), 0);
+
+            //手前のオブジェクト生成
+            GameObject go = _drawMesh.CreateMesh(_vertices);
+            go.GetComponent<MeshRenderer>().material = _material;
+            go.transform.position += go.transform.forward * -0.001f;
+            Vector3 pos = go.transform.localPosition;
+            pos.z -= 0.1f;
+            go.transform.localPosition = pos;
+            _meshList.Add(go);
+            //go.AddComponent<Rigidbody>();
+
+            //奥のオブジェクト生成
+            GameObject go2 = _drawMesh.CreateMesh(back_vertices);
+            go2.GetComponent<MeshRenderer>().material = _material;
+            go2.transform.position += go2.transform.forward * -0.001f;
+            Vector3 pos2 = go2.transform.localPosition;
+            pos2.z -= 0.1f;
+            go2.transform.localPosition = pos2;
+            //go2.AddComponent<Rigidbody>();
+            _meshList.Add(go2);
+
+            //手前と奥の間にメッシュオブジェクトを作成
+            GameObject meshob = new GameObject("MeshObject", typeof(MeshFilter), typeof(MeshRenderer));
+            mesh.RecalculateNormals();//法線の再設定
+            meshob.GetComponent<MeshRenderer>().material = _material;
+            Vector3 pos3 = meshob.transform.localPosition;
+            pos3.z -= 0.1f;
+            meshob.transform.localPosition = pos3;
+            MeshFilter filter = meshob.GetComponent<MeshFilter>();
+            filter.mesh = mesh;
+            _meshList.Add(meshob);
+
+            //メッシュを表示するため
+            go.gameObject.AddComponent<MeshInfo>();
+            go2.gameObject.AddComponent<MeshInfo>();
+            meshob.gameObject.AddComponent<MeshInfo>();
+
+            //前作ったメッシュとつながってしまうためクリア
+            _subMesh_vertices.Clear();
+            IsChangeDirection = false;
+            //_vertices.Clear();
+            //back_dotList.Clear();
+        }
+        /// <summary>
+        /// 三角頂点の順番決め
+        /// </summary>       
         private int[] OrderTriangles()
         {
             //頂点を結ぶのに必要な数
@@ -232,7 +316,7 @@ namespace BLINDED_AM_ME
         }
 
         /// <summary>
-        /// Try raycast to the plane.
+        /// クリックした位置に点を打ち、ドラッグで一定間隔に点を打っていく
         /// </summary>
         private void TryRaycast()
         {
@@ -242,7 +326,7 @@ namespace BLINDED_AM_ME
             {
                 //奥の頂点
                 Vector3 pos = hit.point;
-                pos.z += CutScale;
+                pos.z += CutScaleZ;
 
                 //最初の頂点
                 if (_vertices.Count == 0)
@@ -269,30 +353,6 @@ namespace BLINDED_AM_ME
 
                     LineCreate();
 
-                    //GameObject pl = GameObject.CreatePrimitive(PrimitiveType.Plane);
-
-                    //pl.transform.localScale = Vector3.one * distance;
-                    //pl.transform.position = _dotList[_dotList.Count - 2].transform.position;
-                    //if(_dotList[_dotList.Count - 1].transform.position.x > _dotList[_dotList.Count - 2].transform.position.x)
-                    //{
-                    //    float dis = (_dotList[_dotList.Count - 1].transform.position - _dotList[_dotList.Count - 2].transform.position).sqrMagnitude;
-
-                    //    Vector3 vec = pl.transform.position;
-                    //    vec.x += dis;
-                    //    pl.transform.position = vec;
-                    //}
-                    //else
-                    //{
-                    //    float dis = (_dotList[_dotList.Count - 2].transform.position - _dotList[_dotList.Count - 1].transform.position).sqrMagnitude;
-
-                    //    Vector3 vec = pl.transform.position;
-                    //    vec.x -= dis;
-                    //    pl.transform.position = vec;
-                    //}
-
-                    //var aim = _dotList[_dotList.Count -1].transform.position - _dotList[_dotList.Count - 2].transform.position;
-                    //var look = Quaternion.LookRotation(aim);
-                    //pl.transform.localRotation = look;
                 }
                 else
                 {
@@ -302,23 +362,38 @@ namespace BLINDED_AM_ME
                 }
             }
         }
-
+        /// <summary>
+        /// 囲むための判定用に頂点間にCube(線)を生成
+        /// </summary>   
         private void LineCreate()
         {
             List<Vector3> myPoint = new List<Vector3>();
-            myPoint.Add(_dotList[0].transform.position);
-            myPoint.Add(_dotList[1].transform.position);
+            myPoint.Add(_dotList[_dotList.Count - 2].transform.position);
+            myPoint.Add(_dotList[_dotList.Count - 1].transform.position);
 
-            GameObject newLine = new GameObject("Line");
-            LineRenderer lRend = newLine.AddComponent<LineRenderer>();
-            lRend.SetVertexCount(2);
-            lRend.SetWidth(0.2f, 0.2f);
-            Vector3 startVec = myPoint[0];
-            Vector3 endVec = myPoint[1];
-            lRend.SetPosition(0, startVec);
-            lRend.SetPosition(1, endVec);
+            GameObject obj = Instantiate(Line, transform.position, transform.rotation) as GameObject;
+            obj.transform.position = (myPoint[0] + myPoint[1]) / 2;
+            obj.transform.right = (myPoint[1] - myPoint[0]).normalized;
+            obj.transform.localScale = new Vector3((myPoint[1] - myPoint[0]).magnitude, _dotSize, _dotSize);
+            obj.tag = "LastLine";
+            _lineList.Add(obj);
+            if (_lineList.Count > 1)
+            {
+                Destroy(_lineList[_lineList.Count - 2].GetComponent<HitPoint>());
+                _lineList[_lineList.Count - 2].tag = "Line";
+            }
+
+            obj.GetComponent<BoxCollider>().isTrigger = true;
+            obj.AddComponent<Rigidbody>();
+            obj.GetComponent<Rigidbody>().isKinematic = true;
+
+            obj.AddComponent<HitPoint>();
         }
 
+        /// <summary>
+        /// 頂点リストに追加
+        /// </summary>
+        /// <param name="point"></param>
         private void AddVertex(Vector3 point)
         {
             CreateDot(point);
@@ -327,7 +402,7 @@ namespace BLINDED_AM_ME
         }
 
         /// <summary>
-        /// Create dot for clicked poisition.
+        /// 点（頂点）を生成
         /// </summary>
         /// <returns>Dot GameObject.</returns>
         private GameObject CreateDot(Vector3 position)
@@ -343,13 +418,14 @@ namespace BLINDED_AM_ME
                 dot.transform.rotation = Quaternion.AngleAxis(180, new Vector3(0, 0, 1));
             }
 
-
             dot.transform.localScale = Vector3.one * _dotSize;
             dot.transform.position = position;
             dot.GetComponent<MeshRenderer>().material = _dotMat;
             Destroy(dot.GetComponent<Collider>());
-
-            _dotList.Add(dot);
+            if (!IsChangeDirection)
+                _dotList.Add(dot);
+            else
+                back_dotList.Add(dot);
 
             return dot;
         }
