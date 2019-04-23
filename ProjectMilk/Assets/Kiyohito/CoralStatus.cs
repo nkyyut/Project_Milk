@@ -27,6 +27,7 @@ public class CoralStatus : MonoBehaviour {
     {
         float Volume;
         Volume =CalculateMeshVolume(this.gameObject);
+
     }
 
     /*メッシュの体積を算出*/

@@ -39,7 +39,6 @@ public class FauxGravityBody : MonoBehaviour {
             if (hit.collider.transform.tag == "Coral")
             {
                 Debug.DrawRay(Bottom.position, -transform.up * 10, Color.red, 0.1f);
-                Debug.Log(hit.collider.transform.tag);
                 LogHit = hit;
                 return hit;
             }
@@ -47,10 +46,40 @@ public class FauxGravityBody : MonoBehaviour {
         }
         else
         {
+
             return LogHit;
         }
 
     }
+
+    //指定されたタグの中で最も近いものを取得
+    GameObject serchTag(GameObject OriginObject, string TagName)
+    {
+        float TmpDis = 0;           //距離用一時変数
+        float NearDis = 0;          //最も近いオブジェクトの距離
+        GameObject MostNearObj = null; //オブジェクト
+
+        //タグ指定されたオブジェクトを配列で取得する
+        foreach (GameObject Container in GameObject.FindGameObjectsWithTag(TagName))
+        {
+            //自身と取得したオブジェクトの距離を取得
+            TmpDis = Vector3.Distance(Container.transform.position,OriginObject.transform.position);
+
+            //オブジェクトの距離が近いか、距離0であればオブジェクト名を取得
+            //一時変数に距離を格納
+            if ( NearDis > TmpDis|| NearDis == 0)
+            {
+                NearDis = TmpDis;
+                MostNearObj = Container;
+            }
+
+        }
+        //最も近かったオブジェクトを返す
+        return MostNearObj;
+    }
+
+
+
 
     Vector3 CheckNormal()
     {
