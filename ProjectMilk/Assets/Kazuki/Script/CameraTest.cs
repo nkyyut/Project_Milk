@@ -22,7 +22,6 @@ public class CameraTest : MonoBehaviour
     {
         targetPos = Player.transform.position;
         CameraPos = transform.position;
-        transform.position = targetPos + CameraPos;
         Settransform.position = targetPos + CameraPos;
     }
 
