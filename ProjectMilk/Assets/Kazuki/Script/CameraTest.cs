@@ -1,4 +1,4 @@
-﻿//かずき
+﻿//かずき2019/4/23
 
 using System.Collections;
 using System.Collections.Generic;
@@ -20,18 +20,19 @@ public class CameraTest : MonoBehaviour
 
     void Start()
     {
+        Debug.Log("Initialize");
         targetPos = Player.transform.position;
         CameraPos = transform.position;
-        transform.position = targetPos + CameraPos;
-        Settransform.position = targetPos + CameraPos;
+        //transform.position = targetPos + CameraPos;
+        //Settransform.position = targetPos + CameraPos;
     }
 
     
     void Update()
     {
         
-         InputH = Input.GetAxisRaw("HorizontalR");
-         InputV = Input.GetAxisRaw("VerticalR");
+         InputH = Input.GetAxisRaw("Horizontal2");
+         InputV = Input.GetAxisRaw("Vertical2");
         
 
     }
