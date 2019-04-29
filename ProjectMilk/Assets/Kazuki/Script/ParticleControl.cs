@@ -17,6 +17,7 @@ public class ParticleControl : MonoBehaviour {
 	void Update () {
         if (Flg == true && objectBox == null)
         {
+            //objectBox.positoin = ;
             objectBox = Instantiate<Object>(particle);
 
         }

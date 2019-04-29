@@ -5,7 +5,7 @@ using UnityEngine;
 public class CharMove : MonoBehaviour {
 
     GameObject Player;
-    float Angle = 3f;
+
 	// Use this for initialization
 	void Start () {
         
