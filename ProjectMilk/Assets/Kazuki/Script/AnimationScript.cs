@@ -7,7 +7,7 @@ public class AnimationScript : MonoBehaviour {
     Animator rool;
     public GameObject Player;
     bool gravityFlgR = false;
-    bool Flg = true;
+
    
     void Start () {
         rool = GetComponent<Animator>();
@@ -41,17 +41,7 @@ public class AnimationScript : MonoBehaviour {
             }
             rool.SetBool("End", true);
         }
-        //if (Player.GetComponent<PlayerControl>().gravityFlg == true)
-        //    gravityFlgR = true;
-        //if(gravityFlgR == true)
-        //{
-        //    if (Flg == true)
-        //    {
-        //       // transform.Rotate(0f, -90f, 90f);
-        //        Flg = false;
-        //    }
-
-        //}
+        
     }
 
     
