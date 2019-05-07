@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using Jin_Const;
+using System;
 
 namespace BLINDED_AM_ME
 {
@@ -20,14 +21,19 @@ namespace BLINDED_AM_ME
         //切断するオブジェクト
         GameObject MARUTA;
 
+        Camera MainCamera;
+
         int dotnum;
         bool IsChangeDirection;
         public bool IsMeshCreate = false;
 
+        [SerializeField]
+        private GameObject _planeMesh;
+
         private int AllList_Index;
 
         [SerializeField]
-        public float CutScaleZ;
+        public float CutScaleZ = 0.2f;
 
         [SerializeField]
         private DrawMesh _drawMesh;
@@ -52,7 +58,7 @@ namespace BLINDED_AM_ME
         private List<GameObject> _dotList = new List<GameObject>();
         private List<GameObject> back_dotList = new List<GameObject>();
         public List<Vector3> _vertices = new List<Vector3>();
-        private List<GameObject> _meshList = new List<GameObject>();
+        public List<GameObject> _meshList = new List<GameObject>();
         private List<Vector3> _subMesh_vertices = new List<Vector3>();
         //奥の頂点リスト
         public List<Vector3> back_vertices = new List<Vector3>();
@@ -62,12 +68,7 @@ namespace BLINDED_AM_ME
         private List<List<Vector3>> All_verticesList = new List<List<Vector3>>();
 
         private List<Vector3> _target_vertices = new List<Vector3>();
-
-
-        private void Start()
-        {
-            CutScaleZ = 0.2f;
-        }
+        private List<Vector3> _localvertices = new List<Vector3>();
 
 
         /// <summary>
@@ -93,6 +94,7 @@ namespace BLINDED_AM_ME
         {
             MARUTA = GameObject.Find("MARUTA");
             _sqrThreshold = _threshold * _threshold;
+            MainCamera = Camera.main;
         }
 
         private void Update()
@@ -107,51 +109,106 @@ namespace BLINDED_AM_ME
             {
 
                 MeshFilter filter = MARUTA.GetComponent<MeshFilter>();
-                //Mesh _targetMesh = MARUTA.GetComponent<Mesh>();
                 _target_vertices.AddRange(filter.mesh.vertices);
-
-                Vector3 center = Vector3.zero;
-
-                foreach (Vector3 point in _vertices)
-                {
-                    center += point;
-                }
-                center = center / _vertices.Count;
-
-                _vertices.Add(center);
 
                 int _target_verticesNum = _target_vertices.Count;
 
-                for (int i = 0; i < _vertices.Count; i++)
-                {
-                    _target_vertices.Add(_vertices[i]);
-                }
-
-                filter.mesh.SetVertices(_target_vertices);
-
                 int[] triangles = filter.mesh.triangles;
 
-                //for (int i = 0; i < _vertices.Count; i += 3)
+                _target_vertices.AddRange(_localvertices);
+                filter.mesh.SetVertices(_target_vertices);
+
+                int _target_trianglesNum = filter.mesh.triangles.Count();
+
+
+                //点から一番近い
+                int[] MinTriangle = new int[_localvertices.Count];
+                float min = 0;
+                for (int i = 0; i < _localvertices.Count; i++)
+                {
+                    min = 99;
+                    for (int k = 0; k < _target_verticesNum - 1; k++)
+                    {
+                        //float dis = (_localvertices[i] - _target_vertices[k]).sqrMagnitude;
+                        float dis = Vector3.Distance(_localvertices[i], _target_vertices[k]);
+
+                        if (dis < min)
+                        {
+                            min = dis;
+                            MinTriangle[i] = k;
+                        }
+                    }
+                }
+                //Debug.Log(min);
+                //for(int i=0; i<MinTriangle.Length; i++)
+                //    Debug.Log(MinTriangle[i]);
+
+                //for (int i = 0; i < MinTriangle.Length; i++)
                 //{
-                triangles[_target_verticesNum] = (_target_verticesNum - 1) + (_vertices.Count - 1);
-                Debug.Log(triangles[_target_verticesNum]);
-
-                triangles[_target_verticesNum + 1] = _target_verticesNum;
-                Debug.Log(triangles[_target_verticesNum + 1]);
-
-                triangles[_target_verticesNum + 2] = _target_verticesNum + 1;
-                Debug.Log(triangles[_target_verticesNum + 2]);
+                //    //int num = Array.IndexOf(triangles, MinTriangle[i]);
+                //    //Debug.Log(num);
+                //    //if (num % 3 == 0)
+                //    //{
+                //    //    triangles[num + 1] = _target_verticesNum + i;
+                //    //    triangles[num + 2] = _target_verticesNum + i + 1;
+                //    //    Debug.Log("並べ替え");
+                //    //}
+                //    //else if (num % 3 == 1)
+                //    //{
+                //    //    triangles[num - 1] = _target_verticesNum + i;
+                //    //    triangles[num + 1] = _target_verticesNum + i + 1;
+                //    //    Debug.Log("並べ替え2");
+                //    //}
+                //    //else if (num % 3 == 2)
+                //    //{
+                //    //    triangles[num - 1] = _target_verticesNum + i;
+                //    //    triangles[num - 2] = _target_verticesNum + i + 1;
+                //    //}
                 //}
 
-                Debug.Log(center);
-                Debug.Log(_target_vertices[_target_vertices.Count - 1]);
-                Debug.Log(triangles[(_target_verticesNum - 1) + (_vertices.Count - 1)]);
+                int j = 0;
+
+                Array.Resize(ref triangles, triangles.Length + (_localvertices.Count * 3));
+                //for (int i = 0; i < (_localvertices.Count - 1) * 3; i += 3)
+                //{
+                //    triangles[_target_trianglesNum + i] = MinTriangle[j];
+                //    //Debug.Log(_target_vertices[MinTriangle]);
+                //    //Debug.Log(triangles[_target_verticesNum]);
+
+                //    triangles[_target_trianglesNum + 1 + i] = _target_verticesNum + j;
+                //    //Debug.Log(_target_vertices[_target_verticesNum]);
+                //    //Debug.Log(triangles[_target_verticesNum + 1]);
+
+                //    triangles[_target_trianglesNum + 2 + i] = _target_verticesNum + 1 + j;
+                //    //Debug.Log(_target_vertices[_target_verticesNum + 1]);
+                //    //Debug.Log(triangles[_target_verticesNum + 2]);
+                //    j++;
+                //}
+                //for (int i = 0; i < _localvertices.Count; i++)
+                //{
+                //    Debug.Log(triangles[_target_trianglesNum + i]);
+                //}
+                //for (int i = 0; i < _target_verticesNum + _vertices.Count; i++)
+                //{
+                //    Debug.Log(filter.mesh.vertices[i]);
+                //}
+
+                //_target_vertices[35] = Vector3.zero;
+                //_target_vertices[36] = Vector3.zero;
+                //_target_vertices[_target_verticesNum - 1] = Vector3.zero;
+                //_target_vertices[15] = Vector3.zero;
+                //filter.mesh.SetVertices(_target_vertices);
+                Debug.Log(triangles.Count());
+                //Debug.Log(triangles[triangles.Count() - 1]);
+                //Debug.Log(center);
+                //Debug.Log(_target_vertices[_target_vertices.Count - 1]);
+                //Debug.Log(triangles[_target_verticesNum - 1 + (_vertices.Count - 1)]);
                 //Debug.Log(triangles[_target_verticesNum + 1]);
 
                 filter.mesh.SetTriangles(triangles, 0);
 
-                Destroy(MARUTA.GetComponent<MeshCollider>());
-                MARUTA.AddComponent<MeshCollider>();
+                //Destroy(MARUTA.GetComponent<MeshCollider>());
+                //MARUTA.AddComponent<MeshCollider>();
 
                 Debug.Log(_target_vertices.Count);
 
@@ -164,7 +221,6 @@ namespace BLINDED_AM_ME
                 //for(int i = 0; i < _vertices.Count; i++)
                 //{
                 //    //Vector3[][] vec = new Vector3[AllList_Index][i];
-
 
                 //}
 
@@ -194,6 +250,29 @@ namespace BLINDED_AM_ME
             _dotList.Clear();
             _lineList.Clear();
         }
+
+        public void MeshCuting()
+        {
+            float max = 0;
+            Vector3 CutPoint;
+
+            for (int i = 0; i < _vertices.Count; i++)
+            {
+                float dis = _vertices.First().z - _vertices[i].z;
+
+                if (Mathf.Abs(dis) > max)
+                {
+                    max = Mathf.Abs(dis);
+                    CutPoint = _vertices[i];
+                }
+            }
+            Debug.Log(max);
+            if (max > 0.5f)
+            {
+                Debug.Log("斬る");
+            }
+        }
+
         /// <summary>
         /// Meshの生成
         /// </summary>
@@ -226,20 +305,21 @@ namespace BLINDED_AM_ME
             //手前のオブジェクト生成
             GameObject go = _drawMesh.CreateMesh(_vertices);
             go.GetComponent<MeshRenderer>().material = _material;
-            go.transform.position += go.transform.forward * -0.001f;
-            Vector3 pos = go.transform.localPosition;
-            pos.z -= 0.1f;
-            go.transform.localPosition = pos;
+            go.transform.position += go.transform.forward * -0.0001f;
+            //Vector3 pos = go.transform.localPosition;
+            //pos.z -= 0.03f;
+            //go.transform.localPosition = pos;
             _meshList.Add(go);
             //go.AddComponent<Rigidbody>();
+            go.AddComponent<ProjectedMesh>();
 
             //奥のオブジェクト生成
             GameObject go2 = _drawMesh.CreateMesh(back_vertices);
             go2.GetComponent<MeshRenderer>().material = _material;
             go2.transform.position += go2.transform.forward * -0.001f;
-            Vector3 pos2 = go2.transform.localPosition;
-            pos2.z -= 0.1f;
-            go2.transform.localPosition = pos2;
+            //Vector3 pos2 = go2.transform.localPosition;
+            //pos2.z -= 0.1f;
+            //go2.transform.localPosition = pos2;
             //go2.AddComponent<Rigidbody>();
             _meshList.Add(go2);
 
@@ -247,17 +327,23 @@ namespace BLINDED_AM_ME
             GameObject meshob = new GameObject("MeshObject", typeof(MeshFilter), typeof(MeshRenderer));
             mesh.RecalculateNormals();//法線の再設定
             meshob.GetComponent<MeshRenderer>().material = _material;
-            Vector3 pos3 = meshob.transform.localPosition;
-            pos3.z -= 0.1f;
-            meshob.transform.localPosition = pos3;
+            //Vector3 pos3 = meshob.transform.localPosition;
+            //pos3.z -= 0.1f;
+            //meshob.transform.localPosition = pos3;
             MeshFilter filter = meshob.GetComponent<MeshFilter>();
             filter.mesh = mesh;
             _meshList.Add(meshob);
+
+            //GameObject TextureObj = _drawMesh.CreateMesh(_vertices);
+            //TextureObj.GetComponent<MeshRenderer>().material = _material;
+            //go.transform.position += go.transform.forward * -0.001f;
 
             //メッシュを表示するため
             go.gameObject.AddComponent<MeshInfo>();
             go2.gameObject.AddComponent<MeshInfo>();
             meshob.gameObject.AddComponent<MeshInfo>();
+
+            //_planeMesh.SetActive(true);
 
             //前作ったメッシュとつながってしまうためクリア
             _subMesh_vertices.Clear();
@@ -324,9 +410,14 @@ namespace BLINDED_AM_ME
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit, float.MaxValue))
             {
+                //var aim = hit.point - hit.collider.gameObject.transform.position;
+                //var look = Quaternion.LookRotation(aim, Vector3.up);
+
                 //奥の頂点
-                Vector3 pos = hit.point;
-                pos.z += CutScaleZ;
+                //Vector3 pos = hit.point;
+                //transform.InverseTransformDirection(pos);
+                //pos.z += 1.5f;
+                //transform.TransformDirection(pos);
 
                 //最初の頂点
                 if (_vertices.Count == 0)
@@ -334,7 +425,7 @@ namespace BLINDED_AM_ME
                     //手前の頂点
                     AddVertex(hit.point);
                     //奥の頂点
-                    back_vertices.Add(pos);
+                    back_vertices.Add(hit.point);
                     return;
                 }
 
@@ -349,7 +440,7 @@ namespace BLINDED_AM_ME
                 {
                     AddVertex(hit.point);
                     //奥の頂点リスト追加(点を打つのはまだ)
-                    back_vertices.Add(pos);
+                    back_vertices.Add(hit.point);
 
                     LineCreate();
 
@@ -398,6 +489,7 @@ namespace BLINDED_AM_ME
         {
             CreateDot(point);
             _vertices.Add(point);
+            _localvertices.Add(MARUTA.transform.InverseTransformPoint(point));
             _samplingVertices.Clear();
         }
 
@@ -415,7 +507,11 @@ namespace BLINDED_AM_ME
             dotnum++;
             if (IsChangeDirection)
             {
-                dot.transform.rotation = Quaternion.AngleAxis(180, new Vector3(0, 0, 1));
+                //dot.transform.rotation = Quaternion.AngleAxis(180, new Vector3(0, 0, 1));
+                Vector3 p = MainCamera.transform.position;
+                //p.y = dot.transform.position.y;
+                dot.transform.LookAt(p);
+
             }
 
             dot.transform.localScale = Vector3.one * _dotSize;
@@ -425,7 +521,14 @@ namespace BLINDED_AM_ME
             if (!IsChangeDirection)
                 _dotList.Add(dot);
             else
+            {
+                //Vector3 pos = dot.transform.localPosition;
+                //pos.z += 1.5f;
+                //transform.TransformDirection(pos);
+                //dot.transform.position = pos;
                 back_dotList.Add(dot);
+            }
+                
 
             return dot;
         }

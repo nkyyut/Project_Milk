@@ -40,8 +40,6 @@ namespace BLINDED_AM_ME
 
             if (c.gameObject.tag == "Line")
             {
-                Debug.Log("あたった");
-
                 if (c != _pointDrawer_script._lineList[_pointDrawer_script._lineList.Count - 2].GetComponent<BoxCollider>())
                 {
                     Debug.Log("魔法カード発動！");
@@ -80,13 +78,23 @@ namespace BLINDED_AM_ME
                         _pointDrawer_script._vertices.RemoveAt(i);
                         vec.Add(_pointDrawer_script._vertices[i]);
                         _pointDrawer_script.back_vertices.RemoveAt(i);
-                        back_vec.Add(_pointDrawer_script._vertices[i]);
+                        back_vec.Add(_pointDrawer_script.back_vertices[i]);
                         
                     }
                     //for(int i=RemoveIndex; i < _pointDrawer_script._lineList.Count - RemoveIndex; i++)
                     //{
                     //    _pointDrawer_script._lineList.Add(_pointDrawer_script._lineList[i]);
                     //}
+
+                    //float distance = (_pointDrawer_script._vertices[0] - _pointDrawer_script._vertices[5]).sqrMagnitude;
+
+                    //Vector3 Lerp = Vector3.Lerp(_pointDrawer_script._vertices[0], _pointDrawer_script._vertices[5] , 0.5f);
+
+                    //GameObject obj = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                    //obj.transform.localScale = Vector3.one * 0.05f;
+                    //obj.transform.position = Lerp;
+
+                    //_pointDrawer_script.MeshCuting();
 
                     _pointDrawer_script.MeshCreate();
 

@@ -422,7 +422,9 @@ namespace BLINDED_AM_ME
 
             // 新頂点郡に新しい頂点を追加
             new_vertices.Add(newVertex1);
-
+            GameObject obj = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        obj.transform.localScale = Vector3.one * 0.05f;
+        obj.transform.position = newVertex1;
 
             // ---------------------------
             // 右側の処理
@@ -436,7 +438,6 @@ namespace BLINDED_AM_ME
 
             // 新頂点郡に新しい頂点を追加
             new_vertices.Add(newVertex2);
-
 
             // 計算された新しい頂点を使って、新トライアングルを左右ともに追加する
             // memo: どう分割されても、左右どちらかは1つの三角形になる気がするけど、縮退三角形的な感じでとにかく2つずつ追加している感じだろうか？
