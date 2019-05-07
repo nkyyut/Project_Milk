@@ -25,12 +25,7 @@ public class FauxGravityBody : MonoBehaviour {
             Vector3 NormalVec = CheckNormal();
             Attracter.Attract(MyGameObject, NormalVec);
         }
-
-
     }
-
-
-
     RaycastHit CheckPolygonToRayCast()
     {
         RaycastHit hit;
