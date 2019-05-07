@@ -4,4 +4,10 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Kiyohito/Title.unity
+    guid: 75574c770bfe745419671fa5d409b9af
+  - enabled: 1
+    path: Assets/Kiyohito/KiyohitoTestScene.unity
+    guid: 8e424702c0b05de41a918f7f0c908706

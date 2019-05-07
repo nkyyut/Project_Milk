@@ -6,6 +6,7 @@ TagManager:
   tags:
   - LastLine
   - Line
+  - Coral
   layers:
   - Default
   - TransparentFX

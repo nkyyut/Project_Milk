@@ -1,11 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+[DefaultExecutionOrder(-1)]
 public class CoralStatus : MonoBehaviour {
-    public DurableValueManager DurableValueManager;
-    float MyMeshVolume;
-    float InitMyMeshVolum;
+    //public DurableValueManager DurableValueManager;
+    float MyMeshArea;
+    float InitMyMeshArea;
 	// Use this for initialization
 	void Start () {
         Initialize();
@@ -17,21 +17,22 @@ public class CoralStatus : MonoBehaviour {
 	}
     void Initialize()
     {
-        float Volume;
-        Volume=CalculateMeshVolume(this.gameObject);
-        MyMeshVolume = Volume;
-        InitMyMeshVolum = Volume;
+        float Area;
+        Area=CalculateMeshArea(this.gameObject);
+        Debug.Log(this.gameObject.name+Area);
+        MyMeshArea = Area;
+        InitMyMeshArea = Area;
     }
 
     void CheckNowVolume()
     {
         float Volume;
-        Volume =CalculateMeshVolume(this.gameObject);
+        Volume =CalculateMeshArea(this.gameObject);
 
     }
 
-    /*メッシュの体積を算出*/
-    public float CalculateMeshVolume(GameObject Parts)
+    /*メッシュの面積を算出*/
+    public float CalculateMeshArea(GameObject Parts)
     {
         if (Parts == null)
         {
@@ -40,7 +41,7 @@ public class CoralStatus : MonoBehaviour {
 
         }
 
-        float MeshVolume = 0;
+        float MeshArea = 0.0000000f;
         MeshFilter MeshFilter = Parts.GetComponent<MeshFilter>()/*CoralPartsArray[i].GetComponent<MeshFilter>()*/;
         if (MeshFilter == null) return 0;
         Mesh Mesh = MeshFilter.sharedMesh;
@@ -56,12 +57,28 @@ public class CoralStatus : MonoBehaviour {
             Vector3 p1 = vertices[triangles[i + 0]];
             Vector3 p2 = vertices[triangles[i + 1]];
             Vector3 p3 = vertices[triangles[i + 2]];
-            MeshVolume += Vector3.Dot(p1, Vector3.Cross(p2, p3)) / 6.0f;
+
+            Vector3 VectorAB;
+            Vector3 VectorAC;
+            Vector3 ForeignProduct_AB_AC;
+
+            VectorAB = p2 - p1;
+            VectorAC = p3 - p1;
+            float Area_ABC=0.00000f;
+            ForeignProduct_AB_AC = Vector3.Cross(VectorAB, VectorAC);
+            Vector3 scale = Parts.transform.lossyScale;
+            ForeignProduct_AB_AC=new Vector3(ForeignProduct_AB_AC.x * scale.x, ForeignProduct_AB_AC.y * scale.y, ForeignProduct_AB_AC.z * scale.z);
+
+            Area_ABC = ForeignProduct_AB_AC.magnitude / 2;
+
+            MeshArea += Area_ABC;
+
         }
-        Vector3 scale = Parts.transform.lossyScale;
-        MeshVolume = MeshVolume * scale.x * scale.y * scale.z;
-        return Mathf.Abs(MeshVolume);
+        return Mathf.Abs(MeshArea);
     }
-    float GetVolume() { return MyMeshVolume; }
+
+
+
+    public float GetArea() { return MyMeshArea; }
     //public void SetDurableValue(float NewValue) { MyMeshVolume = NewValue; }
 }

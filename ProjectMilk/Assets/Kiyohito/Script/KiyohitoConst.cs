@@ -10,6 +10,7 @@
         public const float TranslucentValue = 100.0f/255;//Pause画面での仕切りパネルの半透明度
 
         public const float InclineRatio = 0.7f;
+        public const float PressTimeLimit = 1.0f;
     }
 
 
