@@ -22,7 +22,7 @@ public class TotalManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         Switching();
-        if (Input.GetMouseButtonUp(0))
+        if (Input.GetKeyUp("joystick button 7"))
         {
             SetTotalManagerState_Pause();
         }
@@ -46,13 +46,13 @@ public class TotalManager : MonoBehaviour {
         }
     }
 
-    void SetPlay()
+    public void SetPlay()
     {
         TimeManager.SetNowTimeManagerState_TICK();
         PauseManager.SetPauseManagerState_Idle();
     }
 
-    void SetPause()
+    public void SetPause()
     {
         TimeManager.SetNowTimeManagerState_IDLE();
         PauseManager.SetPauseManagerState_Pause();
