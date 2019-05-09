@@ -92,6 +92,7 @@ public class Footprints : MonoBehaviour {
                 {
                     VertNum++;
                     GameObject fp = Instantiate(footpoints, FootPoint.transform);
+                    fp.transform.rotation = gameObject.transform.rotation;
                     fp.transform.position = pos;
                     rendererPositions.Add(pos);
                     OldNormal = CheckNormal();

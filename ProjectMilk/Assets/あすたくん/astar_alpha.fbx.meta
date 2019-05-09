@@ -53,7 +53,12 @@ ModelImporter:
     7400006: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Test_IDLE_0"
     9500000: //RootNode
     13700000: "\u5186"
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: "\u30DE\u30C6\u30EA\u30A2\u30EB"
+    second: {fileID: 2100000, guid: 274b2704889fe9440ad85ac2d54f6a73, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
