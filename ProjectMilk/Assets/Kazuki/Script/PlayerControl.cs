@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class PlayerControl : MonoBehaviour
 {
-
+    [SerializeField] Transform cameraVec;
     [SerializeField] Vector3 StatePos;
     public float movespeed = 0.01f;
 
@@ -33,13 +33,16 @@ public class PlayerControl : MonoBehaviour
                 float InputH = Input.GetAxisRaw("Horizontal");
                 float InputV = Input.GetAxisRaw("Vertical");
 
-                Vector3 cameraForward = Vector3.Scale(Camera.main.transform.forward, new Vector3(1, 1, 1)).normalized;
+                
+
+                Vector3 cameraForward = Vector3.Scale(cameraVec.forward , new Vector3(1, 1, 1)).normalized;
+                Debug.Log(cameraForward);
                 Vector3 moveForward = cameraForward * InputV + Camera.main.transform.right * InputH;
 
                 if (InputH != 0 || InputV != 0)
                 {
                     transform.position += moveForward * movespeed;
-                    transform.rotation = Quaternion.LookRotation(moveForward);
+                    //transform.rotation = Quaternion.LookRotation(moveForward);
                 }
                 break;
             case SCENE_TYPE.PAUSE:
