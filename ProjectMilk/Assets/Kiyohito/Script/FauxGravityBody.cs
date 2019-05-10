@@ -22,8 +22,13 @@ public class FauxGravityBody : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
+<<<<<<< HEAD
             Vector3 NormalVec = CheckNormal();
             Attracter.Attract(MyGameObject, NormalVec);
+=======
+        Vector3 NormalVec = CheckNormal();
+        Attracter.Attract(MyGameObject, NormalVec);
+>>>>>>> origin/Debug
     }
 
 
