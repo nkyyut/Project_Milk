@@ -20,11 +20,8 @@ public class FauxGravityBody : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetAxis("Horizontal") + Input.GetAxis("Vertical") != 0)
-        {
-            Vector3 NormalVec = CheckNormal();
-            Attracter.Attract(MyGameObject, NormalVec);
-        }
+        Vector3 NormalVec = CheckNormal();
+        Attracter.Attract(MyGameObject, NormalVec);
     }
     RaycastHit CheckPolygonToRayCast()
     {

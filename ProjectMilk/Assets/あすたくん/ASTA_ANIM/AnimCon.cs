@@ -17,11 +17,11 @@ public class AnimCon : MonoBehaviour {
             anim.SetInteger("state", 0);
         }
 
-        if (Input.GetMouseButtonDown(1))
-        {
+        if (Input.GetAxis("RT_Botton") == -1)
+        { 
             anim.SetInteger("ModeState", 1);
         }
-        if (Input.GetMouseButtonUp(1))
+        if (Input.GetAxis("RT_Botton") == 0)
         {
                 anim.SetInteger("ModeState", 0);
         }
@@ -29,7 +29,7 @@ public class AnimCon : MonoBehaviour {
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.tag == "Enemy")
+        if(collision.gameObject.tag == "Onihitode")
         {
             anim.SetTrigger("Hit");
         }

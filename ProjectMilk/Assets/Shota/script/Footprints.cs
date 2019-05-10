@@ -27,12 +27,13 @@ public class Footprints : MonoBehaviour {
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(DRAW_BUTTON))
+        if (Input.GetAxis("RT_Botton") == -1)
         {
-            isDrawing = true;
+            if(!isDrawing)
             CreateLineRoot();
+            isDrawing = true;
         }
-        if (Input.GetMouseButtonUp(DRAW_BUTTON))
+        if (Input.GetAxis("RT_Botton") == 0)
         {
             isDrawing = false;
             // 各種変数を初期化
@@ -43,6 +44,8 @@ public class Footprints : MonoBehaviour {
         {
             SetLinePoint(CheckPoint());
         }
+
+        Debug.Log(Input.GetAxis("RT_Botton"));
     }
 
     RaycastHit CheckPolygonToRayCast()

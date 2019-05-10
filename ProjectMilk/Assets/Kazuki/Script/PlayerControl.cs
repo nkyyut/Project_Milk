@@ -18,7 +18,7 @@ public class PlayerControl : MonoBehaviour
     public SCENE_TYPE scene;
     void Start()
     {
-        transform.position = StatePos;
+        //transform.position = StatePos;
     }
 
 
@@ -33,13 +33,13 @@ public class PlayerControl : MonoBehaviour
                 float InputH = Input.GetAxisRaw("Horizontal");
                 float InputV = Input.GetAxisRaw("Vertical");
 
-                Vector3 cameraForward = Vector3.Scale(Camera.main.transform.forward, new Vector3(1, 1, 1)).normalized;
+                Vector3 cameraForward = Vector3.Scale(Camera.main.transform.up, new Vector3(1, 1, 1)).normalized;
                 Vector3 moveForward = cameraForward * InputV + Camera.main.transform.right * InputH;
 
                 if (InputH != 0 || InputV != 0)
                 {
                     transform.position += moveForward * movespeed;
-                    transform.rotation = Quaternion.LookRotation(moveForward);
+                    //transform.rotation = Quaternion.LookRotation(moveForward);
                 }
                 break;
             case SCENE_TYPE.PAUSE:

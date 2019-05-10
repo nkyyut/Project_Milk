@@ -39,8 +39,8 @@ public class CameraTest : MonoBehaviour
     {
         if (scene == SCENE_TYPE.MAIN)
         {
-            InputH = Input.GetAxisRaw("HorizontalR");
-            InputV = Input.GetAxisRaw("VerticalR");
+            InputH = Input.GetAxisRaw("Horizontal2");
+            InputV = -Input.GetAxisRaw("Vertical2");
         }
 
     }

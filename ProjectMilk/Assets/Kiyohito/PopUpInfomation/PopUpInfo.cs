@@ -15,8 +15,8 @@ public class PopUpInfo : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         Distance = Vector3.Distance(Player.transform.position, this.gameObject.transform.position);
-
-        if (Distance <= 2.0f)
+        Debug.Log(Distance);
+        if (Distance <= 0.2f)
         {
             PopUp();
         }
