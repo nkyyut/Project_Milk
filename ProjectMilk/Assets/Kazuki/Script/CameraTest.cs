@@ -9,6 +9,7 @@ public class CameraTest : MonoBehaviour
 
     public GameObject Player;
     [SerializeField] Vector3 OffsetPos;
+    [SerializeField] Transform cameraVec;
     Vector3 targetPos;
     Vector3 CameraPos;
 
@@ -60,6 +61,7 @@ public class CameraTest : MonoBehaviour
         transform.RotateAround(Player.transform.position, Vector3.up, InputH * 1.5f);
         transform.RotateAround(Player.transform.position, -transform.right, InputV * 1.5f);
 
+        cameraVec.transform.RotateAround(Player.transform.position, Vector3.up, InputH * 1.5f);
 
         if (InputH != 0 || InputV != 0)
         {
