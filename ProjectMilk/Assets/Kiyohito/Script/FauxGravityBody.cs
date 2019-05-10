@@ -1,5 +1,4 @@
 ﻿//與儀清仁　2019年/4/17
-using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,8 +7,7 @@ public class FauxGravityBody : MonoBehaviour {
 
     public FauxGravityAttracter Attracter;
     RaycastHit LogHit;
-    float Search_Radius;
-    public Transform Bottom1,Bottom2;
+    public Transform Bottom;
     private GameObject MyGameObject;
     // Use this for initialization
     void Start()
@@ -22,60 +20,27 @@ public class FauxGravityBody : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-            Vector3 NormalVec = CheckNormal();
-            Attracter.Attract(MyGameObject, NormalVec);
+        Vector3 NormalVec = CheckNormal();
+        Attracter.Attract(MyGameObject, NormalVec);
     }
-
-
     RaycastHit CheckPolygonToRayCast()
     {
-        RaycastHit hit1,hit2;
-        //RaycastHit[] hits;
-
-        //hits = Physics.RaycastAll(Bottom.position, -this.transform.up,10.0f);
-        //Debug.Log(hits.Length);
-
-        Physics.Raycast(Bottom1.position, -transform.up, out hit1, 10.0f);
-        Physics.Raycast(Bottom2.position, -transform.up, out hit2, 10.0f);
-        if (hit1.transform.tag == "Coral" && hit2.transform.tag == "Coral")
+        RaycastHit hit;
+        if(Physics.Raycast(Bottom.position, -transform.up, out hit, float.PositiveInfinity))
         {
-            if (hit1.distance < hit2.distance)
+            if (hit.collider.transform.tag == "Coral")
             {
-                LogHit = hit1;
-                return hit1;
+                Debug.DrawRay(Bottom.position, -transform.up * 10, Color.red, 0.1f);
+                LogHit = hit;
+                return hit;
             }
-            else
-            {
-                LogHit = hit2;
-                return hit2;
-            }
+            else return LogHit;
         }
-        else if (hit1.transform.tag == "Coral" && hit2.transform.tag != "Coral")
+        else
         {
-            return hit1;
+
+            return LogHit;
         }
-        else if (hit1.transform.tag != "Coral" && hit2.transform.tag == "Coral")
-        {
-            return hit2;
-        }
-        else return LogHit;
-
-
-        
-
-        //if (Physics.Raycast(Bottom1.position, -transform.up, out hit, 10.0f))
-        //{
-        //    if (hit.collider.transform.tag == "Coral")
-        //    {
-        //        LogHit = hit;
-        //        return hit;
-        //    }
-        //    else return LogHit;
-        //}
-        //else
-        //{
-        //    return LogHit;
-        //}
 
     }
 

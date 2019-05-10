@@ -6,8 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Kiyohito/Title.unity
-    guid: 75574c770bfe745419671fa5d409b9af
+    path: Assets/Main/TitleScene.unity
+    guid: 415b170ff3e135340a0f9ce0438d5b31
   - enabled: 1
-    path: Assets/Kiyohito/KiyohitoTestScene.unity
-    guid: 8e424702c0b05de41a918f7f0c908706
+    path: Assets/Main/GameMainScene.unity
+    guid: d26198af24ea607418266972edb21500
