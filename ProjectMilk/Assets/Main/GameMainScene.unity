@@ -478,7 +478,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StatePos: {x: 0, y: 0, z: 0}
   movespeed: 0.005
-  aster: {fileID: 0}
   scene: 0
 --- !u!114 &91017835
 MonoBehaviour:
@@ -4222,9 +4221,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1cafced0c8396c418daef041b7592e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CoralPartsArray:
-  - {fileID: 0}
-  - {fileID: 0}
+  CoralPartsArray: []
   DurableIMG: {fileID: 487554107}
   DurableTXT: {fileID: 1757870596}
   ImageChangeSpriteArray:
