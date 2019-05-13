@@ -1,4 +1,4 @@
-﻿//かずき 4/24
+﻿//かずき 5/13
 
 using System.Collections;
 using System.Collections.Generic;
@@ -9,7 +9,6 @@ public class CameraTest : MonoBehaviour
 
     public GameObject Player;
     [SerializeField] Vector3 OffsetPos;
-    [SerializeField] Transform cameraVec;
     Vector3 targetPos;
     Vector3 CameraPos;
 
@@ -48,7 +47,7 @@ public class CameraTest : MonoBehaviour
     private void LateUpdate()
     {
 
-        Debug.Log("Chang");
+        //Debug.Log("Chang");
 
         Settransform.position += Player.transform.position - targetPos;
         targetPos = Player.transform.position;
@@ -60,8 +59,7 @@ public class CameraTest : MonoBehaviour
         Settransform.transform.RotateAround(Player.transform.position, -transform.right, InputV * 1.5f);
         transform.RotateAround(Player.transform.position, Vector3.up, InputH * 1.5f);
         transform.RotateAround(Player.transform.position, -transform.right, InputV * 1.5f);
-
-        cameraVec.transform.RotateAround(Player.transform.position, Vector3.up, InputH * 1.5f);
+        
 
         if (InputH != 0 || InputV != 0)
         {
