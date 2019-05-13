@@ -7,11 +7,12 @@ public class FauxGravityBody : MonoBehaviour {
 
     public FauxGravityAttracter Attracter;
     RaycastHit LogHit;
-    public Transform Bottom;
+    public Transform Bottom;//Rayの原点
     private GameObject MyGameObject;
     // Use this for initialization
     void Start()
     {
+        /*リジットボディを固定*/
         this.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
         this.GetComponent<Rigidbody>().useGravity = false;
         MyGameObject = this.gameObject;
@@ -23,6 +24,8 @@ public class FauxGravityBody : MonoBehaviour {
         Vector3 NormalVec = CheckNormal();
         Attracter.Attract(MyGameObject, NormalVec);
     }
+
+    /*Rayを飛ばして自分の真下のポリゴンを取得*/
     RaycastHit CheckPolygonToRayCast()
     {
         RaycastHit hit;
@@ -72,7 +75,7 @@ public class FauxGravityBody : MonoBehaviour {
 
 
 
-
+    //Rayを飛ばして接点の放線ベクトルを取得
     Vector3 CheckNormal()
     {
         RaycastHit hit;

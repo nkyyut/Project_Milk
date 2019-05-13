@@ -6,7 +6,7 @@ using UnityEngine;
 public class FauxGravityAttracter : MonoBehaviour {
 
     public float Gravity = -10;
-
+    //取得した放線ベクトルの逆向きに重力を与える
     public void Attract(GameObject body,Vector3 NormalVec)
     {
         //Vector3 GravityUp = (body.transform.position - transform.position).normalized;

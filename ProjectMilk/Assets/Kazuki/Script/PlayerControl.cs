@@ -18,7 +18,7 @@ public class PlayerControl : MonoBehaviour
     public SCENE_TYPE scene;
     void Start()
     {
-        transform.position = StatePos;
+        //transform.position = StatePos;
     }
 
 
