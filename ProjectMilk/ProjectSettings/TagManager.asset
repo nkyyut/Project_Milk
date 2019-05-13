@@ -6,6 +6,9 @@ TagManager:
   tags:
   - LastLine
   - Line
+  - Coral
+  - Enemy
+  - DropBlock
   layers:
   - Default
   - TransparentFX

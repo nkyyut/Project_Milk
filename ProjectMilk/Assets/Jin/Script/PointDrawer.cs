@@ -34,8 +34,6 @@ public class PointDrawer : MonoBehaviour
 
     [SerializeField]
     private DrawMesh _drawMesh;
-    [SerializeField]
-    private SourcePM _sourcePM;
 
     //打った点のマテリアル
     [SerializeField]
@@ -99,7 +97,7 @@ public class PointDrawer : MonoBehaviour
     {
         MARUTA = GameObject.Find("MARUTA");
         _sqrThreshold = _threshold * _threshold;
-    }
+   }
 
     private void Update()
     {
@@ -282,6 +280,7 @@ public class PointDrawer : MonoBehaviour
     /// </summary>
     public void MeshCreate()
     {
+        
         dotnum = 0;
         IsChangeDirection = true;
 
@@ -306,13 +305,7 @@ public class PointDrawer : MonoBehaviour
         //決めた順番をセット
         mesh.SetTriangles(OrderTriangles(), 0);
 
-        //手前のオブジェクト生成
-        GameObject go = _drawMesh.CreateMesh(_vertices);
-        go.GetComponent<MeshRenderer>().material = _material;
-        go.transform.position += go.transform.forward * -0.08f;
-        //go.transform.position += go.transform.forward * -0.08f;
-        _meshList.Add(go);
-        go.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
+        
 
         List<Vector3> _newVec = new List<Vector3>();
         List<Vector3> _newVector0 = new List<Vector3>();
@@ -381,37 +374,6 @@ public class PointDrawer : MonoBehaviour
                         AllVectorList[Iswitch].Add(Vector3.Lerp(_vertices[k], _vertices[_vertices.Count / 2 + k], j));
                         break;
                 }
-
-                //if (j == 0.05f)
-                //    _newVector0.Add(Vector3.Lerp(_vertices[k], _vertices[_vertices.Count / 2 + k], j));
-
-                //if (j == 0.15f)
-                //    _newVector1.Add(Vector3.Lerp(_vertices[k], _vertices[_vertices.Count / 2 + k], j));
-
-                //if (j == 0.25f)
-                //    _newVector2.Add(Vector3.Lerp(_vertices[k], _vertices[_vertices.Count / 2 + k], j));
-
-                //if (j == 0.35f)
-                //    _newVector3.Add(Vector3.Lerp(_vertices[k], _vertices[_vertices.Count / 2 + k], j));
-
-                //if (j == 0.45f)
-                //    _newVector4.Add(Vector3.Lerp(_vertices[k], _vertices[_vertices.Count / 2 + k], j));
-
-                //if (j == 0.55f)
-                //    _newVector5.Add(Vector3.Lerp(_vertices[k], _vertices[_vertices.Count / 2 + k], j));
-
-                //if (j == 0.65f)
-                //    _newVector6.Add(Vector3.Lerp(_vertices[k], _vertices[_vertices.Count / 2 + k], j));
-
-                //if (j == 0.75f)
-                //    _newVector7.Add(Vector3.Lerp(_vertices[k], _vertices[_vertices.Count / 2 + k], j));
-
-                //if (j == 0.85f)
-                //    _newVector8.Add(Vector3.Lerp(_vertices[k], _vertices[_vertices.Count / 2 + k], j));
-
-                //if (j == 0.95f)
-                //    _newVector9.Add(Vector3.Lerp(_vertices[k], _vertices[_vertices.Count / 2 + k], j));
-
             }
         }
         //_AllVec.AddRange(_vertices);
@@ -445,168 +407,95 @@ public class PointDrawer : MonoBehaviour
         AlltmpList[4].AddRange(AllVectorList[4]);
         AlltmpList[4].AddRange(AllVectorList[5]);
 
-        for (int k = 0; k < AlltmpList.Count; k++)
-        {
-            List<Vector3> newVertices = new List<Vector3>();
-
-            for (int i = 0; i < AlltmpList[k].Count; i++)
-            {
-
-                Vector3 pos = AlltmpList[k][i];
-                pos.z -= 100;
-                AlltmpList[k][i] = pos;
-
-                //Debug.Log(tmpVertices[i]);
-
-                RaycastHit hit;
-                if (Physics.Raycast(AlltmpList[k][i], Vector3.forward, out hit))
-                {
-                    Vector3 newVert = AlltmpList[k][i];
-                    newVert.z = hit.point.z;
-                    newVert.z -= 0.08f;
-                    newVertices.Add(newVert);
-
-                    //GameObject dot = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-                    //dot.transform.localScale = Vector3.one * 0.05f;
-                    //dot.transform.position = newVertices.Last();
-                    //dot.transform.position += dot.transform.forward * -0.1f;
-                    //dot.layer = LayerMask.NameToLayer("Ignore Raycast");
-                    //Debug.Log(newVertices.Last());
-                }
-                else
-                {
-                    Vector3 pos2 = AlltmpList[k][i];
-                    pos2.z = 0;
-                    newVertices[i] = pos2;
-                }
-
-            }
-            GameObject gogo = _drawMesh.CreateMesh(newVertices);
-            gogo.GetComponent<MeshRenderer>().material = _material;
-        }
-
-        //GameObject gogo = CreateCircleMesh(newVertices);
-        //GameObject gogo = _drawMesh.CreateMesh(newVertices);
-        //gogo.GetComponent<MeshRenderer>().material = _material;
-        //_drawMesh.CreateMesh(AlltmpList[0]);
-
-        //for (int i = 0; i < tmpVertices1.Count; i++)
+        //for (int k = 0; k < AlltmpList.Count; k++)
         //{
-        //    Vector3 pos = tmpVertices1[i];
-        //    pos.z -= 100;
-        //    tmpVertices1[i] = pos;
+        //    List<Vector3> newVertices = new List<Vector3>();
 
-        //    //Debug.Log(tmpVertices[i]);
-
-        //    RaycastHit hit;
-        //    if (Physics.Raycast(tmpVertices1[i], Vector3.forward, out hit))
+        //    for (int i = 0; i < AlltmpList[k].Count; i++)
         //    {
-        //        Vector3 newVert = tmpVertices1[i];
-        //        newVert.z = hit.point.z;
-        //        newVertices.Add(newVert);
 
-        //        GameObject dot = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        //        dot.transform.localScale = Vector3.one * 0.05f;
-        //        dot.transform.position = newVertices.Last();
-        //        dot.layer = LayerMask.NameToLayer("Ignore Raycast");
-        //        Debug.Log(newVertices.Last());
+        //        Vector3 pos = AlltmpList[k][i];
+        //        pos.z -= 100;
+        //        AlltmpList[k][i] = pos;
+
+        //        //Debug.Log(tmpVertices[i]);
+
+        //        RaycastHit hit;
+        //        if (Physics.Raycast(AlltmpList[k][i], Vector3.forward, out hit))
+        //        {
+        //            Vector3 newVert = AlltmpList[k][i];
+        //            newVert.z = hit.point.z;
+        //            //newVert.z -= 0.08f;
+        //            newVertices.Add(newVert);
+
+        //            //GameObject dot = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        //            //dot.transform.localScale = Vector3.one * 0.05f;
+        //            //dot.transform.position = newVertices.Last();
+        //            //dot.transform.position += dot.transform.forward * -0.1f;
+        //            //dot.layer = LayerMask.NameToLayer("Ignore Raycast");
+        //            //Debug.Log(newVertices.Last());
+        //        }
+        //        else
+        //        {
+        //            Vector3 pos2 = AlltmpList[k][i];
+        //            pos2.z = 0;
+        //            newVertices[i] = pos2;
+        //        }
+
         //    }
-        //    else
-        //    {
-        //        Vector3 pos2 = tmpVertices1[i];
-        //        pos2.z = 0;
-        //        newVertices[i] = pos2;
-        //    }
-        //    i++;
+        //    GameObject gogo = _drawMesh.CreateMesh(newVertices);
+        //    gogo.transform.position += gogo.transform.forward * -0.08f;
+        //    gogo.GetComponent<MeshRenderer>().material = _material;
+
         //}
 
-
-        //GameObject gogo = CreateCircleMesh(newVertices);
-        //GameObject gogo = _drawMesh.CreateMesh(newVertices);
-        //gogo.GetComponent<MeshRenderer>().material = _material;
-
-        //List<Vector3> newVertices2 = new List<Vector3>();
-        //newVertices2.AddRange(_newVector2);
-        //for (int i = 0; i < newVertices2.Count; i++)
-        //{
-        //    Vector3 pos = newVertices2[i];
-        //    pos.z -= 100;
-        //    newVertices2[i] = pos;
-
-        //    RaycastHit hit;
-        //    if (Physics.Raycast(newVertices2[i], Vector3.forward, out hit))
-        //    {
-        //        Vector3 newVert = newVertices2[i];
-        //        newVert.z = hit.point.z;
-        //        newVertices2.Add(newVert);
-        //    }
-        //    else
-        //    {
-        //        Vector3 pos2 = newVertices2[i];
-        //        pos2.z = 0;
-        //        newVertices2[i] = pos2;
-        //    }
-        //    i++;
-        //}
-
-        //GameObject gogo2 = CreateCircleMesh(newVertices2);
-        //gogo2.GetComponent<MeshRenderer>().material = _material;
-
-        //List<Vector3> newVertices3 = new List<Vector3>();
-        //newVertices3.AddRange(_newVector3);
-        //for (int i = 0; i < newVertices3.Count; i++)
-        //{
-        //    Vector3 pos = newVertices3[i];
-        //    pos.z -= 100;
-        //    newVertices3[i] = pos;
-
-        //    RaycastHit hit;
-        //    if (Physics.Raycast(newVertices3[i], Vector3.forward, out hit))
-        //    {
-        //        Vector3 newVert = newVertices3[i];
-        //        newVert.z = hit.point.z;
-        //        newVertices3.Add(newVert);
-        //    }
-        //    else
-        //    {
-        //        Vector3 pos2 = newVertices3[i];
-        //        pos2.z = 0;
-        //        newVertices3[i] = pos2;
-        //    }
-        //    i++;
-        //}
-
-        //GameObject gogo3 = CreateCircleMesh(newVertices3);
-        //gogo3.GetComponent<MeshRenderer>().material = _material;
-
+        //手前のオブジェクト生成
+        GameObject go = _drawMesh.CreateMesh(_vertices);
+        go.GetComponent<MeshRenderer>().material = _material;
+        go.transform.position += go.transform.forward * -0.05f;
+        go.AddComponent<MeshCollider>();
+        go.GetComponent<MeshCollider>().convex = true;
+        go.AddComponent<DropEnemy>();
+        _meshList.Add(go);
+        go.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
 
         //奥のオブジェクト生成
-        //GameObject go2 = _drawMesh.CreateMesh(back_vertices);
-        //go2.GetComponent<MeshRenderer>().material = _material;
+        GameObject go2 = _drawMesh.CreateMesh(back_vertices);
+        go2.GetComponent<MeshRenderer>().material = _material;
         //go2.transform.position += go2.transform.forward * -0.001f;
-        //go2.transform.position += go2.transform.forward * -0.1f;
-        //_meshList.Add(go2);
+        go2.transform.position += go2.transform.forward * -0.05f;
+        go2.AddComponent<MeshCollider>();
+        //go2.GetComponent<MeshCollider>().convex = true;
+        go2.AddComponent<DropEnemy>();
+        _meshList.Add(go2);
 
         //手前と奥の間にメッシュオブジェクトを作成
-        //GameObject meshob = new GameObject("MeshObject", typeof(MeshFilter), typeof(MeshRenderer));
-        //mesh.RecalculateNormals();//法線の再設定
-        //meshob.GetComponent<MeshRenderer>().material = _material;
-        //meshob.transform.position += go2.transform.forward * -0.1f;
-        //MeshFilter filter = meshob.GetComponent<MeshFilter>();
-        //filter.mesh = mesh;
-        //_meshList.Add(meshob);
+        GameObject meshob = new GameObject("MeshObject", typeof(MeshFilter), typeof(MeshRenderer));
+        mesh.RecalculateNormals();//法線の再設定
+        meshob.GetComponent<MeshRenderer>().material = _material;
+        meshob.transform.position += meshob.transform.forward * -0.05f;
+        meshob.AddComponent<MeshCollider>();
+        //meshob.GetComponent<MeshCollider>().convex = true;
+        meshob.AddComponent<DropEnemy>();
+        MeshFilter filter = meshob.GetComponent<MeshFilter>();
+        filter.mesh = mesh;
+        _meshList.Add(meshob);
 
-        //GameObject TextureObj = _drawMesh.CreateMesh(_vertices);
-        //TextureObj.GetComponent<MeshRenderer>().material = _material;
-        //go.transform.position += go.transform.forward * -0.001f;
+        //１つにまとめる
+        GameObject AllMeshObject = new GameObject("AllMeshObject");
+        go.transform.parent = AllMeshObject.transform;
+        go2.transform.parent = AllMeshObject.transform;
+        meshob.transform.parent = AllMeshObject.transform;
+        AllMeshObject.AddComponent<DropMover>();
+        AllMeshObject.GetComponent<DropMover>().SetPieceState_DROP();
+
+        AllMeshObject.tag = ("DropBlock");
 
         //メッシュを表示するため
         //go.gameObject.AddComponent<MeshInfo>();
         //go2.gameObject.AddComponent<MeshInfo>();
         //meshob.gameObject.AddComponent<MeshInfo>();
         //gogo.gameObject.AddComponent<MeshInfo>();
-
-        //_planeMesh.SetActive(true);
 
         //前作ったメッシュとつながってしまうためクリア
         _subMesh_vertices.Clear();
