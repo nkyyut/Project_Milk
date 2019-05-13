@@ -16,9 +16,7 @@ public class GameOver : MonoBehaviour {
     int end = 50;
     List<int> numbers = new List<int>();
 
-    int starey = 1;
-    int endy = 50;
-    List<int> numbersy = new List<int>();
+    
 
     
     bool Keyflg = false;
@@ -31,10 +29,7 @@ public class GameOver : MonoBehaviour {
             numbers.Add(i);
         }
 
-        for (int i = start; i <= end; i++)
-        {
-            numbersy.Add(i);
-        }
+        
 
         int BoxCount = 0;
         for(int i = 1; i <= 5; i++)
@@ -71,9 +66,7 @@ public class GameOver : MonoBehaviour {
                 int index = Random.Range(0, numbers.Count);
                 int ransu = numbers[index];
 
-                int indexy = Random.Range(0, numbersy.Count);
-                int ransuy = numbersy[indexy];
-
+                
 
 
                 generatePos.position = generateBox[ransu];
@@ -84,10 +77,9 @@ public class GameOver : MonoBehaviour {
 
 
                 numbers.Remove(ransu);
-                numbersy.Remove(ransu);
 
                 time = 0;
-                speed *= 1.3f;
+                speed *= 1.5f;
             }
 
 

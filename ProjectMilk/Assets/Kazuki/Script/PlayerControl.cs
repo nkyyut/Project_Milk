@@ -39,13 +39,13 @@ public class PlayerControl : MonoBehaviour
 
 
                 Vector3 cameraForward = Vector3.Scale(playerForward , new Vector3(1, 1, 1)).normalized;
-                Debug.Log(cameraForward);
+                //Debug.Log(cameraForward);
                 Vector3 moveForward = cameraForward * InputV + Camera.main.transform.right * InputH;
 
                 if (InputH != 0 || InputV != 0)
                 {
                     transform.position += moveForward * movespeed;
-                    //transform.rotation = Quaternion.LookRotation(moveForward);
+                    transform.rotation = Quaternion.LookRotation(moveForward);
                 }
                 break;
             case SCENE_TYPE.PAUSE:
