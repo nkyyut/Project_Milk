@@ -27,6 +27,6 @@ public class MouseFPS : MonoBehaviour
  
         //transform.RotateAround()をしようしてメインカメラを回転させる
         mainCamera.transform.RotateAround(playerObject.transform.position, Vector3.up, -angle.x);
-        mainCamera.transform.RotateAround(playerObject.transform.position, transform.right, angle.y);
+        //mainCamera.transform.RotateAround(playerObject.transform.position, transform.right, angle.y);
     }
 }

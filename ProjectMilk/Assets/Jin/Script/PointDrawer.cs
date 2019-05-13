@@ -19,6 +19,7 @@ public class PointDrawer : MonoBehaviour
     GameObject MARUTA;
 
     GameObject FrontMesh;
+    public GameObject _AllMeshObject;
 
     int dotnum;
     bool IsChangeDirection;
@@ -452,9 +453,9 @@ public class PointDrawer : MonoBehaviour
         //手前のオブジェクト生成
         GameObject go = _drawMesh.CreateMesh(_vertices);
         go.GetComponent<MeshRenderer>().material = _material;
-        go.transform.position += go.transform.forward * -0.05f;
+        //go.transform.position += go.transform.forward * -0.05f;
         go.AddComponent<MeshCollider>();
-        go.GetComponent<MeshCollider>().convex = true;
+        //go.GetComponent<MeshCollider>().convex = true;
         go.AddComponent<DropEnemy>();
         _meshList.Add(go);
         go.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
@@ -463,7 +464,7 @@ public class PointDrawer : MonoBehaviour
         GameObject go2 = _drawMesh.CreateMesh(back_vertices);
         go2.GetComponent<MeshRenderer>().material = _material;
         //go2.transform.position += go2.transform.forward * -0.001f;
-        go2.transform.position += go2.transform.forward * -0.05f;
+        //go2.transform.position += go2.transform.forward * -0.05f;
         go2.AddComponent<MeshCollider>();
         //go2.GetComponent<MeshCollider>().convex = true;
         go2.AddComponent<DropEnemy>();
@@ -473,7 +474,7 @@ public class PointDrawer : MonoBehaviour
         GameObject meshob = new GameObject("MeshObject", typeof(MeshFilter), typeof(MeshRenderer));
         mesh.RecalculateNormals();//法線の再設定
         meshob.GetComponent<MeshRenderer>().material = _material;
-        meshob.transform.position += meshob.transform.forward * -0.05f;
+        //meshob.transform.position += meshob.transform.forward * -0.05f;
         meshob.AddComponent<MeshCollider>();
         //meshob.GetComponent<MeshCollider>().convex = true;
         meshob.AddComponent<DropEnemy>();
@@ -486,10 +487,11 @@ public class PointDrawer : MonoBehaviour
         go.transform.parent = AllMeshObject.transform;
         go2.transform.parent = AllMeshObject.transform;
         meshob.transform.parent = AllMeshObject.transform;
-        AllMeshObject.AddComponent<DropMover>();
-        AllMeshObject.GetComponent<DropMover>().SetPieceState_DROP();
+        AllMeshObject.AddComponent<Jin_DropMover>();
+        //AllMeshObject.GetComponent<DropMover>().SetPieceState_DROP();
 
         AllMeshObject.tag = ("DropBlock");
+        _AllMeshObject = AllMeshObject;
 
         //メッシュを表示するため
         //go.gameObject.AddComponent<MeshInfo>();
