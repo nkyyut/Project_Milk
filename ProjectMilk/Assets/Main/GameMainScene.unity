@@ -317,7 +317,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 91017826}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -0.018373877, y: 0.31481847, z: -0.053}
+  m_LocalPosition: {x: -0.018373877, y: 0.305, z: -0.053}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children:
   - {fileID: 1078321116}
@@ -357,11 +357,11 @@ GameObject:
   - component: {fileID: 91017836}
   - component: {fileID: 91017835}
   - component: {fileID: 91017831}
-  - component: {fileID: 91017830}
   - component: {fileID: 91017834}
   - component: {fileID: 91017827}
   - component: {fileID: 91017828}
   - component: {fileID: 91017829}
+  - component: {fileID: 91017830}
   m_Layer: 0
   m_Name: astar
   m_TagString: Untagged
@@ -415,12 +415,12 @@ SphereCollider:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 91017826}
-  m_Material: {fileID: 13400000, guid: 381b41590ae3d7645940fa2bbda42ae7, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
-  m_Center: {x: 0, y: 0.42, z: 0}
+  m_Center: {x: 0, y: 0.47, z: 0}
 --- !u!54 &91017831
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -478,7 +478,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StatePos: {x: 0, y: 0, z: 0}
   movespeed: 0.005
-  aster: {fileID: 0}
   scene: 0
 --- !u!114 &91017835
 MonoBehaviour:
@@ -1449,6 +1448,10 @@ Prefab:
       propertyPath: m_LocalEulerAnglesHint.y
       value: -31.465002
       objectReference: {fileID: 0}
+    - target: {fileID: 1255631567237986, guid: f6423d2ad72823f41b944e4dc49c7f59, type: 2}
+      propertyPath: m_TagString
+      value: Onihitode
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f6423d2ad72823f41b944e4dc49c7f59, type: 2}
   m_IsPrefabParent: 0
@@ -1551,6 +1554,10 @@ Prefab:
     - target: {fileID: 400052, guid: e8a671c4170e0cc4ba8c56dc6daacad5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -11.329
+      objectReference: {fileID: 0}
+    - target: {fileID: 100050, guid: e8a671c4170e0cc4ba8c56dc6daacad5, type: 3}
+      propertyPath: m_TagString
+      value: Onihitode
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e8a671c4170e0cc4ba8c56dc6daacad5, type: 3}
@@ -2396,7 +2403,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 518361288}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 114fcd36c6febb343b6a7748ba027e1d, type: 3}
   m_Name: 
@@ -3695,7 +3702,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1255631567237986, guid: f6423d2ad72823f41b944e4dc49c7f59, type: 2}
       propertyPath: m_TagString
-      value: Untagged
+      value: Onihitode
       objectReference: {fileID: 0}
     - target: {fileID: 1255631567237986, guid: f6423d2ad72823f41b944e4dc49c7f59, type: 2}
       propertyPath: m_IsActive
@@ -3714,8 +3721,8 @@ GameObject:
   m_PrefabParentObject: {fileID: 1255631567237986, guid: f6423d2ad72823f41b944e4dc49c7f59,
     type: 2}
   m_PrefabInternal: {fileID: 920764049}
---- !u!64 &920764052
-MeshCollider:
+--- !u!135 &920764052
+SphereCollider:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
@@ -3723,11 +3730,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 0
-  m_CookingOptions: 14
-  m_SkinWidth: 0.01
-  m_Mesh: {fileID: 4300000, guid: e8a671c4170e0cc4ba8c56dc6daacad5, type: 3}
+  serializedVersion: 2
+  m_Radius: 0.001
+  m_Center: {x: 0.0000000016592657, y: -0.025068182, z: 0.03354612}
 --- !u!1 &930359346
 GameObject:
   m_ObjectHideFlags: 0
@@ -5055,6 +5060,22 @@ Transform:
   m_Father: {fileID: 1430932112}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1271290737 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 100050, guid: e8a671c4170e0cc4ba8c56dc6daacad5, type: 3}
+  m_PrefabInternal: {fileID: 337207114}
+--- !u!135 &1271290740
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1271290737}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.001
+  m_Center: {x: 0.0000000016592657, y: -0.025068182, z: 0.03354612}
 --- !u!1 &1281524608
 GameObject:
   m_ObjectHideFlags: 0
@@ -9541,6 +9562,10 @@ Prefab:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 21.636002
       objectReference: {fileID: 0}
+    - target: {fileID: 1693935194285388, guid: 58366c11d0830f945be6295d42076412, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 58366c11d0830f945be6295d42076412, type: 2}
   m_IsPrefabParent: 0
@@ -9707,6 +9732,23 @@ Transform:
   m_Father: {fileID: 1430932112}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1637534284 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1255631567237986, guid: f6423d2ad72823f41b944e4dc49c7f59,
+    type: 2}
+  m_PrefabInternal: {fileID: 334702033}
+--- !u!135 &1637534287
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1637534284}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.001
+  m_Center: {x: 0.0000000016592657, y: -0.025068182, z: 0.03354612}
 --- !u!1 &1686299940
 GameObject:
   m_ObjectHideFlags: 0
@@ -9916,7 +9958,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0, g: 1, b: 0.37931037, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -9936,7 +9978,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Durable
+  m_Text: 98%
 --- !u!222 &1757870598
 CanvasRenderer:
   m_ObjectHideFlags: 0
