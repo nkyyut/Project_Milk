@@ -5,17 +5,15 @@ using UnityEngine;
 public class AnimCon : MonoBehaviour {
 
     [SerializeField] Animator anim;
+    [SerializeField] Material mat;
 
-    private void Update()
+    [SerializeField] Color[] color; // 変更前後 0:キリトリ　1:通常 2:変数
+    [SerializeField] float ColorSpeed;
+    
+    private void FixedUpdate()
     {
-        if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
-        {
-            anim.SetInteger("state", 1);
-        }
-        else
-        {
-            anim.SetInteger("state", 0);
-        }
+        anim.SetFloat("X", Input.GetAxis("Horizontal"));
+        anim.SetFloat("Z", Input.GetAxis("Vertical"));
 
         if (Input.GetMouseButtonDown(1))
         {
@@ -23,15 +21,50 @@ public class AnimCon : MonoBehaviour {
         }
         if (Input.GetMouseButtonUp(1))
         {
-                anim.SetInteger("ModeState", 0);
+            anim.SetInteger("ModeState", 0);
+        }
+
+        if (anim.GetInteger("ModeState") == 0)
+        {
+            color[2] = ColorChange(color[2], color[1]);
+            color[2].a = 0;
+            mat.color = color[2];
+        }
+        else
+        {
+            color[2] = ColorChange(color[2], color[0]);
+            color[2].a = 0;
+            mat.color = color[2];
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider collision)
     {
-        if(collision.gameObject.tag == "Enemy")
+        if(collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "Onihitode")
         {
             anim.SetTrigger("Hit");
         }
+    }
+
+    private Color ColorChange(Color w , Color a)
+    {
+        if(w.r < a.r)
+        {
+            w.r += Time.deltaTime * ColorSpeed;
+        }
+        if(w.r > a.r)
+        {
+            w.r -= Time.deltaTime * ColorSpeed;
+        }
+        if (w.g < a.g)
+        {
+            w.g += Time.deltaTime * ColorSpeed;
+        }
+        if (w.g > a.g)
+        {
+            w.g -= Time.deltaTime * ColorSpeed;
+        }
+
+        return w;
     }
 }

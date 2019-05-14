@@ -9,10 +9,7 @@ public class Footprints : MonoBehaviour {
     RaycastHit LogHit;
 
     public float PointRange = 1;
-
-    private Vector3 OldRotation;
-    private Vector3 OldNormal;
-
+    
     // キリトリモードのフラグ
     protected bool isDrawing = false;
 
@@ -25,7 +22,7 @@ public class Footprints : MonoBehaviour {
     // キリトリモードへ移行するボタン（ここでは右クリック）
     private const int DRAW_BUTTON = 1;
 
-    void Update()
+    void FixedUpdate()
     {
         if (Input.GetMouseButtonDown(DRAW_BUTTON))
         {
@@ -95,21 +92,16 @@ public class Footprints : MonoBehaviour {
                     fp.transform.rotation = gameObject.transform.rotation;
                     fp.transform.position = pos;
                     rendererPositions.Add(pos);
-                    OldNormal = CheckNormal();
                 }
         }
     }
 
     void CreateLineRoot()
     {
-        //新規生成
-        OldNormal = CheckNormal();
-        OldRotation = gameObject.transform.rotation.eulerAngles;
         GameObject fp = Instantiate(footpoints,FootPoint.transform);
         fp.transform.position = CheckPoint();
         fp.transform.rotation = gameObject.transform.rotation;
         rendererPositions.Add(CheckPoint());
         VertNum++;
     }
-
 }
