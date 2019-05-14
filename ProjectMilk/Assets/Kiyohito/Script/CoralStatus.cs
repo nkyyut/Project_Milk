@@ -81,7 +81,18 @@ public class CoralStatus : MonoBehaviour {
         return Mathf.Abs(MeshArea);
     }
 
+    public Vector3 SerchNearestPoint(Transform TargetTransform)
+    {
+        var collider = GetComponent<Collider>();
 
+        if (!collider)
+        {
+            Debug.Log("err"); // nothing to do without a collider
+        }
+
+        Vector3 ClosestPoint = collider.ClosestPoint(TargetTransform.position);
+        return ClosestPoint;
+    }
 
     public float GetArea() { return MyMeshArea; }
 }
