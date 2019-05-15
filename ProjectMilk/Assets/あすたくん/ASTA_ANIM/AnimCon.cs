@@ -24,18 +24,18 @@ public class AnimCon : MonoBehaviour {
             anim.SetInteger("ModeState", 0);
         }
 
-        if (anim.GetInteger("ModeState") == 0)
-        {
-            color[2] = ColorChange(color[2], color[1]);
-            color[2].a = 0;
-            mat.color = color[2];
-        }
-        else
-        {
-            color[2] = ColorChange(color[2], color[0]);
-            color[2].a = 0;
-            mat.color = color[2];
-        }
+        //if (anim.GetInteger("ModeState") == 0)
+        //{
+        //    color[2] = ColorChange(color[2], color[1]);
+        //    color[2].a = 0;
+        //    mat.color = color[2];
+        //}
+        //else
+        //{
+        //    color[2] = ColorChange(color[2], color[0]);
+        //    color[2].a = 0;
+        //    mat.color = color[2];
+        //}
     }
 
     private void OnTriggerEnter(Collider collision)

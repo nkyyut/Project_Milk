@@ -141,11 +141,11 @@ public class DurableValueManager : MonoBehaviour {
 
     float CheckTotalArea()
     {
-        float TotalArea=0;
+        float TotalArea = 0;
 
         for (int i = 0; i < CoralPartsArray.Length; i++)
         {
-            TotalArea+=CoralPartsArray[i].GetComponent<CoralStatus>().GetArea();
+            TotalArea += CoralPartsArray[i].GetComponent<CoralStatus>().GetArea();
         }
         return TotalArea;
     }
