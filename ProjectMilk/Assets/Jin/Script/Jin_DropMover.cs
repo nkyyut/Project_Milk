@@ -22,13 +22,13 @@ public class Jin_DropMover : MonoBehaviour
     float DropSpeed;/*落ちるスピード*/
     float SwaySpeed;/*揺れるスピード*/
 
-    PointDrawer _pointDrawer;
+    Jin_PointDrawer _pointDrawer;
 
     void Start()
     {
-        _pointDrawer = GameObject.Find("PointDrawer").GetComponent<PointDrawer>();
+        _pointDrawer = GameObject.Find("PointDrawer").GetComponent<Jin_PointDrawer>();
         Initialize();
-        StartCoroutine(DelayMethod(180));
+        StartCoroutine(DelayMethod(60));
     }
 
     // Update is called once per frame
@@ -43,8 +43,8 @@ public class Jin_DropMover : MonoBehaviour
         {
             /*以下いろいろ初期化*/
             Sway_HorizontalVessel = 0;
-            DropSpeed = 1.0f;
-            SwaySpeed = 1.0f;
+            DropSpeed = 0.5f;
+            SwaySpeed = 0.5f;
             PieceState = PIECE_STATE.IDLE;
             Sway_HorizontalLimit = 1.0f;
             PieceTra = this.transform;
@@ -78,7 +78,7 @@ public class Jin_DropMover : MonoBehaviour
 
     void FrontMoveMesh()
     {
-        _pointDrawer._AllMeshObject.transform.position += _pointDrawer._AllMeshObject.transform.forward * -0.005f;
+        _pointDrawer.FrontMesh.transform.position += _pointDrawer.FrontMesh.transform.forward * -0.005f;
     }
 
     private IEnumerator DelayMethod(int delayFrameCount)

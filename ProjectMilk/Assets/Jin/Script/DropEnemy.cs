@@ -17,10 +17,11 @@ public class DropEnemy : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.tag == "Enemy")
+        if (other.gameObject.tag == "Onihitode")
         {
+            Debug.Log("Onihitode");
             other.gameObject.transform.parent = this.transform.gameObject.transform;
-
+            other.gameObject.GetComponent<BoxCollider>().enabled = false;
             other.gameObject.transform.position += other.transform.forward * -0.005f;
         }
     }

@@ -6,13 +6,18 @@ using System.Linq;
 public class HitPoint : MonoBehaviour
 {
     private GameObject _pointDrawer;
-    private PointDrawer _pointDrawer_script;
-    bool IsMeshCreate = false;
+    private Jin_PointDrawer _pointDrawer_script;
+    private bool IsMeshCreate = false;
+
+    bool GetIsMeshCreate()
+    {
+        return IsMeshCreate;
+    }
 
     void Start()
     {
         _pointDrawer = GameObject.Find("PointDrawer");
-        _pointDrawer_script = _pointDrawer.GetComponent<PointDrawer>();
+        _pointDrawer_script = _pointDrawer.GetComponent<Jin_PointDrawer>();
     }
 
     void Update()
@@ -26,6 +31,7 @@ public class HitPoint : MonoBehaviour
         {
             CreatePoint(c);
             IsMeshCreate = true;
+            
         }
 
 
@@ -33,15 +39,14 @@ public class HitPoint : MonoBehaviour
 
     void CreatePoint(Collider c)
     {
-        float _dotsize = 0.05f;
+        float _dotsize = 0.005f;
 
         if (c.gameObject.tag == "Line")
         {
             if (c != _pointDrawer_script._lineList[_pointDrawer_script._lineList.Count - 2].GetComponent<BoxCollider>())
             {
-                Debug.Log("魔法カード発動！");
 
-                _pointDrawer_script.IsMeshCreate = true;
+                //_pointDrawer_script.IsMeshCreate = true;
 
                 //重なったところに点を打つ
                 Vector3 position = c.ClosestPoint(transform.position);
@@ -50,10 +55,11 @@ public class HitPoint : MonoBehaviour
                 sphere.transform.localScale = Vector3.one * _dotsize;
 
                 sphere.transform.position = position;
-
+                sphere.GetComponent<SphereCollider>().enabled = false;
+                sphere.GetComponent<MeshRenderer>().enabled = false;
                 _pointDrawer_script._vertices[_pointDrawer_script._vertices.Count - 1] = sphere.transform.position;
-                position.z += _pointDrawer_script.CutScaleZ;
-                _pointDrawer_script.back_vertices[_pointDrawer_script.back_vertices.Count - 1] = position;
+                //position.z += _pointDrawer_script.CutScaleZ;
+                _pointDrawer_script.back_vertices[_pointDrawer_script.back_vertices.Count - 1] = sphere.transform.forward * -0.1f;
 
 
                 //いらない頂点を削除
@@ -92,8 +98,10 @@ public class HitPoint : MonoBehaviour
                 //obj.transform.position = Lerp;
 
                 //_pointDrawer_script.MeshCuting();
-
+                //Debug.Log("HitPoint");
                 _pointDrawer_script.MeshCreate();
+                _pointDrawer_script.Clear();
+                _pointDrawer_script.GetFootprints().Clear();
 
             }
         }

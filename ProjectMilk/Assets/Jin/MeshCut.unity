@@ -389,13 +389,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   capMaterial: {fileID: 2100000, guid: 0a1fef63a04dc2c4da17b2fec3460f1c, type: 2}
   Line: {fileID: 1921527470484842, guid: 324e4248051da534e896c3b8624de730, type: 2}
+  _AllMeshObject: {fileID: 0}
   IsMeshCreate: 0
   _planeMesh: {fileID: 0}
   CutScaleZ: 0.2
   _drawMesh: {fileID: 1844326405}
   _dotMat: {fileID: 2100000, guid: c027d393d0aff874db79999b135667c3, type: 2}
   _dotSize: 0.05
-  _material: {fileID: 2100000, guid: 0a1fef63a04dc2c4da17b2fec3460f1c, type: 2}
+  _material: {fileID: 2100000, guid: 136c51b4e5579c64db16d88a8a00fe66, type: 2}
   _threshold: 0.1
   _vertices: []
   _meshList: []
@@ -423,7 +424,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 400052, guid: e8a671c4170e0cc4ba8c56dc6daacad5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.396
+      value: -0.236
       objectReference: {fileID: 0}
     - target: {fileID: 400052, guid: e8a671c4170e0cc4ba8c56dc6daacad5, type: 3}
       propertyPath: m_LocalPosition.y
@@ -431,23 +432,23 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400052, guid: e8a671c4170e0cc4ba8c56dc6daacad5, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -9.292
+      value: -9.355
       objectReference: {fileID: 0}
     - target: {fileID: 400052, guid: e8a671c4170e0cc4ba8c56dc6daacad5, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.013162613
+      value: -0.01123846
       objectReference: {fileID: 0}
     - target: {fileID: 400052, guid: e8a671c4170e0cc4ba8c56dc6daacad5, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.28464252
+      value: 0.17345878
       objectReference: {fileID: 0}
     - target: {fileID: 400052, guid: e8a671c4170e0cc4ba8c56dc6daacad5, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.016114965
+      value: -0.01751124
       objectReference: {fileID: 0}
     - target: {fileID: 400052, guid: e8a671c4170e0cc4ba8c56dc6daacad5, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.95840794
+      value: 0.98462135
       objectReference: {fileID: 0}
     - target: {fileID: 400052, guid: e8a671c4170e0cc4ba8c56dc6daacad5, type: 3}
       propertyPath: m_RootOrder
@@ -495,7 +496,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400052, guid: e8a671c4170e0cc4ba8c56dc6daacad5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 33.1
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 100052, guid: e8a671c4170e0cc4ba8c56dc6daacad5, type: 3}
       propertyPath: m_Name
@@ -661,7 +662,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1785422086
 MonoBehaviour:
   m_ObjectHideFlags: 0
