@@ -1,4 +1,4 @@
-﻿//かずき 4/24
+﻿//かずき 5/13
 
 using System.Collections;
 using System.Collections.Generic;
@@ -59,7 +59,7 @@ public class CameraTest : MonoBehaviour
         Settransform.transform.RotateAround(Player.transform.position, -transform.right, InputV * 1.5f);
         transform.RotateAround(Player.transform.position, Vector3.up, InputH * 1.5f);
         transform.RotateAround(Player.transform.position, -transform.right, InputV * 1.5f);
-
+        
 
         if (InputH != 0 || InputV != 0)
         {
