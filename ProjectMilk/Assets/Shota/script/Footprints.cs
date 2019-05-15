@@ -2,14 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Footprints : MonoBehaviour {
+public class Footprints : MonoBehaviour
+{
 
     [SerializeField] GameObject footpoints; // 子
     [SerializeField] GameObject FootPoint; // 親
+    [SerializeField] GameObject pointDrawer;
+    Jin_PointDrawer _pointDrawerSc;
+
     RaycastHit LogHit;
 
     public float PointRange = 1;
-    
+
+    private Vector3 OldRotation;
+    private Vector3 OldNormal;
+
+    private List<GameObject> _dotList = new List<GameObject>();
+
     // キリトリモードのフラグ
     protected bool isDrawing = false;
 
@@ -22,27 +31,41 @@ public class Footprints : MonoBehaviour {
     // キリトリモードへ移行するボタン（ここでは右クリック）
     private const int DRAW_BUTTON = 1;
 
-    void FixedUpdate()
+    public void Clear()
+    {
+        isDrawing = false;
+        // 各種変数を初期化
+        rendererPositions.Clear();
+        VertNum = 0;
+        _pointDrawerSc.Clear();
+        foreach (GameObject dot in _dotList)
+            Destroy(dot);
+        _dotList.Clear();
+    }
+
+    private void Start()
+    {
+        _pointDrawerSc = pointDrawer.GetComponent<Jin_PointDrawer>();
+    }
+
+    void Update()
     {
         if (Input.GetAxis("RT_Botton") == -1)
         {
-            if(!isDrawing)
-            CreateLineRoot();
+            if (!isDrawing)
+                CreateLineRoot();
             isDrawing = true;
         }
         if (Input.GetAxis("RT_Botton") == 0)
         {
-            isDrawing = false;
-            // 各種変数を初期化
-            rendererPositions.Clear();
-            VertNum = 0;
+            Clear();
         }
         if (isDrawing)
         {
             SetLinePoint(CheckPoint());
         }
 
-        Debug.Log(Input.GetAxis("RT_Botton"));
+        //Debug.Log(Input.GetAxis("RT_Botton"));
     }
 
     RaycastHit CheckPolygonToRayCast()
@@ -94,17 +117,34 @@ public class Footprints : MonoBehaviour {
                     GameObject fp = Instantiate(footpoints, FootPoint.transform);
                     fp.transform.rotation = gameObject.transform.rotation;
                     fp.transform.position = pos;
+                    _pointDrawerSc.AddVertex(pos);
+                    Vector3 back = fp.transform.forward * -0.1f;
+                    _pointDrawerSc.AddBackVertex(pos);
+                    _pointDrawerSc.LineCreate();
+                    fp.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
+                    _dotList.Add(fp);
                     rendererPositions.Add(pos);
+                    OldNormal = CheckNormal();
                 }
         }
     }
 
     void CreateLineRoot()
     {
-        GameObject fp = Instantiate(footpoints,FootPoint.transform);
+        //新規生成
+        OldNormal = CheckNormal();
+        OldRotation = gameObject.transform.rotation.eulerAngles;
+        GameObject fp = Instantiate(footpoints, FootPoint.transform);
         fp.transform.position = CheckPoint();
         fp.transform.rotation = gameObject.transform.rotation;
+
+        _pointDrawerSc.AddVertex(fp.transform.position);
+        Vector3 back = fp.transform.forward * -0.1f;
+        _pointDrawerSc.AddBackVertex(fp.transform.position);
+        fp.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
+        _dotList.Add(fp);
         rendererPositions.Add(CheckPoint());
         VertNum++;
     }
+
 }

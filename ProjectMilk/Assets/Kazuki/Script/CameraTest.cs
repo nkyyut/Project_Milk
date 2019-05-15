@@ -47,7 +47,7 @@ public class CameraTest : MonoBehaviour
     private void LateUpdate()
     {
 
-        Debug.Log("Chang");
+        //Debug.Log("Chang");
 
         Settransform.position += Player.transform.position - targetPos;
         targetPos = Player.transform.position;

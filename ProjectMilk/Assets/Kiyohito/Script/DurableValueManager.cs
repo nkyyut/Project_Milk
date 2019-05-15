@@ -29,7 +29,7 @@ public class DurableValueManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        Debug.Log(TotalAreaValue);
+        //Debug.Log(TotalAreaValue);
 	}
 
 
@@ -142,6 +142,7 @@ public class DurableValueManager : MonoBehaviour {
     float CheckTotalArea()
     {
         float TotalArea=0;
+
         for (int i = 0; i < CoralPartsArray.Length; i++)
         {
             TotalArea+=CoralPartsArray[i].GetComponent<CoralStatus>().GetArea();
