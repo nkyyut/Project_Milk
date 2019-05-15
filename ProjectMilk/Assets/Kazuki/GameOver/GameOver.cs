@@ -39,7 +39,7 @@ public class GameOver : MonoBehaviour {
         for(int i = 1; i <= 5; i++)
         {
             for (int y = 1; y <= 10; y++)
-                generateBox[BoxCount++] = new Vector3(y * 40f - 10, i * 40 , 0);
+                generateBox[BoxCount++] = new Vector3(Screen.width*y/10-60, Screen.height*i/5-50/*y * 40f - 10, i * 40 , 0*/);
         }
         if (BoxCount >= 50)
             State = true;
