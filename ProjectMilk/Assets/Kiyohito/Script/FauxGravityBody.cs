@@ -4,11 +4,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class FauxGravityBody : MonoBehaviour {
-
+    RaycastHit hit;
+    RaycastHit hitLog;
+    RaycastHit Previoushit;
     public Transform Bottom1;
     public Transform Bottom2;//Rayの原点
+    bool LostFlg;
     private GameObject MyGameObject;
-    public float Gravity = -50;
+    public float Gravity;
     // Use this for initialization
     void Start()
     {
@@ -16,6 +19,7 @@ public class FauxGravityBody : MonoBehaviour {
         this.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
         this.GetComponent<Rigidbody>().useGravity = false;
         MyGameObject = this.gameObject;
+        LostFlg = true;
     }
 
     // Update is called once per frame
@@ -28,32 +32,55 @@ public class FauxGravityBody : MonoBehaviour {
     /*Rayを飛ばして自分の真下のポリゴンを取得*/
     RaycastHit CheckPolygonToRayCast()
     {
-        RaycastHit hit;
-        RaycastHit hitLog;
+
         float DistanceLog=999999999;
 
-        for (int i = 0; i < 360; i += 60)
-        {
-            for (int j = 0; j < 360; j += 60)
+        //if (Physics.Raycast(Bottom1.position, -this.transform.up, out hit, 3.0f))
+        //{
+        //    Debug.DrawRay(Bottom1.position, this.transform.up*3.0f, Color.red, 0.1f);
+        //    LostFlg = true;
+        //    return hit;
+        //}
+        //return hit;
+        //else if (LostFlg)
+        //{
+        
+            for (int i = 0; i < 360; i += 60)
             {
-                for (int k = 0; k < 360; k += 60)
+                for (int j = 0; j < 360; j += 60)
                 {
-                    if (Physics.Raycast(Bottom1.position, new Vector3(i - 180, j - 180, k - 180), out hit, 5.0f)){
-                        Debug.DrawRay(Bottom1.position, new Vector3(i - 180, j - 180, k - 180) * 0.1f, Color.red, 0.1f);
-                        if (hit.collider.transform.tag == "Coral")
+                    for (int k = 0; k < 360; k += 60)
+                    {
+                        if (Physics.Raycast(Bottom1.position, new Vector3(i - 180, j - 180, k - 180), out hit, Mathf.Infinity))
                         {
-                            if (hit.distance < DistanceLog)
+                            Debug.DrawRay(Bottom1.position, new Vector3(i - 180, j - 180, k - 180) * 0.1f, Color.red, 0.1f);
+                            if (hit.collider.transform.tag == "Coral")
                             {
-                                hitLog = hit;
-                                DistanceLog = hitLog.distance;
+                                if (hit.distance < DistanceLog)
+                                {
+                                    Debug.Log("in");
+                                    hitLog = hit;
+                                    DistanceLog = hitLog.distance;
+                                }
                             }
                         }
                     }
                 }
             }
-        }
+            LostFlg = false;
+        Debug.Log(hitLog.distance);
+        //if (hitLog.distance > 2f)
+        //{
+        //    return Previoushit;
+        //}
+        //    Previoushit = hitLog;
+            return hitLog;
+        //}
+        //else
+        //{
+        //    return hit;
+        //}
 
-        return hit;
 
     }
 
@@ -104,6 +131,6 @@ public class FauxGravityBody : MonoBehaviour {
 
         body.GetComponent<Rigidbody>().AddForce(GravityUp * Gravity);
         Quaternion TargetRotation = Quaternion.FromToRotation(BodyUp, GravityUp) * body.transform.rotation;
-        body.transform.rotation = Quaternion.Slerp(body.transform.rotation, TargetRotation, 5 * Time.deltaTime);
+        body.transform.rotation = Quaternion.Slerp(body.transform.rotation, TargetRotation,   10*Time.deltaTime);
     }
 }
