@@ -19,17 +19,17 @@ public class CoralStatus : MonoBehaviour {
     {
         float Area;
         Area=CalculateMeshArea(this.gameObject);
-        Debug.Log(this.gameObject.name+Area);
         MyMeshArea = Area;
         InitMyMeshArea = Area;
     }
 
-    void CheckNowVolume()
-    {
-        float Volume;
-        Volume =CalculateMeshArea(this.gameObject);
+    //void CheckNowVolume()
+    //{
+    //    float Volume;
+    //    Volume =CalculateMeshArea(this.gameObject);
+    //    //Debug.Log("Now");
 
-    }
+    //}
 
     /*メッシュの面積を算出*/
     public float CalculateMeshArea(GameObject Parts)
@@ -79,6 +79,9 @@ public class CoralStatus : MonoBehaviour {
 
 
 
-    public float GetArea() { return MyMeshArea; }
+    public float GetArea() {
+        //Debug.Log("MyMeshArea"+MyMeshArea);
+        return MyMeshArea;
+    }
     //public void SetDurableValue(float NewValue) { MyMeshVolume = NewValue; }
 }

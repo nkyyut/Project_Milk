@@ -198,7 +198,7 @@ public class PauseManager : MonoBehaviour {
             {
                 TitleUIGuage.FillUp(BPressTime);
                 PressTimeInitialize();
-                ST_ToTitle.Transition();
+                FadeManager.Instance.LoadScene("TitleScene", 0.5f);
             }
         }
         //それがXボタンなら
@@ -222,6 +222,7 @@ public class PauseManager : MonoBehaviour {
             //長押しされたら""へ
             if (YPressTime >= KiyohitoConst.Const.PressTimeLimit)
             {
+                Application.LoadLevel("GameMainScene");
                 PressTimeInitialize();
                 YPressTime = 0;
             }

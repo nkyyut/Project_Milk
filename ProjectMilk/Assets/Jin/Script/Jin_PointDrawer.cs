@@ -8,7 +8,8 @@ using System;
 
 public class Jin_PointDrawer : MonoBehaviour
 {
-
+    [SerializeField]
+    DurableValueManager DurableValueManager;
     //切断面に適用するマテリアル
     public Material capMaterial;
 
@@ -328,6 +329,7 @@ public class Jin_PointDrawer : MonoBehaviour
         FrontMesh = go;
         _meshList.Add(go);
         go.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
+        DurableValueManager.SubMeshArea(go);
         //Debug.Log(_vertices.Count);
         //Debug.Log(back_vertices.Count);
         //_vertices.Clear();

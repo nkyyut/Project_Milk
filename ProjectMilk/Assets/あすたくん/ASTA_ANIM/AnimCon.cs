@@ -15,11 +15,11 @@ public class AnimCon : MonoBehaviour {
         anim.SetFloat("X", Input.GetAxis("Horizontal"));
         anim.SetFloat("Z", Input.GetAxis("Vertical"));
 
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetAxis("RT_Botton") == -1)
         {
             anim.SetInteger("ModeState", 1);
         }
-        if (Input.GetMouseButtonUp(1))
+        if (Input.GetAxis("RT_Botton") == 0)
         {
             anim.SetInteger("ModeState", 0);
         }
