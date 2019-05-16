@@ -17,6 +17,8 @@ public class Footprints : MonoBehaviour
     private Vector3 OldRotation;
     private Vector3 OldNormal;
 
+    Vector3 cameraForward;
+
     private List<GameObject> _dotList = new List<GameObject>();
 
     // キリトリモードのフラグ
@@ -46,6 +48,7 @@ public class Footprints : MonoBehaviour
     private void Start()
     {
         _pointDrawerSc = pointDrawer.GetComponent<Jin_PointDrawer>();
+        cameraForward = Vector3.Scale(Camera.main.transform.forward, new Vector3(1, 0, 1)).normalized;
     }
 
     void Update()
@@ -118,12 +121,14 @@ public class Footprints : MonoBehaviour
                     fp.transform.rotation = gameObject.transform.rotation;
                     fp.transform.position = pos;
                     _pointDrawerSc.AddVertex(pos);
-                    Vector3 back = fp.transform.forward * -0.1f;
-                    _pointDrawerSc.AddBackVertex(pos);
+                    rendererPositions.Add(pos);
+                    pos += cameraForward * -0.1f;
+                    Vector3 back = pos;
+                    _pointDrawerSc.AddBackVertex(back);
                     _pointDrawerSc.LineCreate();
                     fp.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
                     _dotList.Add(fp);
-                    rendererPositions.Add(pos);
+                    
                     OldNormal = CheckNormal();
                 }
         }
