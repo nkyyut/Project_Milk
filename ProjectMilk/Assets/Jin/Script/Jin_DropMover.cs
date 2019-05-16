@@ -81,7 +81,7 @@ public class Jin_DropMover : MonoBehaviour
 
     void FrontMoveMesh()
     {
-        _pointDrawer.FrontMesh.transform.position += cameraForward * -0.005f;
+        this.gameObject.transform.position += cameraForward * -0.005f;
     }
 
     private IEnumerator DelayMethod(int delayFrameCount)

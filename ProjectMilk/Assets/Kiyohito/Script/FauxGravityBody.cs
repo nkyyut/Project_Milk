@@ -58,7 +58,7 @@ public class FauxGravityBody : MonoBehaviour {
                             {
                                 if (hit.distance < DistanceLog)
                                 {
-                                    Debug.Log("in");
+                                    //Debug.Log("in");
                                     hitLog = hit;
                                     DistanceLog = hitLog.distance;
                                 }
@@ -68,7 +68,7 @@ public class FauxGravityBody : MonoBehaviour {
                 }
             }
             LostFlg = false;
-        Debug.Log(hitLog.distance);
+        //Debug.Log(hitLog.distance);
         //if (hitLog.distance > 2f)
         //{
         //    return Previoushit;

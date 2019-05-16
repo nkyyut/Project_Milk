@@ -12,7 +12,7 @@ public class Footprints : MonoBehaviour
 
     RaycastHit LogHit;
 
-    public float PointRange = 1;
+    public float PointRange = 0.5f;
 
     private Vector3 OldRotation;
     private Vector3 OldNormal;
@@ -61,6 +61,8 @@ public class Footprints : MonoBehaviour
         }
         if (Input.GetAxis("RT_Botton") == 0)
         {
+            //isDrawing = false;
+            //VertNum = 0;
             Clear();
         }
         if (isDrawing)
@@ -122,9 +124,10 @@ public class Footprints : MonoBehaviour
                     fp.transform.position = pos;
                     _pointDrawerSc.AddVertex(pos);
                     rendererPositions.Add(pos);
-                    pos += cameraForward * -0.1f;
                     Vector3 back = pos;
+                    back = back + fp.transform.forward * -0.1f;
                     _pointDrawerSc.AddBackVertex(back);
+                    //Debug.Log(back);
                     _pointDrawerSc.LineCreate();
                     fp.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
                     _dotList.Add(fp);
@@ -144,7 +147,8 @@ public class Footprints : MonoBehaviour
         fp.transform.rotation = gameObject.transform.rotation;
 
         _pointDrawerSc.AddVertex(fp.transform.position);
-        Vector3 back = fp.transform.forward * -0.1f;
+        Vector3 back = fp.transform.position;
+        back = back + fp.transform.forward * -0.1f;
         _pointDrawerSc.AddBackVertex(fp.transform.position);
         fp.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
         _dotList.Add(fp);

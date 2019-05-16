@@ -19,7 +19,6 @@ public class Jin_PointDrawer : MonoBehaviour
     GameObject MARUTA;
 
     public GameObject FrontMesh;
-    public GameObject _AllMeshObject;
 
     int dotnum;
     bool IsChangeDirection;
@@ -70,6 +69,8 @@ public class Jin_PointDrawer : MonoBehaviour
 
     private List<Vector3> _AllVec = new List<Vector3>();
 
+    public List<GameObject> _AllMeshObject = new List<GameObject>();
+
     public Footprints GetFootprints()
     {
         return _footPrints;
@@ -108,9 +109,15 @@ public class Jin_PointDrawer : MonoBehaviour
 
     private void Update()
     {
-        if(_AllMeshObject)
-            if(_AllMeshObject.transform.position.y <= -5)
-                Destroy(_AllMeshObject);
+        for (int i = 0; i < _AllMeshObject.Count; i++)
+        {
+            if (_AllMeshObject[i].transform.position.y <= -3)
+            {
+                Destroy(_AllMeshObject[i]);
+                _AllMeshObject.Remove(_AllMeshObject[i]);
+
+            }
+        }
 
         //if (Input.GetMouseButton(0))
         //{
@@ -322,8 +329,19 @@ public class Jin_PointDrawer : MonoBehaviour
         go.GetComponent<MeshRenderer>().material = _material;
         ////go.transform.position += go.transform.forward * -0.05f;
         go.AddComponent<MeshCollider>();
-        go.GetComponent<MeshCollider>().convex = true;
-        go.GetComponent<MeshCollider>().isTrigger = true;
+        if (go.GetComponent<MeshCollider>())
+        {
+            try
+            {
+                go.GetComponent<MeshCollider>().convex = true;
+                go.GetComponent<MeshCollider>().isTrigger = true;
+            }
+            catch
+            {
+                Debug.Log("例外");
+            }
+            
+        }
         go.AddComponent<DropEnemy>();
         FrontMesh = go;
         _meshList.Add(go);
@@ -361,7 +379,7 @@ public class Jin_PointDrawer : MonoBehaviour
         AllMeshObject.GetComponent<Jin_DropMover>().SetPieceState_DROP();
 
         AllMeshObject.tag = ("DropBlock");
-        _AllMeshObject = AllMeshObject;
+        _AllMeshObject.Add(AllMeshObject);
 
         //メッシュを表示するため
         //go.gameObject.AddComponent<MeshInfo>();
@@ -397,17 +415,12 @@ public class Jin_PointDrawer : MonoBehaviour
         {
             if (i == (vertices.Count - 2) * 3)
             {
-                Debug.Log("最後");
-                Debug.Log(k);
                 meshTriangle[i] = k;
                 meshTriangle[i + 1] = 0;
                 meshTriangle[i + 2] = vertices.Count - 1;
-                Debug.Log("最後2");
             }
             else
             {
-                Debug.Log("hu");
-                Debug.Log(i);
                 meshTriangle[i] = k;
                 meshTriangle[i + 1] = k + 1;
                 meshTriangle[i + 2] = vertices.Count - 1;
@@ -526,39 +539,49 @@ public class Jin_PointDrawer : MonoBehaviour
     }
     /// <summary>
     /// 囲むための判定用に頂点間にCube(線)を生成
-    /// </summary>   
+    /// </summary>
+    int g = 0;
     public void LineCreate()
     {
         if (_vertices.Count > 1)
         {
             List<Vector3> myPoint = new List<Vector3>();
-        
+
             myPoint.Add(_vertices[_vertices.Count - 2]);
             myPoint.Add(_vertices[_vertices.Count - 1]);
 
-            GameObject obj = Instantiate(Line, transform.position, transform.rotation) as GameObject;
-            obj.transform.position = (myPoint[0] + myPoint[1]) / 2;
-            obj.transform.right = (myPoint[1] - myPoint[0]).normalized;
-            obj.transform.localScale = new Vector3((myPoint[1] - myPoint[0]).magnitude, 0.005f, 0.005f);
-            obj.tag = "LastLine";
-            obj.layer = LayerMask.NameToLayer("Ignore Raycast");
-            _lineList.Add(obj);
-
-            
+            GameObject Lineobj = Instantiate(Line, transform.position, transform.rotation) as GameObject;
+            //Lineobj.name = "Lineobj" + g;
+            Lineobj.transform.position = (myPoint[0] + myPoint[1]) / 2;
+            Lineobj.transform.right = (myPoint[1] - myPoint[0]).normalized;
+            Lineobj.transform.localScale = new Vector3((myPoint[1] - myPoint[0]).magnitude, 0.005f, 0.005f);
+            Lineobj.tag = "LastLine";
+            Lineobj.layer = LayerMask.NameToLayer("Ignore Raycast");
+            _lineList.Add(Lineobj);
 
             if (_lineList.Count > 1)
             {
-                //if(!_lineList[_lineList.Count - 2].GetComponent<HitPoint>().IsMeshCreate)
-                //    obj.AddComponent<HitPoint>();
                 Destroy(_lineList[_lineList.Count - 2].GetComponent<HitPoint>());
                 _lineList[_lineList.Count - 2].tag = "Line";
+                _lineList[_lineList.Count - 2].layer = LayerMask.NameToLayer("Coral");                
+            }
+            if(_lineList.Count > 2)
+            {
+                _lineList[_lineList.Count - 3].layer = LayerMask.NameToLayer("Ignore Raycast");
             }
 
-            obj.GetComponent<BoxCollider>().isTrigger = true;
-            obj.AddComponent<Rigidbody>();
-            obj.GetComponent<Rigidbody>().isKinematic = true;
+            Lineobj.GetComponent<BoxCollider>().isTrigger = true;
+            Lineobj.AddComponent<Rigidbody>();
+            Lineobj.GetComponent<Rigidbody>().isKinematic = true;
 
-            obj.AddComponent<HitPoint>();
+            Lineobj.AddComponent<HitPoint>();
+
+            //if(myPoint[0].x < myPoint[1].x)
+            //    Lineobj.AddComponent<LineRightForward>();
+            //else
+            //    Lineobj.AddComponent<LineLeftForward>();
+
+            g++;
         }
 
     }
@@ -636,7 +659,7 @@ public class Jin_PointDrawer : MonoBehaviour
         //}
         //_meshList.Clear();
 
-        for(int i=0; i<_lineList.Count; i++)
+        for (int i = 0; i < _lineList.Count; i++)
         {
             Destroy(_lineList[i]);
         }
