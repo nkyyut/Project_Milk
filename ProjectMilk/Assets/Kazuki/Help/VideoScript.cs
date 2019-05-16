@@ -6,7 +6,7 @@ using UnityEngine.Video;
 
 public class VideoScript : MonoBehaviour {
 
-    [SerializeField]VideoClip[] clipsBox = new VideoClip[2];
+    [SerializeField]VideoClip[] clipsBox ;
     VideoPlayer videoplayer;
     [SerializeField]GameObject manager;
     private int movieNum;

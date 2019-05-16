@@ -5,15 +5,15 @@ using System;
 
 public class ButtonScript : MonoBehaviour {
     public int Boxnum;
-    //public GameObject manager;
+    [SerializeField] GameObject manager;
+   
 
+    
 
     public void OnClick()
     {
+        manager = GameObject.Find("HelpManager");
         Debug.Log("On");
-        
-        GameObject manager = GameObject.Find("HelpManager");
-
         for (int i = 0; i < 4; i++)
             if (manager.GetComponent<HelpScript>().Hbutton[i].transform.position == this.transform.position)
                 Boxnum = i;

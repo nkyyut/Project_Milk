@@ -37,16 +37,17 @@ public class PlayerControl : MonoBehaviour
                 float InputV = Input.GetAxisRaw("Vertical");
                 playerForward = new Vector3(transform.position.x, Camera.main.transform.position.y, transform.position.z) - Camera.main.transform.position;
 
-
                 Vector3 cameraForward = Vector3.Scale(playerForward , new Vector3(1, 1, 1)).normalized;
                 //Debug.Log(cameraForward);
                 Vector3 moveForward = cameraForward * InputV + Camera.main.transform.right * InputH;
 
                 if (InputH != 0 || InputV != 0)
                 {
+                    this.GetComponent<ParticleControl>().Flg = true;
                     transform.position += moveForward * movespeed;
                     transform.rotation = Quaternion.LookRotation(moveForward);
                 }
+                else this.GetComponent<ParticleControl>().Flg = false;
                 break;
             case SCENE_TYPE.PAUSE:
                 break;

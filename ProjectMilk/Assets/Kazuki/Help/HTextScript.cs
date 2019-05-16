@@ -8,7 +8,7 @@ public class HTextScript : MonoBehaviour {
     Text textBox;
     private int textNum;
     [SerializeField] GameObject manager;
-    [Multiline] [SerializeField] string[] textString = new string[2];
+    [Multiline] [SerializeField] string[] textString;
 
 	void Start () {
         textNum = 0;
