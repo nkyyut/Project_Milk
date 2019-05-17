@@ -5,6 +5,9 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Kazuki/Scene/Map.unity
     guid: b31982a7446818640be85d1270ad3242
+  - enabled: 1
+    path: Assets/Jin/Jin_Stage.unity
+    guid: ea59771dc0ea39147bf2a90e80c35eee

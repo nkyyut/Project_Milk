@@ -12,7 +12,7 @@ public class Footprints : MonoBehaviour
 
     RaycastHit LogHit;
 
-    public float PointRange = 0.5f;
+    public float PointRange = 1;
 
     private Vector3 OldRotation;
     private Vector3 OldNormal;
@@ -125,13 +125,12 @@ public class Footprints : MonoBehaviour
                     _pointDrawerSc.AddVertex(pos);
                     rendererPositions.Add(pos);
                     Vector3 back = pos;
-                    back = back + fp.transform.forward * -0.1f;
-                    _pointDrawerSc.AddBackVertex(back);
-                    //Debug.Log(back);
+                    back = back + fp.transform.up * -0.1f;
+                    //_pointDrawerSc.AddBackVertex(back);
                     _pointDrawerSc.LineCreate();
                     fp.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
                     _dotList.Add(fp);
-                    
+
                     OldNormal = CheckNormal();
                 }
         }
@@ -148,8 +147,8 @@ public class Footprints : MonoBehaviour
 
         _pointDrawerSc.AddVertex(fp.transform.position);
         Vector3 back = fp.transform.position;
-        back = back + fp.transform.forward * -0.1f;
-        _pointDrawerSc.AddBackVertex(fp.transform.position);
+        back = back + fp.transform.up * -0.1f;
+        //_pointDrawerSc.AddBackVertex(back);
         fp.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
         _dotList.Add(fp);
         rendererPositions.Add(CheckPoint());

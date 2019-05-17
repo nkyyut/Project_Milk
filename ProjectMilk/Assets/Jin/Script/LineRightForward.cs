@@ -4,9 +4,14 @@ using UnityEngine;
 
 public class LineRightForward : MonoBehaviour {
 
-    private void OnTriggerStay(Collider other)
+    private void Start()
     {
-        if(other.transform.tag == "Coral")
-            this.transform.position += this.transform.forward * -0.001f;
+        this.gameObject.GetComponent<MeshRenderer>().enabled = false;
     }
+
+    //private void OnTriggerStay(Collider other)
+    //{
+    //    if(other.transform.tag == "Coral")
+    //        this.transform.position += this.transform.forward * -0.001f;
+    //}
 }

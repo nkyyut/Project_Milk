@@ -31,7 +31,7 @@ public class HitPoint : MonoBehaviour
         if (!IsMeshCreate)
         {
             //colList.Add(c.gameObject);
-            Debug.Log(c.gameObject);
+            //Debug.Log(c.gameObject);
             CreatePoint(c);
             IsMeshCreate = true;
 
@@ -43,8 +43,8 @@ public class HitPoint : MonoBehaviour
     void CreatePoint(Collider c)
     {
         float _dotsize = 0.005f;
-        if (_pointDrawer_script._lineList.Count > 1)
-        {
+        //if (_pointDrawer_script._lineList.Count > 1)
+        //{
             if (c.gameObject.tag == "Line")
             {
                 //Debug.Log("線");
@@ -60,12 +60,12 @@ public class HitPoint : MonoBehaviour
                     sphere.transform.localScale = Vector3.one * _dotsize;
 
                     sphere.transform.position = position;
-                    sphere.GetComponent<SphereCollider>().enabled = false;
-                    sphere.GetComponent<MeshRenderer>().enabled = false;
+                    //sphere.GetComponent<SphereCollider>().enabled = false;
+                    //sphere.GetComponent<MeshRenderer>().enabled = false;
                     _pointDrawer_script._vertices[_pointDrawer_script._vertices.Count - 1] = sphere.transform.position;
                     //position.z += _pointDrawer_script.CutScaleZ;
-                    _pointDrawer_script.back_vertices[_pointDrawer_script.back_vertices.Count - 1] = sphere.transform.position + sphere.transform.forward * -0.1f;
-                    //Debug.Log(_pointDrawer_script.back_vertices[_pointDrawer_script.back_vertices.Count - 1]);
+                    //_pointDrawer_script.back_vertices[_pointDrawer_script.back_vertices.Count - 1] = sphere.transform.position += sphere.transform.forward * 0.1f;
+                    //_pointDrawer_script.AddBackVertex(sphere.transform.position + sphere.transform.forward * 0.1f);
 
                     //いらない頂点を削除
                     int RemoveIndex = _pointDrawer_script._lineList.IndexOf(c.gameObject);//交差した線のインデックスを取得
@@ -85,8 +85,8 @@ public class HitPoint : MonoBehaviour
 
                         _pointDrawer_script._vertices.RemoveAt(i);
                         vec.Add(_pointDrawer_script._vertices[i]);
-                        _pointDrawer_script.back_vertices.RemoveAt(i);
-                        back_vec.Add(_pointDrawer_script.back_vertices[i]);
+                        //_pointDrawer_script.back_vertices.RemoveAt(i);
+                        //back_vec.Add(_pointDrawer_script.back_vertices[i]);
 
                     }
                     //for(int i=RemoveIndex; i < _pointDrawer_script._lineList.Count - RemoveIndex; i++)
@@ -112,7 +112,7 @@ public class HitPoint : MonoBehaviour
 
                 }
             }
-        }
+        //}
     }
 }
 
