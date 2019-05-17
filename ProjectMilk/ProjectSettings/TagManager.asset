@@ -10,6 +10,7 @@ TagManager:
   - LastLine
   - Line
   - DropBlock
+  - FootPoint
   layers:
   - Default
   - TransparentFX
