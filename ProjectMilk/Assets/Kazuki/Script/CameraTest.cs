@@ -53,15 +53,18 @@ public class CameraTest : MonoBehaviour
         targetPos = Player.transform.position;
         transform.position = Vector3.Lerp(transform.position, Player.transform.position + CameraPos, 2.0f * Time.deltaTime);
 
-
-
+        
         Settransform.transform.RotateAround(Player.transform.position, Vector3.up, InputH * 1.5f);
         Settransform.transform.RotateAround(Player.transform.position, -transform.right, InputV * 1.5f);
-        transform.RotateAround(Player.transform.position, Vector3.up, InputH * 1.5f);
-        transform.RotateAround(Player.transform.position, -transform.right, InputV * 1.5f);
         
 
-        if (InputH != 0 || InputV != 0)
+        transform.RotateAround(Player.transform.position, Vector3.up, InputH * 1.5f);
+        transform.RotateAround(Player.transform.position, -transform.right, InputV * 1.5f);
+
+
+        Settransform.transform.rotation = Player.transform.rotation;
+
+            if (InputH != 0 || InputV != 0)
         {
             CameraPos = Settransform.position - Player.transform.position;
         }

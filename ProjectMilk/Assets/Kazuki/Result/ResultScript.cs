@@ -69,7 +69,7 @@ public class ResultScript : MonoBehaviour {
                 {
                     textBox[0] = Instantiate(winner);
                     textBox[0].transform.SetParent(parentImage.transform, false);
-                    textBox[0].rectTransform.position = new Vector3(Screen.width / 2, Screen.height / 2 + 100);
+                    textBox[0].rectTransform.position = new Vector3(Screen.width / 2, Screen.height * 0.9f);
                     textBox[0].text = "勝ち";
                     fadeflg = false;
                 }
@@ -85,7 +85,7 @@ public class ResultScript : MonoBehaviour {
                     textBox[1].text = "さいこうだ!!";
                 }
                     Vector3 Box2 = textBox[1].rectTransform.position;
-                    textBox[1].rectTransform.position = Vector3.Lerp(textBox[1].transform.position, new Vector3(Screen.width / 2, Screen.height / 2 + 50), 2 * Time.deltaTime);
+                    textBox[1].rectTransform.position = Vector3.Lerp(textBox[1].transform.position, new Vector3(Screen.width / 2, Screen.height *0.7f), 2 * Time.deltaTime);
                     if (textBox[1].rectTransform.position.normalized - Box2.normalized == Vector3.zero)
                     {
                         textBox[1].text += "\n-------------------";
@@ -105,7 +105,7 @@ public class ResultScript : MonoBehaviour {
                 {
                     textBox[2] = Instantiate(score);
                     textBox[2].transform.SetParent(parentImage.transform, false);
-                    textBox[2].rectTransform.position = new Vector3(Screen.width / 2, Screen.height / 2-30);
+                    textBox[2].rectTransform.position = new Vector3(Screen.width / 2, Screen.height *0.3f);
                     textBox[2].text = "とくてん…"+ countdown[3] + countdown[2] + countdown[1] + countdown[0];
 
                     scorebox[3] = Score / 1000;
