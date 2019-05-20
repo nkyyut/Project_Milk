@@ -23,11 +23,14 @@ public class Jin_PointDrawer : MonoBehaviour
     int dotnum;
     bool IsChangeDirection;
     public bool IsAllMeshCreate;
+    private bool Rightturn;
 
     private int AllList_Index;
 
+    private Vector3 MeshForawd;
+
     [SerializeField]
-    public float CutScaleZ = 0.1f;
+    public float CutScaleZ = 0.05f;
 
     [SerializeField]
     private DrawMesh _drawMesh;
@@ -44,6 +47,9 @@ public class Jin_PointDrawer : MonoBehaviour
 
     [SerializeField]
     private Material _material;
+
+    [SerializeField]
+    private Material _maskMaterial;
 
     [SerializeField]
     private float _threshold = 0.1f;
@@ -102,26 +108,13 @@ public class Jin_PointDrawer : MonoBehaviour
 
     private void Awake()
     {
-        MARUTA = GameObject.Find("MARUTA");
+        MARUTA = GameObject.Find("edasan1");
         IsAllMeshCreate = false;
         _sqrThreshold = _threshold * _threshold;
     }
 
     private void Update()
     {
-        if (IsAllMeshCreate)
-        {
-            for (int i = 0; i < _allMeshObject.Count; i++)
-            {    
-                if (_allMeshObject[i].transform.position.y <= -3)
-                {
-                    Destroy(_allMeshObject[i]);
-                    _allMeshObject.Remove(_allMeshObject[i]);
-
-                }
-            }
-        }
-
         //if (Input.GetKeyDown(KeyCode.Q))
         //{
         //    Clear();
@@ -177,10 +170,11 @@ public class Jin_PointDrawer : MonoBehaviour
         //    CreateDot(back_vertices[i]);
         //}
 
-        
-
         //手前のオブジェクト生成
         GameObject go = _drawMesh.CreateMesh(_vertices);
+        Mesh gomesh = go.GetComponent<MeshFilter>().mesh;
+        go.GetComponent<MeshFilter>().mesh.SetTriangles(gomesh.triangles.Reverse().ToArray(), 0);
+        //go.transform.LookAt(MARUTA.transform);
         go.GetComponent<MeshRenderer>().material = _material;
         ////go.transform.position += go.transform.forward * -0.05f;
         go.AddComponent<MeshCollider>();
@@ -198,9 +192,11 @@ public class Jin_PointDrawer : MonoBehaviour
 
         }
         go.AddComponent<DropEnemy>();
+        go.AddComponent<Subtractor>();
+        go.GetComponent<Subtractor>().maskMaterial = _maskMaterial;
         FrontMesh = go;
-        _meshList.Add(go);
         go.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
+        _meshList.Add(go);
 
         //奥のオブジェクト生成
         GameObject go2 = _drawMesh.CreateMesh(_vertices);
@@ -209,7 +205,10 @@ public class Jin_PointDrawer : MonoBehaviour
         go2.transform.localPosition = go2.transform.localPosition + go2.transform.forward * CutScaleZ;
         go2.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
         go2.AddComponent<MeshCollider>();
+        //go2.GetComponent<MeshCollider>().convex = true;
         go2.AddComponent<DropEnemy>();
+        go2.AddComponent<Subtractor>();
+        go2.GetComponent<Subtractor>().maskMaterial = _maskMaterial;
         _meshList.Add(go2);
 
         MeshFilter mf = go2.GetComponent<MeshFilter>();
@@ -235,29 +234,58 @@ public class Jin_PointDrawer : MonoBehaviour
         //手前と奥の間にメッシュオブジェクトを作成
         GameObject meshob = new GameObject("MeshObject", typeof(MeshFilter), typeof(MeshRenderer));
         mesh.RecalculateNormals();//法線の再設定
-        meshob.GetComponent<MeshRenderer>().material = _material;
-        meshob.AddComponent<MeshCollider>();
+        meshob.GetComponent<MeshRenderer>().material = _material;       
         meshob.AddComponent<DropEnemy>();
         MeshFilter filter = meshob.GetComponent<MeshFilter>();
         filter.mesh = mesh;
+        meshob.AddComponent<MeshCollider>();
+        //meshob.GetComponent<MeshCollider>().convex = true;
+        meshob.AddComponent<Subtractor>();
+        meshob.GetComponent<Subtractor>().maskMaterial = _maskMaterial;
         _meshList.Add(meshob);
 
         //１つにまとめる
-        GameObject AllMeshObject = new GameObject("AllMeshObject");
+
+        GameObject AllMeshObject = new GameObject("AllMeshObject", typeof(MeshFilter), typeof(MeshRenderer));
         go.transform.parent = AllMeshObject.transform;
         go2.transform.parent = AllMeshObject.transform;
         meshob.transform.parent = AllMeshObject.transform;
-        AllMeshObject.AddComponent<Jin_DropMover>();
-        AllMeshObject.GetComponent<Jin_DropMover>().SetPieceState_DROP();
+
+        MeshFilter[] meshFilters = AllMeshObject.GetComponentsInChildren<MeshFilter>();
+        CombineInstance[] _combine = new CombineInstance[meshFilters.Length];
+        int h = 0;
+        while (h < meshFilters.Length)
+        {
+            _combine[h].mesh = meshFilters[h].sharedMesh;
+            _combine[h].transform = meshFilters[h].transform.localToWorldMatrix;
+            meshFilters[h].gameObject.SetActive(false);
+            h++;
+        }
+        AllMeshObject.transform.GetComponent<MeshFilter>().mesh = new Mesh();
+        AllMeshObject.transform.GetComponent<MeshFilter>().mesh.CombineMeshes(_combine);
+        AllMeshObject.transform.gameObject.SetActive(true);
+
+        AllMeshObject.AddComponent<MeshCollider>();
+        AllMeshObject.GetComponent<MeshRenderer>().material = _material;
+        AllMeshObject.AddComponent<Subtractor>();
+        AllMeshObject.GetComponent<Subtractor>().maskMaterial = _maskMaterial;
+        AllMeshObject.transform.position = AllMeshObject.transform.position + AllMeshObject.transform.forward * -0.1f;
+        //AllMeshObject.AddComponent<Jin_DropMover>();
+        //AllMeshObject.GetComponent<Jin_DropMover>().SetPieceState_DROP();
 
         AllMeshObject.tag = ("DropBlock");
+        Mesh allmesh = AllMeshObject.GetComponent<MeshFilter>().mesh;
+        if(Rightturn)
+            AllMeshObject.GetComponent<MeshFilter>().mesh.SetTriangles(allmesh.triangles.Reverse().ToArray(), 0);
+        //AllMeshObject.GetComponent<MeshFilter>().mesh.RecalculateNormals();
         _allMeshObject.Add(AllMeshObject);
 
+        
         IsAllMeshCreate = true;
 
         //メッシュを表示するため
         //go.gameObject.AddComponent<MeshInfo>();
-        go2.gameObject.AddComponent<MeshInfo>();
+        //go2.gameObject.AddComponent<MeshInfo>();
         //meshob.gameObject.AddComponent<MeshInfo>();
         //gogo.gameObject.AddComponent<MeshInfo>();
 
@@ -327,14 +355,14 @@ public class Jin_PointDrawer : MonoBehaviour
             if (!(i == PorigonAraay - _JinConst.ORDERTRIANGLES_NUM))
             {
                 meshTriangles[i] = j;
-                meshTriangles[i + 1] = j + _vertices.Count;
-                meshTriangles[i + 2] = j + 1;
+                meshTriangles[i + 1] = j + 1;
+                meshTriangles[i + 2] = j + _vertices.Count;
             }
             else
             {
                 meshTriangles[i] = j;
-                meshTriangles[i + 1] = j + _vertices.Count;
-                meshTriangles[i + 2] = 0;
+                meshTriangles[i + 1] = 0;
+                meshTriangles[i + 2] = j + _vertices.Count;
             }
             j++;
         }
@@ -344,14 +372,14 @@ public class Jin_PointDrawer : MonoBehaviour
             if (!(i == PorigonAraay - _JinConst.ORDERTRIANGLES_PORIGON))
             {
                 meshTriangles[i] = j + 1;
-                meshTriangles[i + 1] = j + _vertices.Count;
-                meshTriangles[i + 2] = j + _vertices.Count + 1;
+                meshTriangles[i + 1] = j + _vertices.Count + 1;
+                meshTriangles[i + 2] = j + _vertices.Count;
             }
             else
             {
                 meshTriangles[i] = 0;
-                meshTriangles[i + 1] = j + _vertices.Count;
-                meshTriangles[i + 2] = _vertices.Count;
+                meshTriangles[i + 1] = _vertices.Count;
+                meshTriangles[i + 2] = j + _vertices.Count;
             }
             j++;
         }
@@ -374,9 +402,16 @@ public class Jin_PointDrawer : MonoBehaviour
             GameObject Lineobj = Instantiate(Line, transform.position, transform.rotation) as GameObject;
             Lineobj.transform.position = (myPoint[0] + myPoint[1]) / 2;
             if (myPoint[0].x < myPoint[1].x)
-                Lineobj.transform.right = (myPoint[1] - myPoint[0]).normalized;
+            {
+                MeshForawd = Lineobj.transform.right = (myPoint[1] - myPoint[0]).normalized;
+                Rightturn = true;
+            }
             else
-                Lineobj.transform.right = (myPoint[0] - myPoint[1]).normalized;
+            {
+                MeshForawd = Lineobj.transform.right = (myPoint[0] - myPoint[1]).normalized;
+                Rightturn = false;
+            }
+                
             //Lineobj.transform.right = (myPoint[1] - myPoint[0]).normalized;
             Lineobj.transform.localScale = new Vector3((myPoint[1] - myPoint[0]).magnitude, 0.005f, 0.005f);
             Lineobj.tag = "LastLine";

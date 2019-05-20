@@ -60,9 +60,9 @@ public class HitPoint : MonoBehaviour
                     sphere.transform.localScale = Vector3.one * _dotsize;
 
                     sphere.transform.position = position;
-                    //sphere.GetComponent<SphereCollider>().enabled = false;
-                    //sphere.GetComponent<MeshRenderer>().enabled = false;
-                    _pointDrawer_script._vertices[_pointDrawer_script._vertices.Count - 1] = sphere.transform.position;
+                sphere.GetComponent<SphereCollider>().enabled = false;
+                sphere.GetComponent<MeshRenderer>().enabled = false;
+                _pointDrawer_script._vertices[_pointDrawer_script._vertices.Count - 1] = sphere.transform.position;
                     //position.z += _pointDrawer_script.CutScaleZ;
                     //_pointDrawer_script.back_vertices[_pointDrawer_script.back_vertices.Count - 1] = sphere.transform.position += sphere.transform.forward * 0.1f;
                     //_pointDrawer_script.AddBackVertex(sphere.transform.position + sphere.transform.forward * 0.1f);

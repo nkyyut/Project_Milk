@@ -38,6 +38,8 @@ public class Jin_DropMover : MonoBehaviour
     void Update()
     {
         Switching();
+        if(this.transform.position.y < -5)
+            Destroy(this.gameObject);
     }
     /*いろいろ初期化*/
     void Initialize()
