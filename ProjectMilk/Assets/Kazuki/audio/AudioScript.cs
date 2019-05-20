@@ -1,13 +1,11 @@
-﻿//かずき
-
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class AudioScript : MonoBehaviour {
 
-    public bool audioPlayflg = false;
-    public bool audioStopflg = false;
+    [SerializeField] bool audioPlayflg = false;
+    [SerializeField] bool audioStopflg = false;
     AudioSource audiosorce;
     [SerializeField] AudioClip audioclip;
 

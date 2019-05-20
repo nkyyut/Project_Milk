@@ -16,27 +16,33 @@ public class GameOver : MonoBehaviour {
     int end = 50;
     List<int> numbers = new List<int>();
 
+    private bool generateFlg = true;
+    
+    public bool finish { get { return generateFlg; } }
     
 
-    
     bool Keyflg = false;
+    bool State = false;
     float speed = 1f;
     float time = 0;
+    
+
 
 	void Start () {
+        State = false;
       for(int i = start; i <= end; i++)
         {
             numbers.Add(i);
         }
-
-        
-
+      
         int BoxCount = 0;
         for(int i = 1; i <= 5; i++)
         {
             for (int y = 1; y <= 10; y++)
-                generateBox[BoxCount++] = new Vector3(y * 40f - 10, i * 40 , 0);
+                generateBox[BoxCount++] = new Vector3(Screen.width*y/10-60, Screen.height*i/5-50/*y * 40f - 10, i * 40 , 0*/);
         }
+        if (BoxCount >= 50)
+            State = true;
 
     }
 
@@ -44,45 +50,45 @@ public class GameOver : MonoBehaviour {
     void Update()
     {
 
-       
-        if(Input.anyKey)
-            for(int i = 0; i < numbers.Count; i++)
-            {
-                int index = Random.Range(0, numbers.Count);
-                int ransu = numbers[index];
-                generatePos.position = generateBox[ransu];
-                Debug.Log(generatePos.position);
-                hitodeBox[ransu] = Instantiate(hitode, generatePos);
-                hitodeBox[ransu].transform.SetParent(parentPos, true);
-                numbers.Remove(ransu);
-                Keyflg = true;
+        if (State == true)
+        {
+            if (Input.anyKey)
+                for (int i = 0; i < numbers.Count; )
+                {
+                    int index = Random.Range(0, numbers.Count);
+                    int ransu = numbers[index];
+                    generatePos.position = generateBox[ransu];
+                    // Debug.Log(generatePos.position);
+                    hitodeBox[ransu] = Instantiate(hitode, generatePos);
+                    hitodeBox[ransu].transform.SetParent(parentPos, true);
+                    numbers.Remove(ransu);
+                    Keyflg = true;
+                    Debug.Log(numbers.Count);
+                }
 
-            }
+            if ((time += Time.deltaTime * speed) >= 0.75f && Keyflg == false)
+                if (numbers.Count > 0)
+                {
 
-        if ((time += Time.deltaTime * speed) >= 0.75f && Keyflg == false)
-            if (numbers.Count > 0)
-            {
+                    int index = Random.Range(0, numbers.Count);
+                    int ransu = numbers[index];
 
-                int index = Random.Range(0, numbers.Count);
-                int ransu = numbers[index];
-
-                
-
-
-                generatePos.position = generateBox[ransu];
-                Debug.Log(generatePos.position);
-                hitodeBox[ransu] = Instantiate(hitode, generatePos);
-                hitodeBox[ransu].transform.SetParent(parentPos, true);
+                    generatePos.position = generateBox[ransu];
+                    // Debug.Log(generatePos.position);
+                    hitodeBox[ransu] = Instantiate(hitode, generatePos);
+                    hitodeBox[ransu].transform.SetParent(parentPos, true);
 
 
+                    numbers.Remove(ransu);
 
-                numbers.Remove(ransu);
+                    time = 0;
+                    speed *= 1.5f;
+                }
 
-                time = 0;
-                speed *= 1.5f;
-            }
+            if (numbers.Count == 0)
+                generateFlg = false;
 
-
+        }
 
         //if (flg == true)
         //{
