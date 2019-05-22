@@ -11,8 +11,9 @@ public class GravityNormal : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        rBody = this.GetComponent<Rigidbody>();
-        rBody.useGravity = false; //最初にrigidBodyの重力を使わなくする
+        this.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
+        this.GetComponent<Rigidbody>().useGravity = false;
+
     }
 	
 	// Update is called once per frame
