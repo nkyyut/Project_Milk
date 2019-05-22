@@ -16,7 +16,7 @@ public class GameOver : MonoBehaviour {
     int end = 50;
     List<int> numbers = new List<int>();
 
-    private bool generateFlg = true;
+    private bool generateFlg = false;
     
     public bool finish { get { return generateFlg; } }
     

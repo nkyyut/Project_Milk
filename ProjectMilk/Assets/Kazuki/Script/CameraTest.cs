@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class CameraTest : MonoBehaviour
 {
+    public PlayerControl Playercontrol;
 
     public GameObject Player;
     public GameObject SangoFree;
@@ -20,7 +21,8 @@ public class CameraTest : MonoBehaviour
     public Transform SetFreetransform;
 
     bool FreeFlg;
-    
+    public bool PmoveFlg;
+
     float InputH;
     float InputV;
 
@@ -45,9 +47,9 @@ public class CameraTest : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetAxis("TriggerL") == -1)
+        if (Input.GetAxis("TriggerL") == 1)
             scene = SCENE_TYPE.FREECAMERA;
-        else
+        else 
             scene = SCENE_TYPE.MAIN;
 
 
@@ -62,8 +64,18 @@ public class CameraTest : MonoBehaviour
                     CameraPos = Settransform.position - Player.transform.position;
                     FreeFlg = false;
                 }
-                InputH = Input.GetAxisRaw("HorizontalR");
-                InputV = Input.GetAxisRaw("VerticalR");
+                
+                    switch(Playercontrol.chang)
+                    {
+                        case true:
+                            InputH = 0;
+                            InputV = 0;
+                            break;
+                        case false:
+                            InputH = Input.GetAxisRaw("HorizontalR");
+                            InputV = Input.GetAxisRaw("VerticalR");
+                        break;
+                     }
                 if(FreeFlg == false)
                 {
                     CtransformBox = transform.position;
@@ -88,13 +100,10 @@ public class CameraTest : MonoBehaviour
                 InputV = Input.GetAxisRaw("VerticalR");
                 
                 break;
-
-
-
         }
-        
-
     }
+
+
     private void LateUpdate()
     {
 
