@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class CameraTest : MonoBehaviour
 {
-    //public PlayerControl Playercontrol;
+    public PlayerController Playercontrol;
 
     public GameObject Player;
     public GameObject SangoFree;
@@ -48,7 +48,7 @@ public class CameraTest : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetAxis("TriggerL") == -1)
+        if (Input.GetAxis("TriggerL") < 0)
             scene = SCENE_TYPE.FREECAMERA;
         else 
             scene = SCENE_TYPE.MAIN;
@@ -65,7 +65,7 @@ public class CameraTest : MonoBehaviour
                     CameraPos = Settransform.position - Player.transform.position;
                     FreeFlg = false;
                 }
-                if (Input.GetAxisRaw("Horizontal2") + Input.GetAxisRaw("Vertical2") != 0)
+                if (Playercontrol.chang != true)
                 {
                     InputH = Input.GetAxisRaw("HorizontalR");
                     InputV = Input.GetAxisRaw("VerticalR");

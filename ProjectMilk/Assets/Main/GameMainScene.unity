@@ -147,10 +147,11 @@ MonoBehaviour:
   IsAllMeshCreate: 0
   CutScaleZ: 0.2
   _drawMesh: {fileID: 795938314}
-  _footPrints: {fileID: 0}
+  _footPrints: {fileID: 405995311}
   _dotMat: {fileID: 2100000, guid: 0a1fef63a04dc2c4da17b2fec3460f1c, type: 2}
   _dotSize: 0.05
-  _material: {fileID: 2100000, guid: 0a1fef63a04dc2c4da17b2fec3460f1c, type: 2}
+  _material: {fileID: 2100000, guid: aef3e9503aeaf87478cf32728746333c, type: 2}
+  _maskMaterial: {fileID: 2100000, guid: b9b7348442c8d4873a34de4f483d1e93, type: 2}
   _threshold: 0.1
   _vertices: []
   _meshList: []
@@ -1264,6 +1265,7 @@ MonoBehaviour:
   footpoints: {fileID: 1181687140550412, guid: 6efe01df9360cf544a5871e239eb0a47, type: 2}
   FootPoint: {fileID: 2078437314}
   pointDrawer: {fileID: 20930569}
+  Hed: {fileID: 0}
   PointRange: 0.03
 --- !u!135 &405995312
 SphereCollider:
@@ -9139,6 +9141,7 @@ MonoBehaviour:
   OffsetPos: {x: 0, y: 0.3, z: 0.7}
   Settransform: {fileID: 1715361171}
   SetFreetransform: {fileID: 0}
+  PmoveFlg: 0
   scene: 0
 --- !u!81 &1949500562
 AudioListener:
