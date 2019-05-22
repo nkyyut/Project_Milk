@@ -11,6 +11,8 @@ public class PlayerControl : MonoBehaviour
     public float movespeed = 0.01f;
     private Vector3 playerForward;
 
+    private bool PmoveFlg = false;
+    public bool chang { get { return PmoveFlg; } }
 
     public enum SCENE_TYPE
     {
@@ -40,6 +42,12 @@ public class PlayerControl : MonoBehaviour
             case SCENE_TYPE.MAIN:
                 float InputH = Input.GetAxisRaw("Horizontal");
                 float InputV = Input.GetAxisRaw("Vertical");
+
+                if (InputH + InputV != 0)
+                    PmoveFlg = true;
+                else
+                    PmoveFlg = false;
+
                 playerForward = new Vector3(transform.position.x, Camera.main.transform.position.y, transform.position.z) - Camera.main.transform.position;
 
                 Vector3 cameraForward = Vector3.Scale(playerForward , new Vector3(1, 1, 1)).normalized;
