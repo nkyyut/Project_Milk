@@ -53,7 +53,7 @@ public class FauxGravityBody : MonoBehaviour {
                     {
                         if (Physics.Raycast(Bottom1.position, new Vector3(i - 180, j - 180, k - 180), out hit, Mathf.Infinity))
                         {
-                            Debug.DrawRay(Bottom1.position, new Vector3(i - 180, j - 180, k - 180) * 0.1f, Color.red, 0.1f);
+                            //Debug.DrawRay(Bottom1.position, new Vector3(i - 180, j - 180, k - 180) * 0.1f, Color.red, 0.1f);
                             if (hit.collider.transform.tag == "Coral")
                             {
                                 if (hit.distance < DistanceLog)

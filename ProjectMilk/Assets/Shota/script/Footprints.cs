@@ -8,6 +8,7 @@ public class Footprints : MonoBehaviour
     [SerializeField] GameObject footpoints; // 子
     [SerializeField] GameObject FootPoint; // 親
     [SerializeField] GameObject pointDrawer;
+    [SerializeField] GameObject Hed;
     Jin_PointDrawer _pointDrawerSc;
 
     RaycastHit LogHit;
@@ -18,6 +19,8 @@ public class Footprints : MonoBehaviour
     private Vector3 OldNormal;
 
     Vector3 cameraForward;
+
+    Vector3 MeshVector;
 
     private List<GameObject> _dotList = new List<GameObject>();
 
@@ -98,7 +101,7 @@ public class Footprints : MonoBehaviour
         return hit.point;
     }
 
-    Vector3 CheckNormal()
+    public Vector3 CheckNormal()
     {
         RaycastHit hit;
         hit = CheckPolygonToRayCast();
@@ -124,9 +127,15 @@ public class Footprints : MonoBehaviour
                     fp.transform.position = pos;
                     _pointDrawerSc.AddVertex(pos);
                     rendererPositions.Add(pos);
-                    Vector3 back = pos;
-                    back = back + fp.transform.up * -0.1f;
-                    //_pointDrawerSc.AddBackVertex(back);
+
+                    //Vector3 p = Coral.transform.position;
+                    //p.y = fp.transform.position.y;
+                    //fp.transform.LookAt(p);
+                    //fp.transform.rotation.x = pos.x;
+                    //Vector3 back = pos;
+                    //back = back + fp.transform.forward * 0.1f;
+
+                    //_pointDrawerSc.AddBackVertex(vec);
                     _pointDrawerSc.LineCreate();
                     fp.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
                     _dotList.Add(fp);
@@ -140,15 +149,31 @@ public class Footprints : MonoBehaviour
     {
         //新規生成
         OldNormal = CheckNormal();
-        OldRotation = gameObject.transform.rotation.eulerAngles;
+        OldRotation = this.gameObject.transform.rotation.eulerAngles;
         GameObject fp = Instantiate(footpoints, FootPoint.transform);
         fp.transform.position = CheckPoint();
-        fp.transform.rotation = gameObject.transform.rotation;
-
+        //fp.transform.rotation = this.gameObject.transform.rotation;
         _pointDrawerSc.AddVertex(fp.transform.position);
-        Vector3 back = fp.transform.position;
-        back = back + fp.transform.up * -0.1f;
-        //_pointDrawerSc.AddBackVertex(back);
+        //Vector3 p = Coral.transform.position;
+        //p.y = fp.transform.position.y;
+        //fp.transform.LookAt(p);
+        //Vector3 centerpos = transform.TransformPoint(Center.transform.localPosition);
+        Vector3 hedpos = Hed.transform.position;
+        MeshVector = fp.transform.position - hedpos;
+        //MeshVector.y = fp.transform.position.y;
+        //MeshVector.x = fp.transform.position.x;
+        //MeshVector = MeshVector.normalized;
+        //var vec = MeshVector * -5f;
+        //var vec = CheckPoint() * -3f;
+        //vec = transform.TransformPoint(vec);
+        Debug.Log(fp.transform.position);
+        Debug.Log(hedpos);
+        Debug.Log(MeshVector);
+        GameObject fp2 = Instantiate(footpoints, FootPoint.transform);
+        fp2.transform.position = MeshVector + fp.transform.position;
+        //Vector3 back = fp.transform.position;
+        //back = back + fp.transform.forward * 0.1f;
+        //_pointDrawerSc.AddBackVertex(vec);
         fp.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
         _dotList.Add(fp);
         rendererPositions.Add(CheckPoint());

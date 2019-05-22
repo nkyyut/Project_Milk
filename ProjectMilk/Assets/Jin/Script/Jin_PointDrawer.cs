@@ -23,14 +23,13 @@ public class Jin_PointDrawer : MonoBehaviour
     int dotnum;
     bool IsChangeDirection;
     public bool IsAllMeshCreate;
-    private bool Rightturn;
 
     private int AllList_Index;
 
     private Vector3 MeshForawd;
 
     [SerializeField]
-    public float CutScaleZ = 0.05f;
+    public float CutScaleZ = 0.1f;
 
     [SerializeField]
     private DrawMesh _drawMesh;
@@ -106,6 +105,20 @@ public class Jin_PointDrawer : MonoBehaviour
         }
     }
 
+    private Vector3 CenterPoint(List<Vector3> vert)
+    {
+        Vector3 center = Vector3.zero;
+
+        //頂点の平均をとって中心点を作る
+        foreach (Vector3 point in vert)
+        {
+            center += point;
+        }
+        center = center / vert.Count;
+
+        return center;
+    }
+
     private void Awake()
     {
         MARUTA = GameObject.Find("edasan1");
@@ -178,6 +191,7 @@ public class Jin_PointDrawer : MonoBehaviour
         go.GetComponent<MeshRenderer>().material = _material;
         ////go.transform.position += go.transform.forward * -0.05f;
         go.AddComponent<MeshCollider>();
+        
         if (go.GetComponent<MeshCollider>())
         {
             try
@@ -197,11 +211,11 @@ public class Jin_PointDrawer : MonoBehaviour
         FrontMesh = go;
         go.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
         _meshList.Add(go);
-
+        CenterPoint(_vertices);
+        //Vector3 cenvec = 
         //奥のオブジェクト生成
         GameObject go2 = _drawMesh.CreateMesh(_vertices);
         go2.GetComponent<MeshRenderer>().material = _material;
-        //go2.transform.position = go2.transform.position + go2.transform.forward * CutScaleZ;
         go2.transform.localPosition = go2.transform.localPosition + go2.transform.forward * CutScaleZ;
         go2.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
         go2.AddComponent<MeshCollider>();
@@ -213,7 +227,7 @@ public class Jin_PointDrawer : MonoBehaviour
 
         MeshFilter mf = go2.GetComponent<MeshFilter>();
         Vector3[] mfVert = mf.mesh.vertices;
-        for(int i=0; i<mfVert.Length; i++)
+        for (int i = 0; i < mfVert.Length; i++)
         {
             mfVert[i] = mfVert[i] + go2.transform.forward * CutScaleZ;
         }
@@ -244,13 +258,13 @@ public class Jin_PointDrawer : MonoBehaviour
         meshob.GetComponent<Subtractor>().maskMaterial = _maskMaterial;
         _meshList.Add(meshob);
 
-        //１つにまとめる
+
 
         GameObject AllMeshObject = new GameObject("AllMeshObject", typeof(MeshFilter), typeof(MeshRenderer));
         go.transform.parent = AllMeshObject.transform;
         go2.transform.parent = AllMeshObject.transform;
         meshob.transform.parent = AllMeshObject.transform;
-
+        //オブジェクトを一つに結合
         MeshFilter[] meshFilters = AllMeshObject.GetComponentsInChildren<MeshFilter>();
         CombineInstance[] _combine = new CombineInstance[meshFilters.Length];
         int h = 0;
@@ -269,20 +283,38 @@ public class Jin_PointDrawer : MonoBehaviour
         AllMeshObject.GetComponent<MeshRenderer>().material = _material;
         AllMeshObject.AddComponent<Subtractor>();
         AllMeshObject.GetComponent<Subtractor>().maskMaterial = _maskMaterial;
-        AllMeshObject.transform.position = AllMeshObject.transform.position + AllMeshObject.transform.forward * -0.1f;
+        AllMeshObject.transform.position = AllMeshObject.transform.position + AllMeshObject.transform.forward * -0.05f;
         //AllMeshObject.AddComponent<Jin_DropMover>();
         //AllMeshObject.GetComponent<Jin_DropMover>().SetPieceState_DROP();
-
         AllMeshObject.tag = ("DropBlock");
         Mesh allmesh = AllMeshObject.GetComponent<MeshFilter>().mesh;
-        if(Rightturn)
+        if (0 > getArea(_vertices.ToArray()))
             AllMeshObject.GetComponent<MeshFilter>().mesh.SetTriangles(allmesh.triangles.Reverse().ToArray(), 0);
-        //AllMeshObject.GetComponent<MeshFilter>().mesh.RecalculateNormals();
         _allMeshObject.Add(AllMeshObject);
 
+
+
+        GameObject DropMeshObject = new GameObject("DropMeshObject");
+        GameObject front = Instantiate(go);
+        GameObject back  = Instantiate(go2);
+        GameObject between = Instantiate(meshob);
+
+        front.SetActive(true);
+        back.SetActive(true);
+        between.SetActive(true);
+
+        front.transform.parent = DropMeshObject.transform;
+        back.transform.parent = DropMeshObject.transform;
+        between.transform.parent = DropMeshObject.transform;
+
+        front.GetComponent<MeshRenderer>().material = _dotMat;
+        back.GetComponent<MeshRenderer>().material = _dotMat;
+        between.GetComponent<MeshRenderer>().material = _dotMat;
+
+        DropMeshObject.AddComponent<Jin_DropMover>();
+        DropMeshObject.GetComponent<Jin_DropMover>().SetPieceState_DROP();
         
         IsAllMeshCreate = true;
-
         //メッシュを表示するため
         //go.gameObject.AddComponent<MeshInfo>();
         //go2.gameObject.AddComponent<MeshInfo>();
@@ -294,6 +326,19 @@ public class Jin_PointDrawer : MonoBehaviour
         IsChangeDirection = false;
         //_vertices.Clear();
         //back_dotList.Clear();
+    }
+
+    //多角形の右回り左回りを判定
+    private float getArea(Vector3[] vec)
+    {
+        float S = 0;
+        for(int i =0; i<vec.Length; i++)
+        {
+            Vector3 a = vec[i];
+            Vector3 b = (i < vec.Length-1) ? vec[i+1] : vec[0];
+            S += a.x * b.y - a.y * b.x;
+        }
+        return S / 2;
     }
 
     private GameObject CreateCircleMesh(List<Vector3> vertices)
@@ -402,15 +447,9 @@ public class Jin_PointDrawer : MonoBehaviour
             GameObject Lineobj = Instantiate(Line, transform.position, transform.rotation) as GameObject;
             Lineobj.transform.position = (myPoint[0] + myPoint[1]) / 2;
             if (myPoint[0].x < myPoint[1].x)
-            {
                 MeshForawd = Lineobj.transform.right = (myPoint[1] - myPoint[0]).normalized;
-                Rightturn = true;
-            }
             else
-            {
                 MeshForawd = Lineobj.transform.right = (myPoint[0] - myPoint[1]).normalized;
-                Rightturn = false;
-            }
                 
             //Lineobj.transform.right = (myPoint[1] - myPoint[0]).normalized;
             Lineobj.transform.localScale = new Vector3((myPoint[1] - myPoint[0]).magnitude, 0.005f, 0.005f);
