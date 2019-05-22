@@ -16,6 +16,7 @@ public class PlayerControl : MonoBehaviour
     {
         MAIN,
         PAUSE,
+        FREE,
     }
     public SCENE_TYPE scene;
     void Start()
@@ -28,6 +29,10 @@ public class PlayerControl : MonoBehaviour
     void Update()
     {
 
+        CameraTest.SCENE_TYPE CameraScene;
+        CameraScene = Camera.main.GetComponent<CameraTest>().scene;
+        int Cscene = (int)CameraScene;
+        scene = (SCENE_TYPE)Cscene;
 
         switch (scene)
         {
