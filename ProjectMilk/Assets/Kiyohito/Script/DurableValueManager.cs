@@ -8,13 +8,15 @@ public class DurableValueManager : MonoBehaviour {
     int RecoveryPoint;
     float InitAreaValue;
     float TotalAreaValue;
-    float NowDurableValue;
+    int NowDurableValue;
     public GameObject DurableIMG;
     public GameObject DurableTXT;
     Image DurableImg;
     Text DurableTxt;
     public Sprite[] ImageChangeSpriteArray;
-    public Material[] TextChangeColorArray;
+    public Color[] TextChangeColorArray;
+    int ChangeSpritePoint;
+    float ChangeSpriteValue;
     int ChangeColorPoint;
     float ChangeColorValue;
 
@@ -30,7 +32,7 @@ public class DurableValueManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         //Debug.Log(CoralPartsArray.Length);
-        Debug.Log("TotalAreaValue"+TotalAreaValue);
+        //Debug.Log("TotalAreaValue"+TotalAreaValue);
     }
 
 
@@ -38,15 +40,21 @@ public class DurableValueManager : MonoBehaviour {
     void Initialize()
     {
         RecoveryPoint = 0;
-
-        NowDurableValue = KiyohitoConst.Const.DurableValueMax;
+        NowDurableValue = (int)KiyohitoConst.Const.DurableValueMax;
         CoralPartsArray = GameObject.FindGameObjectsWithTag("Coral");
-        ChangeColorPoint = 1;
+        ChangeColorPoint = TextChangeColorArray.Length;
         ChangeColorValue = KiyohitoConst.Const.DurableValueMax / TextChangeColorArray.Length;
         DurableImg = DurableIMG.gameObject.GetComponent<Image>();
         DurableTxt = DurableTXT.gameObject.GetComponent<Text>();
         InitAreaValue = CheckTotalArea();
         TotalAreaValue = InitAreaValue;
+        ChangeSpritePoint = ImageChangeSpriteArray.Length;
+        ChangeSpriteValue = KiyohitoConst.Const.DurableValueMax / ImageChangeSpriteArray.Length;
+        float Work = TotalAreaValue / InitAreaValue;
+        NowDurableValue = (int)(KiyohitoConst.Const.DurableValueMax * Work);
+        ChangeString(NowDurableValue);
+        SetSprite();
+        SetColor();
     }
 
 
@@ -87,7 +95,7 @@ public class DurableValueManager : MonoBehaviour {
             ForeignProduct_AB_AC = Vector3.Cross(VectorAB, VectorAC);
             Vector3 scale = Parts.transform.lossyScale;
             ForeignProduct_AB_AC = new Vector3(ForeignProduct_AB_AC.x * scale.x, ForeignProduct_AB_AC.y * scale.y, ForeignProduct_AB_AC.z * scale.z);
-
+            //Debug.Log("LossyScale" + Parts.transform.lossyScale);
             Area_ABC = ForeignProduct_AB_AC.magnitude / 2;
 
             MeshArea += Area_ABC;
@@ -106,18 +114,17 @@ public class DurableValueManager : MonoBehaviour {
         DurableTxt.text = NewDurableValue.ToString() + "%";
     }
 
-    void ChangeColor(Material NewColor)
+    void ChangeColor(int NewColorValue)
     {
-        DurableTxt.color = NewColor.color;
+        DurableTxt.color = TextChangeColorArray[NewColorValue];
     }
 
     float CheckTotalArea()
     {
         float TotalArea = 0;
-        //Debug.Log("In");
-        //Debug.Log("Length"+CoralPartsArray.Length);
         for (int i = 0; i < CoralPartsArray.Length; i++)
         {
+            //Debug.Log("CoralPartsArray"+ CoralPartsArray.Length);
             TotalArea += CoralPartsArray[i].GetComponent<CoralStatus>().GetArea();
             //Debug.Log("CoralPartsArray[i].GetComponent<CoralStatus>().GetArea()"+ CoralPartsArray[i].GetComponent<CoralStatus>().GetArea());
             
@@ -128,13 +135,46 @@ public class DurableValueManager : MonoBehaviour {
     public void SubMeshArea(GameObject SubObject)
     {
         float SubValue = CalculateMeshArea(SubObject);
-        Debug.Log("TotalAreaValue"+TotalAreaValue);
-        Debug.Log("SubValue"+SubValue);
+        Debug.Log("TotalAreaValue" + TotalAreaValue);
+        Debug.Log("SubValue" + SubValue);
 
         TotalAreaValue -= SubValue;
         float Work = TotalAreaValue / InitAreaValue;
-        int Work2= (int)(100 * Work);
-        ChangeString(Work2);
+        NowDurableValue= (int)(KiyohitoConst.Const.DurableValueMax * Work);
+        ChangeString(NowDurableValue);
+        SetSprite();
+        SetColor();
+
+    }
+
+    void SetSprite()
+    {
+
+        if ((int)(NowDurableValue / ChangeSpriteValue) < ChangeSpritePoint)
+        {
+            ChangeSpritePoint = (int)(NowDurableValue / ChangeSpriteValue);
+            int NewSpriteValue = ImageChangeSpriteArray.Length - ChangeSpritePoint;
+            //Debug.Log("NewSpriteValue"+NewSpriteValue);
+            if (NewSpriteValue <= ImageChangeSpriteArray.Length)
+            {
+                ChangeSprite(NewSpriteValue - 1);
+            }
+        }
+
+    }
+
+    void SetColor()
+    {
+        if ((int)(NowDurableValue / ChangeColorValue) < ChangeColorPoint)
+        {
+            ChangeColorPoint = (int)(NowDurableValue / ChangeColorValue);
+            int NewColorValue = TextChangeColorArray.Length - ChangeColorPoint;
+            //Debug.Log("NewColorValue" + NewColorValue);
+            if (NewColorValue <= TextChangeColorArray.Length)
+            {
+                ChangeColor(NewColorValue - 1);
+            }
+        }
     }
 
     public void AddRecoveryPoint()

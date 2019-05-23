@@ -67,6 +67,7 @@ public class CoralStatus : MonoBehaviour {
             float Area_ABC=0.00000f;
             ForeignProduct_AB_AC = Vector3.Cross(VectorAB, VectorAC);
             Vector3 scale = Parts.transform.lossyScale;
+            //Debug.Log("LossyScale"+ Parts.transform.lossyScale);
             ForeignProduct_AB_AC=new Vector3(ForeignProduct_AB_AC.x * scale.x, ForeignProduct_AB_AC.y * scale.y, ForeignProduct_AB_AC.z * scale.z);
 
             Area_ABC = ForeignProduct_AB_AC.magnitude / 2;
@@ -74,6 +75,7 @@ public class CoralStatus : MonoBehaviour {
             MeshArea += Area_ABC;
 
         }
+        //Debug.Log(Parts.transform.name+"MeshArea"+MeshArea);
         return Mathf.Abs(MeshArea);
     }
 

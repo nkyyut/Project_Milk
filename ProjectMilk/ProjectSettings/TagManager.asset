@@ -10,6 +10,7 @@ TagManager:
   - LastLine
   - Line
   - DropBlock
+  - InvisibleObjects
   layers:
   - Default
   - TransparentFX
