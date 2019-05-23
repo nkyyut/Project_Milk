@@ -6,7 +6,8 @@ using UnityEngine;
 
 public class PlayerControl : MonoBehaviour
 {
-   
+    public CameraTest CameraScene;
+
     [SerializeField] Vector3 StatePos;
     public float movespeed = 0.01f;
     private Vector3 playerForward;
@@ -31,10 +32,13 @@ public class PlayerControl : MonoBehaviour
     void Update()
     {
 
-        CameraTest.SCENE_TYPE CameraScene;
-        CameraScene = Camera.main.GetComponent<CameraTest>().scene;
-        int Cscene = (int)CameraScene;
-        scene = (SCENE_TYPE)Cscene;
+        //CameraTest.SCENE_TYPE CameraScene;
+        //CameraScene = Camera.main.GetComponent<CameraTest>().scene;
+        //int Cscene = (int)CameraScene;
+        //scene = (SCENE_TYPE)Cscene;
+
+        int Cscene = (int)CameraScene.Pscene;
+         scene = (SCENE_TYPE)Cscene;
 
         switch (scene)
         {
@@ -49,9 +53,7 @@ public class PlayerControl : MonoBehaviour
                     PmoveFlg = false;
 
                 playerForward = new Vector3(transform.position.x, Camera.main.transform.position.y, transform.position.z) - Camera.main.transform.position;
-
                 Vector3 cameraForward = Vector3.Scale(playerForward , new Vector3(1, 1, 1)).normalized;
-                //Debug.Log(cameraForward);
                 Vector3 moveForward = cameraForward * InputV + Camera.main.transform.right * InputH;
 
                 if (InputH != 0 || InputV != 0)

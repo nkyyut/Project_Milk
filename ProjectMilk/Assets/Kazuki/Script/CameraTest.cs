@@ -7,7 +7,7 @@ using UnityEngine;
 public class CameraTest : MonoBehaviour
 {
 
-    public PlayerController Playercontrol;
+    public PlayerControl Playercontrol;
 
     public GameObject Player;
     public GameObject SangoFree;
@@ -18,10 +18,16 @@ public class CameraTest : MonoBehaviour
     private Vector3 CtransformBox;
     private Quaternion CrotationBox;
 
+    private Vector3 movepos;
+    private Quaternion moverote;
+    private Vector3 Setmovepos;
+    private Quaternion Setmoverote;
+
     public Transform Settransform;
     public Transform SetFreetransform;
 
     bool FreeFlg;
+    private bool MoveFlg;
     public bool PmoveFlg;
 
     float InputH;
@@ -35,7 +41,7 @@ public class CameraTest : MonoBehaviour
     }
     public SCENE_TYPE scene;
 
-
+    public SCENE_TYPE Pscene { get { return scene; } }
 
 
 
@@ -45,12 +51,14 @@ public class CameraTest : MonoBehaviour
         targetPos = Player.transform.position;
         CameraPos = transform.position;
         Settransform.position = CameraPos;
+        MoveFlg = false;
         FreeFlg = false;
     }
 
 
     void Update()
     {
+       
         if (Input.GetAxis("TriggerL") < 0)
             scene = SCENE_TYPE.FREECAMERA;
         else 
@@ -65,7 +73,7 @@ public class CameraTest : MonoBehaviour
                     transform.position = CtransformBox;
                     targetPos = Player.transform.position;
                     transform.rotation = CrotationBox;
-                    CameraPos = Settransform.position - Player.transform.position;
+                    //CameraPos = Settransform.position - Player.transform.position;
                     FreeFlg = false;
                 }
 
@@ -73,29 +81,48 @@ public class CameraTest : MonoBehaviour
                 {
                     InputH = Input.GetAxisRaw("HorizontalR");
                     InputV = Input.GetAxisRaw("VerticalR");
+
+                    if (InputH + InputV != 0)
+                        MoveFlg = false;
+                    if (MoveFlg == false)
+                    {
+                        movepos = transform.position;
+                        moverote = transform.rotation;
+                        Setmovepos = Settransform.position;
+                        Setmoverote = Player.transform.rotation;
+                        MoveFlg = true;
+                    }
+
                 }
                 else
                 {
+                    if(MoveFlg == true)
+                    {
+                        //transform.position = movepos;
+                        transform.rotation = moverote;
+                        Settransform.position = Setmovepos;
+                        Settransform.rotation = Setmoverote;
+                        MoveFlg = false;
+                    }
                     InputH = 0;
                     InputV = 0;
                 }
-                if(FreeFlg == false)
-                {
-                    CtransformBox = transform.position;
-                    CrotationBox = transform.rotation;
-                }
-
                 break;
+
             case SCENE_TYPE.PAUSE:
                 InputH = 0;
                 InputV = 0;
                 break;
+
             case SCENE_TYPE.FREECAMERA:
                 
                 if (FreeFlg == false)
                 {
+                    CtransformBox = Settransform.position;
+                    CrotationBox = transform.rotation;
                     transform.position = SetFreetransform.position;
                     transform.rotation = SetFreetransform.rotation;
+                    
                     FreeFlg = true;
                 }
                 targetPos = SangoFree.transform.position;
@@ -109,7 +136,7 @@ public class CameraTest : MonoBehaviour
 
     private void LateUpdate()
     {
-
+        
         switch (scene)
         {
             case SCENE_TYPE.MAIN:
