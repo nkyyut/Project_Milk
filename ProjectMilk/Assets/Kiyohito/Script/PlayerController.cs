@@ -6,8 +6,12 @@ public class PlayerController : MonoBehaviour {
     public float MoveSpeed = 15;
     public Vector3 MoveDir;
     Rigidbody rigitbody;
-	// Use this for initialization
-	void Start () {
+
+    //かずき追加
+    private bool PmoveFlg = false;
+    public bool chang { get { return PmoveFlg; } }
+    // Use this for initialization
+    void Start () {
 
         rigitbody = this.gameObject.GetComponent<Rigidbody>();
     }
@@ -16,7 +20,10 @@ public class PlayerController : MonoBehaviour {
 	void Update () {
         
         MoveDir = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")).normalized;
-
+        if(Input.GetAxis("Horizontal") + Input.GetAxis("Vertical") != 0)
+            PmoveFlg = true;
+        else
+            PmoveFlg = false;
     }
 
     void FixedUpdate()
