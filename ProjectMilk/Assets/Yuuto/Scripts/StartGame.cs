@@ -26,7 +26,7 @@ public class StartGame : MonoBehaviour {
 
         if(waitTime > 3)
         {
-            FadeManager.Instance.LoadScene("GameMainScene", 0.5f);
+            FadeManager.Instance.LoadScene("GameMainScene", 0.3f);
         }
 	}
 
