@@ -177,7 +177,7 @@ public class UIManager : MonoBehaviour {
     private void LoadMainScene()
     {
         Debug.Log("メインへ遷移");
-        //FadeManager.Instance.LoadScene("GameMainScene", 0.5f);
+        FadeManager.Instance.LoadScene("GameMainScene", 0.5f);
     }
 
     private void ParametersReset()
