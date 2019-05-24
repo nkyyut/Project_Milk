@@ -19,15 +19,6 @@ public class StartGame : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (startFLG)
-        {
-            waitTime += Time.deltaTime;
-        }
-
-        if(waitTime > 3)
-        {
-            FadeManager.Instance.LoadScene("StoryScene", 0.3f);
-        }
 	}
 
     /// <summary>
@@ -42,6 +33,15 @@ public class StartGame : MonoBehaviour {
             BGMManager.PlayOneShot(bubbleSe);
             bubbleEffects.Play();
             startFLG = true;
+        }
+        if (startFLG)
+        {
+            waitTime += Time.deltaTime;
+        }
+
+        if (waitTime > 3)
+        {
+            FadeManager.Instance.LoadScene("StoryScene", 0.3f);
         }
     }
 }
