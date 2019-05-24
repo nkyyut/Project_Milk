@@ -62,6 +62,14 @@ public class TitleUIManager : MonoBehaviour
                 Application.Quit();
             }
         }
+        if (!Input.GetKey("joystick button 0") && startPressTime <= PressLimit)
+        {
+            if (endPressTime > 0)
+            {
+                endPressTime -= Time.deltaTime;
+                endButton.SetFillDownFlg();
+            }
+        }
 
         if (startFLG)
         {
