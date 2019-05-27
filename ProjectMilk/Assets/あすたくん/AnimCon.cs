@@ -40,7 +40,8 @@ public class AnimCon : MonoBehaviour {
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "Onihitode")
+        if(!anim.GetCurrentAnimatorStateInfo(0).IsName("Stan") && 
+            collision.gameObject.tag == "Onihitode")
         {
             anim.SetTrigger("Hit");
         }
