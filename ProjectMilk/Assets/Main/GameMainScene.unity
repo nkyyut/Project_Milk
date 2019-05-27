@@ -1419,8 +1419,8 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0.42, z: 0}
+  m_Radius: 0.1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &405995313
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2380,8 +2380,8 @@ GameObject:
   - component: {fileID: 717219188}
   - component: {fileID: 717219187}
   - component: {fileID: 717219186}
-  - component: {fileID: 717219185}
   - component: {fileID: 717219184}
+  - component: {fileID: 717219185}
   m_Layer: 0
   m_Name: OnihitodeComp
   m_TagString: Onihitode
@@ -2414,8 +2414,8 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.0053414935
-  m_Center: {x: 0.0000000010251132, y: 4.4659144e-11, z: 0.0033035004}
+  m_Radius: 0.002
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &717219186
 MonoBehaviour:
   m_ObjectHideFlags: 0
