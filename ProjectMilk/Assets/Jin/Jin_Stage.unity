@@ -491,6 +491,8 @@ MonoBehaviour:
   _material: {fileID: 2100000, guid: aef3e9503aeaf87478cf32728746333c, type: 2}
   _maskMaterial: {fileID: 2100000, guid: b9b7348442c8d4873a34de4f483d1e93, type: 2}
   _threshold: 0.1
+  footpoints: {fileID: 1181687140550412, guid: 6efe01df9360cf544a5871e239eb0a47, type: 2}
+  FootPoint_Parent: {fileID: 941780114}
   _vertices: []
   _meshList: []
   back_vertices: []
@@ -1452,6 +1454,15 @@ Prefab:
       propertyPath: Hed
       value: 
       objectReference: {fileID: 2042790108}
+    - target: {fileID: 114778398022300644, guid: 0cc9b2c67291d8143bb34861d128b9cf,
+        type: 2}
+      propertyPath: blueMa
+      value: 
+      objectReference: {fileID: 2100000, guid: c3ce114ce0eb8b847a068675f528ba50, type: 2}
+    - target: {fileID: 1943757814108468, guid: 0cc9b2c67291d8143bb34861d128b9cf, type: 2}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114334517858062178, guid: 0cc9b2c67291d8143bb34861d128b9cf, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 0cc9b2c67291d8143bb34861d128b9cf, type: 2}
@@ -8230,34 +8241,6 @@ Transform:
   m_Father: {fileID: 981536714}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1994142875
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1994142876}
-  m_Layer: 0
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1994142876
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1994142875}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: -1, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 22
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1001 &1999212757
 Prefab:
   m_ObjectHideFlags: 0
