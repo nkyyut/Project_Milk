@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class Footprints : MonoBehaviour
 {
@@ -8,7 +9,10 @@ public class Footprints : MonoBehaviour
     [SerializeField] GameObject footpoints; // 子
     [SerializeField] GameObject FootPoint; // 親
     [SerializeField] GameObject pointDrawer;
+    [SerializeField] GameObject Hed;
     Jin_PointDrawer _pointDrawerSc;
+
+    public Material blueMa;
 
     RaycastHit LogHit;
 
@@ -17,7 +21,12 @@ public class Footprints : MonoBehaviour
     private Vector3 OldRotation;
     private Vector3 OldNormal;
 
-    private List<GameObject> _dotList = new List<GameObject>();
+    Vector3 cameraForward;
+
+    private List<GameObject> _dotList    = new List<GameObject>();
+    private List<List<GameObject>> All_dotList = new List<List<GameObject>>();
+
+    private bool IsButtonUp = false;
 
     // キリトリモードのフラグ
     protected bool isDrawing = false;
@@ -46,6 +55,7 @@ public class Footprints : MonoBehaviour
     private void Start()
     {
         _pointDrawerSc = pointDrawer.GetComponent<Jin_PointDrawer>();
+        cameraForward = Vector3.Scale(Camera.main.transform.forward, new Vector3(1, 0, 1)).normalized;
     }
 
     void Update()
@@ -55,10 +65,49 @@ public class Footprints : MonoBehaviour
             if (!isDrawing)
                 CreateLineRoot();
             isDrawing = true;
+            IsButtonUp = true;
         }
         if (Input.GetAxis("RT_Botton") == 0)
         {
-            Clear();
+            if (IsButtonUp)
+            {
+                foreach (GameObject line in _pointDrawerSc._lineList)
+                {
+                    line.AddComponent<HitEnemy>();
+                    line.tag = "OldLine";
+                    line.GetComponent<MeshRenderer>().enabled = true;
+                }
+                List<GameObject> list = new List<GameObject>();
+                List<GameObject> dot = new List<GameObject>();
+
+                list.AddRange(_pointDrawerSc._lineList);
+                dot.AddRange(_dotList);
+
+                _pointDrawerSc.All_lineList.Add(list);
+                All_dotList.Add(dot);
+                if (_pointDrawerSc.All_lineList.Count > 3)
+                {
+                    for (int i = 0; i < _pointDrawerSc.All_lineList[0].Count; i++)
+                    {
+                        Destroy(_pointDrawerSc.All_lineList[0][i]);
+                        Destroy(All_dotList[0][i]);
+                    }
+                    foreach(GameObject _dot in All_dotList[0])
+                        Destroy(_dot);
+
+                    _pointDrawerSc.All_lineList.Remove(_pointDrawerSc.All_lineList[0]);
+                    All_dotList.Remove(All_dotList[0]);
+                }
+
+                isDrawing = false;
+                VertNum = 0;
+                //Clear();
+                rendererPositions.Clear();
+                _pointDrawerSc._lineList.Clear();
+                IsButtonUp = false;
+
+            }
+
         }
         if (isDrawing)
         {
@@ -71,19 +120,21 @@ public class Footprints : MonoBehaviour
     RaycastHit CheckPolygonToRayCast()
     {
         RaycastHit hit;
-        if (Physics.Raycast(gameObject.transform.position, -transform.up, out hit, float.PositiveInfinity))
-        {
-            if (hit.collider.transform.tag == "Coral")
-            {
-                LogHit = hit;
-                return hit;
-            }
-            else return LogHit;
-        }
-        else
-        {
-            return LogHit;
-        }
+        Physics.Raycast(gameObject.transform.position, -transform.up, out hit, float.PositiveInfinity);
+        //if (Physics.Raycast(gameObject.transform.position, -transform.up, out hit, float.PositiveInfinity))
+        //{
+        //    if (hit.collider.transform.tag == "Coral")
+        //    {
+        //        //LogHit = hit;
+        //        return hit;
+        //    }
+        //    //else return LogHit;
+        //}
+        //else
+        //{
+        //    return LogHit;
+        //}
+        return hit;
     }
 
     Vector3 CheckPoint()
@@ -93,7 +144,7 @@ public class Footprints : MonoBehaviour
         return hit.point;
     }
 
-    Vector3 CheckNormal()
+    public Vector3 CheckNormal()
     {
         RaycastHit hit;
         hit = CheckPolygonToRayCast();
@@ -115,15 +166,21 @@ public class Footprints : MonoBehaviour
                 {
                     VertNum++;
                     GameObject fp = Instantiate(footpoints, FootPoint.transform);
-                    fp.transform.rotation = gameObject.transform.rotation;
+                    //fp.transform.rotation = gameObject.transform.rotation;
                     fp.transform.position = pos;
                     _pointDrawerSc.AddVertex(pos);
-                    Vector3 back = fp.transform.forward * -0.1f;
-                    _pointDrawerSc.AddBackVertex(pos);
+                    rendererPositions.Add(pos);
+                    Quaternion TargetRotation = Quaternion.FromToRotation(fp.gameObject.transform.up, CheckNormal()) * fp.gameObject.transform.rotation;
+                    fp.transform.rotation = Quaternion.Slerp(fp.transform.rotation, TargetRotation, 10);
+                    GameObject fp2 = Instantiate(footpoints, FootPoint.transform);
+                    Vector3 vec = CheckNormal();
+                    fp2.transform.position = fp.transform.position + fp.transform.up * -0.05f;
+                    fp2.GetComponent<MeshRenderer>().material = blueMa;
+                    _pointDrawerSc.AddBackVertex(fp2.transform.position);
                     _pointDrawerSc.LineCreate();
                     fp.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
                     _dotList.Add(fp);
-                    rendererPositions.Add(pos);
+
                     OldNormal = CheckNormal();
                 }
         }
@@ -133,14 +190,18 @@ public class Footprints : MonoBehaviour
     {
         //新規生成
         OldNormal = CheckNormal();
-        OldRotation = gameObject.transform.rotation.eulerAngles;
+        OldRotation = this.gameObject.transform.rotation.eulerAngles;
         GameObject fp = Instantiate(footpoints, FootPoint.transform);
         fp.transform.position = CheckPoint();
-        fp.transform.rotation = gameObject.transform.rotation;
-
+        //fp.transform.rotation = this.gameObject.transform.rotation;
+        Quaternion TargetRotation = Quaternion.FromToRotation(fp.gameObject.transform.up, CheckNormal()) * fp.gameObject.transform.rotation;
+        fp.transform.rotation = Quaternion.Slerp(fp.transform.rotation, TargetRotation, 10);
         _pointDrawerSc.AddVertex(fp.transform.position);
-        Vector3 back = fp.transform.forward * -0.1f;
-        _pointDrawerSc.AddBackVertex(fp.transform.position);
+        GameObject fp2 = Instantiate(footpoints, FootPoint.transform);
+        Vector3 vec = CheckNormal();
+        fp2.transform.position = fp.transform.position + fp.transform.up * -0.05f;
+        fp2.GetComponent<MeshRenderer>().material = blueMa;
+        _pointDrawerSc.AddBackVertex(fp2.transform.position);
         fp.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
         _dotList.Add(fp);
         rendererPositions.Add(CheckPoint());

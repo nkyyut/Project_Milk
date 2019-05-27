@@ -12,7 +12,7 @@ public class OniCount : MonoBehaviour {
 
     GameObject[] Onihitode;
 
-    bool isKiritori = false;
+    int kiritoriPhase = 0;
 
 
     private void Start()
@@ -20,24 +20,30 @@ public class OniCount : MonoBehaviour {
         OnihitodeNum.text = Count().ToString();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-        if (Input.GetMouseButtonUp(1))
+        if (Input.GetAxis("RT_Botton") == -1)
         {
-            isKiritori = true;
+            kiritoriPhase = 1;
+        }
+        if(Input.GetAxis("RT_Botton") == 0)
+        {
+            if (kiritoriPhase == 1)
+            {
+                kiritoriPhase = 2;
+            }
         }
 
-        if (isKiritori)
+        if (kiritoriPhase == 2)
         {
             Timer += Time.deltaTime;
             if(Timer > interval)
             {
                 OnihitodeNum.text = Count().ToString();
                 Timer = 0;
-                isKiritori = false;
+                kiritoriPhase = 0;
             }
         }
-
     }
 
     private int Count()

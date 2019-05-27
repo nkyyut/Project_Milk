@@ -8,8 +8,7 @@ using System;
 
 public class Jin_PointDrawer : MonoBehaviour
 {
-    [SerializeField]
-    DurableValueManager DurableValueManager;
+
     //切断面に適用するマテリアル
     public Material capMaterial;
 
@@ -20,16 +19,16 @@ public class Jin_PointDrawer : MonoBehaviour
     GameObject MARUTA;
 
     public GameObject FrontMesh;
-    public GameObject _AllMeshObject;
 
     int dotnum;
     bool IsChangeDirection;
-    public bool IsMeshCreate;
+    public bool IsAllMeshCreate;
+    RaycastHit LogHit;
 
-    private int AllList_Index;
+    private Vector3 MeshForawd;
 
     [SerializeField]
-    public float CutScaleZ = 0.2f;
+    public float CutScaleZ = 0.1f;
 
     [SerializeField]
     private DrawMesh _drawMesh;
@@ -48,7 +47,12 @@ public class Jin_PointDrawer : MonoBehaviour
     private Material _material;
 
     [SerializeField]
+    private Material _maskMaterial;
+
+    [SerializeField]
     private float _threshold = 0.1f;
+
+    [SerializeField] GameObject footpoints;
 
     private float _sqrThreshold = 0;
 
@@ -63,13 +67,12 @@ public class Jin_PointDrawer : MonoBehaviour
     public List<Vector3> back_vertices = new List<Vector3>();
 
     public List<GameObject> _lineList = new List<GameObject>();
-    private List<List<GameObject>> All_lineList = new List<List<GameObject>>();
+    public List<List<GameObject>> All_lineList = new List<List<GameObject>>();
     private List<List<Vector3>> All_verticesList = new List<List<Vector3>>();
 
-    private List<Vector3> _target_vertices = new List<Vector3>();
     private List<Vector3> _localvertices = new List<Vector3>();
 
-    private List<Vector3> _AllVec = new List<Vector3>();
+    public List<GameObject> _allMeshObject = new List<GameObject>();
 
     public Footprints GetFootprints()
     {
@@ -100,161 +103,51 @@ public class Jin_PointDrawer : MonoBehaviour
         }
     }
 
+    private Vector3 CenterPoint(List<Vector3> vert)
+    {
+        Vector3 center = Vector3.zero;
+
+        //頂点の平均をとって中心点を作る
+        foreach (Vector3 point in vert)
+        {
+            center += point;
+        }
+        center = center / vert.Count;
+
+        return center;
+    }
+
+    RaycastHit CheckPolygonToRayCast()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(CenterPoint(_vertices), transform.up, out hit, float.PositiveInfinity))
+        {
+            if (hit.collider.transform.tag == "Coral")
+            {
+                LogHit = hit;
+                return hit;
+            }
+            else return LogHit;
+        }
+        else
+        {
+            return LogHit;
+        }
+    }
+
     private void Awake()
     {
-        MARUTA = GameObject.Find("MARUTA");
-        IsMeshCreate = false;
+        MARUTA = GameObject.Find("edasan1");
+        IsAllMeshCreate = false;
         _sqrThreshold = _threshold * _threshold;
     }
 
     private void Update()
     {
-        if(_AllMeshObject)
-            if(_AllMeshObject.transform.position.y <= -5)
-                Destroy(_AllMeshObject);
-
-        //if (Input.GetMouseButton(0))
+        //if (Input.GetKeyDown(KeyCode.Q))
         //{
-        //    //_lineList = new List<GameObject>();
-        //    TryRaycast();
+        //    Clear();
         //}
-
-        if (Input.GetMouseButtonUp(0))
-        {
-
-            //MeshFilter filter = MARUTA.GetComponent<MeshFilter>();
-            //_target_vertices.AddRange(filter.mesh.vertices);
-
-            //int _target_verticesNum = _target_vertices.Count;
-
-            //int[] triangles = filter.mesh.triangles;
-
-            //_target_vertices.AddRange(_localvertices);
-            //filter.mesh.SetVertices(_target_vertices);
-
-            //int _target_trianglesNum = filter.mesh.triangles.Count();
-
-
-            ////点から一番近い
-            //int[] MinTriangle = new int[_localvertices.Count];
-            //float min = 0;
-            //for (int i = 0; i < _localvertices.Count; i++)
-            //{
-            //    min = 99;
-            //    for (int k = 0; k < _target_verticesNum - 1; k++)
-            //    {
-            //        //float dis = (_localvertices[i] - _target_vertices[k]).sqrMagnitude;
-            //        float dis = Vector3.Distance(_localvertices[i], _target_vertices[k]);
-
-            //        if (dis < min)
-            //        {
-            //            min = dis;
-            //            MinTriangle[i] = k;
-            //        }
-            //    }
-            //}
-            //Debug.Log(min);
-            //for(int i=0; i<MinTriangle.Length; i++)
-            //    Debug.Log(MinTriangle[i]);
-
-            //for (int i = 0; i < MinTriangle.Length; i++)
-            //{
-            //    //int num = Array.IndexOf(triangles, MinTriangle[i]);
-            //    //Debug.Log(num);
-            //    //if (num % 3 == 0)
-            //    //{
-            //    //    triangles[num + 1] = _target_verticesNum + i;
-            //    //    triangles[num + 2] = _target_verticesNum + i + 1;
-            //    //    Debug.Log("並べ替え");
-            //    //}
-            //    //else if (num % 3 == 1)
-            //    //{
-            //    //    triangles[num - 1] = _target_verticesNum + i;
-            //    //    triangles[num + 1] = _target_verticesNum + i + 1;
-            //    //    Debug.Log("並べ替え2");
-            //    //}
-            //    //else if (num % 3 == 2)
-            //    //{
-            //    //    triangles[num - 1] = _target_verticesNum + i;
-            //    //    triangles[num - 2] = _target_verticesNum + i + 1;
-            //    //}
-            //}
-
-            //int j = 0;
-
-            //Array.Resize(ref triangles, triangles.Length + (_localvertices.Count * 3));
-            //for (int i = 0; i < (_localvertices.Count - 1) * 3; i += 3)
-            //{
-            //    triangles[_target_trianglesNum + i] = MinTriangle[j];
-            //    //Debug.Log(_target_vertices[MinTriangle]);
-            //    //Debug.Log(triangles[_target_verticesNum]);
-
-            //    triangles[_target_trianglesNum + 1 + i] = _target_verticesNum + j;
-            //    //Debug.Log(_target_vertices[_target_verticesNum]);
-            //    //Debug.Log(triangles[_target_verticesNum + 1]);
-
-            //    triangles[_target_trianglesNum + 2 + i] = _target_verticesNum + 1 + j;
-            //    //Debug.Log(_target_vertices[_target_verticesNum + 1]);
-            //    //Debug.Log(triangles[_target_verticesNum + 2]);
-            //    j++;
-            //}
-            //for (int i = 0; i < _localvertices.Count; i++)
-            //{
-            //    Debug.Log(triangles[_target_trianglesNum + i]);
-            //}
-            //for (int i = 0; i < _target_verticesNum + _vertices.Count; i++)
-            //{
-            //    Debug.Log(filter.mesh.vertices[i]);
-            //}
-
-            //_target_vertices[35] = Vector3.zero;
-            //_target_vertices[36] = Vector3.zero;
-            //_target_vertices[_target_verticesNum - 1] = Vector3.zero;
-            //_target_vertices[15] = Vector3.zero;
-            //filter.mesh.SetVertices(_target_vertices);
-            //Debug.Log(triangles.Count());
-            //Debug.Log(triangles[triangles.Count() - 1]);
-            //Debug.Log(center);
-            //Debug.Log(_target_vertices[_target_vertices.Count - 1]);
-            //Debug.Log(triangles[_target_verticesNum - 1 + (_vertices.Count - 1)]);
-            //Debug.Log(triangles[_target_verticesNum + 1]);
-
-            //filter.mesh.SetTriangles(triangles, 0);
-
-            //Destroy(MARUTA.GetComponent<MeshCollider>());
-            //MARUTA.AddComponent<MeshCollider>();
-
-            //Debug.Log(_target_vertices.Count);
-
-            //List<GameObject> Sample_lineList = _lineList;
-            //List<Vector3> Sample_verticesList = _vertices;
-
-            //All_lineList.Add(Sample_lineList);
-            //All_verticesList.Add(Sample_verticesList);
-
-            //for(int i = 0; i < _vertices.Count; i++)
-            //{
-            //    //Vector3[][] vec = new Vector3[AllList_Index][i];
-
-            //}
-
-            //if (IsMeshCreate)
-            //    MeshCreate();
-
-            //Debug.Log(All_lineList[0].Count);
-
-            //Debug.Log(All_lineList[0]);
-            //Debug.Log(All_lineList[1]);
-            //Debug.Log(All_verticesList[0]);
-            //Debug.Log(All_verticesList[1]);
-            //Initialize();
-            //Clear();
-        }
-
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            Clear();
-        }
     }
 
     public void Initialize()
@@ -266,27 +159,27 @@ public class Jin_PointDrawer : MonoBehaviour
         _lineList.Clear();
     }
 
-    public void MeshCuting()
-    {
-        float max = 0;
-        Vector3 CutPoint;
+    //public void MeshCuting()
+    //{
+    //    float max = 0;
+    //    Vector3 CutPoint;
 
-        for (int i = 0; i < _vertices.Count; i++)
-        {
-            float dis = _vertices.First().z - _vertices[i].z;
+    //    for (int i = 0; i < _vertices.Count; i++)
+    //    {
+    //        float dis = _vertices.First().z - _vertices[i].z;
 
-            if (Mathf.Abs(dis) > max)
-            {
-                max = Mathf.Abs(dis);
-                CutPoint = _vertices[i];
-            }
-        }
-        Debug.Log(max);
-        if (max > 0.5f)
-        {
-            Debug.Log("斬る");
-        }
-    }
+    //        if (Mathf.Abs(dis) > max)
+    //        {
+    //            max = Mathf.Abs(dis);
+    //            CutPoint = _vertices[i];
+    //        }
+    //    }
+    //    Debug.Log(max);
+    //    if (max > 0.5f)
+    //    {
+    //        Debug.Log("斬る");
+    //    }
+    //}
 
     /// <summary>
     /// Meshの生成
@@ -306,6 +199,63 @@ public class Jin_PointDrawer : MonoBehaviour
         //    CreateDot(back_vertices[i]);
         //}
 
+        //GameObject fp = Instantiate(footpoints);
+        //fp.transform.position = CenterPoint(_vertices);
+        //Quaternion TargetRotation = Quaternion.FromToRotation(fp.gameObject.transform.up, _footPrints.CheckNormal()) * fp.gameObject.transform.rotation;
+        //fp.transform.rotation = Quaternion.Slerp(fp.transform.rotation, TargetRotation, 10);
+
+        //手前のオブジェクト生成
+        Debug.Log(_vertices.Count);
+        GameObject go = _drawMesh.CreateMesh(_vertices);
+        Mesh gomesh = go.GetComponent<MeshFilter>().mesh;
+        go.GetComponent<MeshFilter>().mesh.SetTriangles(gomesh.triangles.Reverse().ToArray(), 0);
+        //go.transform.LookAt(MARUTA.transform);
+        go.GetComponent<MeshRenderer>().material = _material;
+        //go.transform.position += go.transform.forward * -0.05f;
+        go.AddComponent<MeshCollider>();
+
+        if (go.GetComponent<MeshCollider>())
+        {
+            try
+            {
+                go.GetComponent<MeshCollider>().convex = true;
+                go.GetComponent<MeshCollider>().isTrigger = true;
+            }
+            catch
+            {
+                Debug.Log("例外");
+            }
+
+        }
+        go.AddComponent<DropEnemy>();
+        go.AddComponent<Subtractor>();
+        go.GetComponent<Subtractor>().maskMaterial = _maskMaterial;
+        FrontMesh = go;
+        go.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
+        _meshList.Add(go);
+
+        //奥のオブジェクト生成
+        GameObject go2 = _drawMesh.CreateMesh(back_vertices);
+        go2.GetComponent<MeshRenderer>().material = _material;
+        //go2.transform.localPosition = go2.transform.localPosition + go2.transform.forward * CutScaleZ;
+        go2.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
+        go2.AddComponent<MeshCollider>();
+        //Mesh go2mesh = go2.GetComponent<MeshFilter>().mesh;
+        //go2.GetComponent<MeshFilter>().mesh.SetTriangles(go2mesh.triangles.Reverse().ToArray(), 0);
+        //go2.GetComponent<MeshCollider>().convex = true;
+        go2.AddComponent<DropEnemy>();
+        go2.AddComponent<Subtractor>();
+        go2.GetComponent<Subtractor>().maskMaterial = _maskMaterial;
+        _meshList.Add(go2);
+
+        //MeshFilter mf = go2.GetComponent<MeshFilter>();
+        //Vector3[] mfVert = mf.mesh.vertices;
+        //for (int i = 0; i < mfVert.Length; i++)
+        //{
+        //    mfVert[i] = mfVert[i] + go2.transform.forward * CutScaleZ;
+        //}
+        //back_vertices.AddRange(mfVert);
+
         _subMesh_vertices.AddRange(_vertices);
         _subMesh_vertices.AddRange(back_vertices);
 
@@ -318,53 +268,77 @@ public class Jin_PointDrawer : MonoBehaviour
         //決めた順番をセット
         mesh.SetTriangles(OrderTriangles(), 0);
 
-        //手前のオブジェクト生成
-        GameObject go = _drawMesh.CreateMesh(_vertices);
-        go.GetComponent<MeshRenderer>().material = _material;
-        ////go.transform.position += go.transform.forward * -0.05f;
-        go.AddComponent<MeshCollider>();
-        go.GetComponent<MeshCollider>().convex = true;
-        go.GetComponent<MeshCollider>().isTrigger = true;
-        go.AddComponent<DropEnemy>();
-        FrontMesh = go;
-        _meshList.Add(go);
-        go.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
-        DurableValueManager.SubMeshArea(go);
-        //Debug.Log(_vertices.Count);
-        //Debug.Log(back_vertices.Count);
-        //_vertices.Clear();
-        //_vertices.AddRange(back_vertices);
-        //奥のオブジェクト生成
-        //GameObject go2 = _drawMesh.CreateMesh(back_vertices);
-        //go2.GetComponent<MeshRenderer>().material = _material;
-        //go2.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
-        //go2.AddComponent<MeshCollider>();
-        //go2.AddComponent<DropEnemy>();
-        //_meshList.Add(go2);
-
-        ////手前と奥の間にメッシュオブジェクトを作成
-        //GameObject meshob = new GameObject("MeshObject", typeof(MeshFilter), typeof(MeshRenderer));
+        //手前と奥の間にメッシュオブジェクトを作成
+        GameObject meshob = new GameObject("MeshObject", typeof(MeshFilter), typeof(MeshRenderer));
         //mesh.RecalculateNormals();//法線の再設定
-        //meshob.GetComponent<MeshRenderer>().material = _material;
-        ////meshob.transform.position += meshob.transform.forward * -0.05f;
-        //meshob.AddComponent<MeshCollider>();
-        ////meshob.GetComponent<MeshCollider>().convex = true;
-        //meshob.AddComponent<DropEnemy>();
-        //MeshFilter filter = meshob.GetComponent<MeshFilter>();
-        //filter.mesh = mesh;
-        //_meshList.Add(meshob);
+        meshob.GetComponent<MeshRenderer>().material = _material;
+        meshob.AddComponent<DropEnemy>();
+        MeshFilter filter = meshob.GetComponent<MeshFilter>();
+        filter.mesh = mesh;
+        meshob.AddComponent<MeshCollider>();
+        //meshob.GetComponent<MeshCollider>().convex = true;
+        meshob.AddComponent<Subtractor>();
+        meshob.GetComponent<Subtractor>().maskMaterial = _maskMaterial;
+        _meshList.Add(meshob);
 
-        //１つにまとめる
-        GameObject AllMeshObject = new GameObject("AllMeshObject");
+
+
+        GameObject AllMeshObject = new GameObject("AllMeshObject", typeof(MeshFilter), typeof(MeshRenderer));
         go.transform.parent = AllMeshObject.transform;
-        //go2.transform.parent = AllMeshObject.transform;
-        //meshob.transform.parent = AllMeshObject.transform;
-        AllMeshObject.AddComponent<Jin_DropMover>();
-        AllMeshObject.GetComponent<Jin_DropMover>().SetPieceState_DROP();
+        go2.transform.parent = AllMeshObject.transform;
+        meshob.transform.parent = AllMeshObject.transform;
+        //オブジェクトを一つに結合
+        MeshFilter[] meshFilters = AllMeshObject.GetComponentsInChildren<MeshFilter>();
+        CombineInstance[] _combine = new CombineInstance[meshFilters.Length];
+        int h = 0;
+        while (h < meshFilters.Length)
+        {
+            _combine[h].mesh = meshFilters[h].sharedMesh;
+            _combine[h].transform = meshFilters[h].transform.localToWorldMatrix;
+            meshFilters[h].gameObject.SetActive(false);
+            h++;
+        }
+        AllMeshObject.transform.GetComponent<MeshFilter>().mesh = new Mesh();
+        AllMeshObject.transform.GetComponent<MeshFilter>().mesh.CombineMeshes(_combine);
+        AllMeshObject.transform.gameObject.SetActive(true);
 
+        AllMeshObject.AddComponent<MeshCollider>();
+        AllMeshObject.GetComponent<MeshRenderer>().material = _material;
+        AllMeshObject.AddComponent<Subtractor>();
+        AllMeshObject.GetComponent<Subtractor>().maskMaterial = _maskMaterial;
+
+        //AllMeshObject.transform.position += AllMeshObject.transform.forward * -0.05f;
+        //AllMeshObject.AddComponent<Jin_DropMover>();
+        //AllMeshObject.GetComponent<Jin_DropMover>().SetPieceState_DROP();
         AllMeshObject.tag = ("DropBlock");
-        _AllMeshObject = AllMeshObject;
+        Mesh allmesh = AllMeshObject.GetComponent<MeshFilter>().mesh;
+        if (0 > getArea(_vertices.ToArray()))
+            AllMeshObject.GetComponent<MeshFilter>().mesh.SetTriangles(allmesh.triangles.Reverse().ToArray(), 0);
+        _allMeshObject.Add(AllMeshObject);
 
+
+
+        GameObject DropMeshObject = new GameObject("DropMeshObject");
+        GameObject front = Instantiate(go);
+        GameObject back = Instantiate(go2);
+        GameObject between = Instantiate(meshob);
+
+        front.SetActive(true);
+        back.SetActive(true);
+        between.SetActive(true);
+
+        front.transform.parent = DropMeshObject.transform;
+        back.transform.parent = DropMeshObject.transform;
+        between.transform.parent = DropMeshObject.transform;
+
+        front.GetComponent<MeshRenderer>().material = _dotMat;
+        back.GetComponent<MeshRenderer>().material = _dotMat;
+        between.GetComponent<MeshRenderer>().material = _dotMat;
+
+        DropMeshObject.AddComponent<Jin_DropMover>();
+        DropMeshObject.GetComponent<Jin_DropMover>().SetPieceState_DROP();
+
+        IsAllMeshCreate = true;
         //メッシュを表示するため
         //go.gameObject.AddComponent<MeshInfo>();
         //go2.gameObject.AddComponent<MeshInfo>();
@@ -377,6 +351,28 @@ public class Jin_PointDrawer : MonoBehaviour
         //_vertices.Clear();
         //back_dotList.Clear();
     }
+
+    //多角形の右回り左回りを判定
+    private float getArea(Vector3[] vec)
+    {
+        float S = 0;
+
+        CenterPoint(_vertices);
+
+        for (int i = 0; i < vec.Length; i++)
+        {
+            Vector3 a = vec[i];
+            Vector3 b = (i < vec.Length - 1) ? vec[i + 1] : vec[0];
+            S += a.x * b.y - a.y * b.x;
+        }
+        return S / 2;
+    }
+
+    //メッシュオブジェクトが平面かどうか調べる処理
+    //private Vector3[] FindDistanceVertex(Vector3[] vec)
+    //{
+
+    //}
 
     private GameObject CreateCircleMesh(List<Vector3> vertices)
     {
@@ -399,17 +395,12 @@ public class Jin_PointDrawer : MonoBehaviour
         {
             if (i == (vertices.Count - 2) * 3)
             {
-                Debug.Log("最後");
-                Debug.Log(k);
                 meshTriangle[i] = k;
                 meshTriangle[i + 1] = 0;
                 meshTriangle[i + 2] = vertices.Count - 1;
-                Debug.Log("最後2");
             }
             else
             {
-                Debug.Log("hu");
-                Debug.Log(i);
                 meshTriangle[i] = k;
                 meshTriangle[i + 1] = k + 1;
                 meshTriangle[i + 2] = vertices.Count - 1;
@@ -442,14 +433,14 @@ public class Jin_PointDrawer : MonoBehaviour
             if (!(i == PorigonAraay - _JinConst.ORDERTRIANGLES_NUM))
             {
                 meshTriangles[i] = j;
-                meshTriangles[i + 1] = j + _vertices.Count;
-                meshTriangles[i + 2] = j + 1;
+                meshTriangles[i + 1] = j + 1;
+                meshTriangles[i + 2] = j + _vertices.Count;
             }
             else
             {
                 meshTriangles[i] = j;
-                meshTriangles[i + 1] = j + _vertices.Count;
-                meshTriangles[i + 2] = 0;
+                meshTriangles[i + 1] = 0;
+                meshTriangles[i + 2] = j + _vertices.Count;
             }
             j++;
         }
@@ -459,14 +450,14 @@ public class Jin_PointDrawer : MonoBehaviour
             if (!(i == PorigonAraay - _JinConst.ORDERTRIANGLES_PORIGON))
             {
                 meshTriangles[i] = j + 1;
-                meshTriangles[i + 1] = j + _vertices.Count;
-                meshTriangles[i + 2] = j + _vertices.Count + 1;
+                meshTriangles[i + 1] = j + _vertices.Count + 1;
+                meshTriangles[i + 2] = j + _vertices.Count;
             }
             else
             {
                 meshTriangles[i] = 0;
-                meshTriangles[i + 1] = j + _vertices.Count;
-                meshTriangles[i + 2] = _vertices.Count;
+                meshTriangles[i + 1] = _vertices.Count;
+                meshTriangles[i + 2] = j + _vertices.Count;
             }
             j++;
         }
@@ -475,92 +466,47 @@ public class Jin_PointDrawer : MonoBehaviour
     }
 
     /// <summary>
-    /// クリックした位置に点を打ち、ドラッグで一定間隔に点を打っていく
-    /// </summary>
-    private void TryRaycast()
-    {
-        //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        //RaycastHit hit;
-        //if (Physics.Raycast(ray, out hit, float.MaxValue))
-        //{
-        //    //var aim = hit.point - hit.collider.gameObject.transform.position;
-        //    //var look = Quaternion.LookRotation(aim, Vector3.up);
-
-        //    //奥の頂点
-        //    Vector3 pos = hit.point;
-        //    //transform.InverseTransformDirection(pos);
-        //    pos.z += CutScaleZ;
-        //    //transform.TransformDirection(pos);
-
-        //    //最初の頂点
-        //    if (_vertices.Count == 0)
-        //    {
-        //        //手前の頂点
-        //        AddVertex(hit.point);
-        //        //奥の頂点
-        //        back_vertices.Add(pos);
-        //        return;
-        //    }
-
-        //    if (_samplingVertices.Count == 0)
-        //    {
-        //        _samplingVertices.Add(hit.point);
-        //        return;
-        //    }
-
-        //    float distance = (AveragePoint - hit.point).sqrMagnitude;
-        //    if (distance >= _sqrThreshold)
-        //    {
-        //        AddVertex(hit.point);
-        //        //奥の頂点リスト追加(点を打つのはまだ)
-        //        back_vertices.Add(pos);
-
-        //        LineCreate();
-
-        //    }
-        //    else
-        //    {
-        //        //仮の点
-        //        _samplingVertices.Add(hit.point);
-        //        //_samplingVertices.Add(pos);
-        //    }
-        //}
-    }
-    /// <summary>
     /// 囲むための判定用に頂点間にCube(線)を生成
-    /// </summary>   
+    /// </summary>
     public void LineCreate()
     {
         if (_vertices.Count > 1)
         {
             List<Vector3> myPoint = new List<Vector3>();
-        
+
             myPoint.Add(_vertices[_vertices.Count - 2]);
             myPoint.Add(_vertices[_vertices.Count - 1]);
 
-            GameObject obj = Instantiate(Line, transform.position, transform.rotation) as GameObject;
-            obj.transform.position = (myPoint[0] + myPoint[1]) / 2;
-            obj.transform.right = (myPoint[1] - myPoint[0]).normalized;
-            obj.transform.localScale = new Vector3((myPoint[1] - myPoint[0]).magnitude, 0.005f, 0.005f);
-            obj.tag = "LastLine";
-            obj.layer = LayerMask.NameToLayer("Ignore Raycast");
-            _lineList.Add(obj);
+            GameObject Lineobj = Instantiate(Line, transform.position, transform.rotation) as GameObject;
+            Lineobj.transform.position = (myPoint[0] + myPoint[1]) / 2;
+            if (myPoint[0].x < myPoint[1].x)
+                MeshForawd = Lineobj.transform.right = (myPoint[1] - myPoint[0]).normalized;
+            else
+                MeshForawd = Lineobj.transform.right = (myPoint[0] - myPoint[1]).normalized;
 
-            
-
+            //Lineobj.transform.right = (myPoint[1] - myPoint[0]).normalized;
+            Lineobj.transform.localScale = new Vector3((myPoint[1] - myPoint[0]).magnitude, 0.005f, 0.005f);
+            Lineobj.tag = "LastLine";
+            Lineobj.layer = LayerMask.NameToLayer("Ignore Raycast");
+            _lineList.Add(Lineobj);
+            //All_lineList[AllList_Index].Add(Lineobj);
             if (_lineList.Count > 1)
             {
-                //if(!_lineList[_lineList.Count - 2].GetComponent<HitPoint>().IsMeshCreate)
-                //    obj.AddComponent<HitPoint>();
                 Destroy(_lineList[_lineList.Count - 2].GetComponent<HitPoint>());
                 _lineList[_lineList.Count - 2].tag = "Line";
+                _lineList[_lineList.Count - 2].layer = LayerMask.NameToLayer("Coral");
+            }
+            if (_lineList.Count > 2)
+            {
+                _lineList[_lineList.Count - 3].layer = LayerMask.NameToLayer("Ignore Raycast");
             }
 
-            obj.GetComponent<BoxCollider>().isTrigger = true;
-            obj.AddComponent<Rigidbody>();
-            obj.GetComponent<Rigidbody>().isKinematic = true;
+            Lineobj.GetComponent<BoxCollider>().isTrigger = true;
+            Lineobj.AddComponent<Rigidbody>();
+            Lineobj.GetComponent<Rigidbody>().isKinematic = true;
 
-            obj.AddComponent<HitPoint>();
+            Lineobj.AddComponent<HitPoint>();
+
         }
 
     }
@@ -638,7 +584,7 @@ public class Jin_PointDrawer : MonoBehaviour
         //}
         //_meshList.Clear();
 
-        for(int i=0; i<_lineList.Count; i++)
+        for (int i = 0; i < _lineList.Count; i++)
         {
             Destroy(_lineList[i]);
         }
@@ -646,6 +592,12 @@ public class Jin_PointDrawer : MonoBehaviour
 
         _vertices.Clear();
         back_vertices.Clear();
+        _subMesh_vertices.Clear();
+    }
+
+    public void LineClear()
+    {
+
     }
 }
 

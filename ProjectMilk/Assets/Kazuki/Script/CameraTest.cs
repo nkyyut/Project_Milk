@@ -7,13 +7,28 @@ using UnityEngine;
 public class CameraTest : MonoBehaviour
 {
 
+    public PlayerControl Playercontrol;
+
     public GameObject Player;
+    public GameObject SangoFree;
     [SerializeField] Vector3 OffsetPos;
     Vector3 targetPos;
     Vector3 CameraPos;
 
-    public Transform Settransform;
+    private Vector3 CtransformBox;
+    private Quaternion CrotationBox;
 
+    private Vector3 movepos;
+    private Quaternion moverote;
+    private Vector3 Setmovepos;
+    private Quaternion Setmoverote;
+
+    public Transform Settransform;
+    public Transform SetFreetransform;
+
+    bool FreeFlg;
+    private bool MoveFlg;
+    public bool PmoveFlg;
 
     float InputH;
     float InputV;
@@ -22,8 +37,12 @@ public class CameraTest : MonoBehaviour
     {
         MAIN,
         PAUSE,
+        FREECAMERA,
     }
     public SCENE_TYPE scene;
+
+    public SCENE_TYPE Pscene { get { return scene; } }
+
 
 
     void Start()
@@ -31,40 +50,132 @@ public class CameraTest : MonoBehaviour
         transform.position = Player.transform.position - OffsetPos;
         targetPos = Player.transform.position;
         CameraPos = transform.position;
-        Settransform.position = targetPos + CameraPos;
+        Settransform.position = CameraPos;
+        MoveFlg = false;
+        FreeFlg = false;
     }
 
 
     void Update()
     {
-        if (scene == SCENE_TYPE.MAIN)
-        {
-            InputH = Input.GetAxisRaw("Horizontal2");
-            InputV = -Input.GetAxisRaw("Vertical2");
-        }
+       
+        if (Input.GetAxis("TriggerL") < 0)
+            scene = SCENE_TYPE.FREECAMERA;
+        else 
+            scene = SCENE_TYPE.MAIN;
 
+
+        switch (scene)
+        {
+            case SCENE_TYPE.MAIN:
+                if(FreeFlg == true)
+                {
+                    transform.position = CtransformBox;
+                    targetPos = Player.transform.position;
+                    transform.rotation = CrotationBox;
+                    //CameraPos = Settransform.position - Player.transform.position;
+                    FreeFlg = false;
+                }
+
+                if (Playercontrol.chang != true)
+                {
+                    InputH = Input.GetAxisRaw("HorizontalR");
+                    InputV = Input.GetAxisRaw("VerticalR");
+
+                    if (InputH + InputV != 0)
+                        MoveFlg = false;
+                    if (MoveFlg == false)
+                    {
+                        movepos = transform.position;
+                        moverote = transform.rotation;
+                        Setmovepos = Settransform.position;
+                        Setmoverote = Player.transform.rotation;
+                        MoveFlg = true;
+                    }
+
+                }
+                else
+                {
+                    if(MoveFlg == true)
+                    {
+                        //transform.position = movepos;
+                        transform.rotation = moverote;
+                        Settransform.position = Setmovepos;
+                        Settransform.rotation = Setmoverote;
+                        MoveFlg = false;
+                    }
+                    InputH = 0;
+                    InputV = 0;
+                }
+                break;
+
+            case SCENE_TYPE.PAUSE:
+                InputH = 0;
+                InputV = 0;
+                break;
+
+            case SCENE_TYPE.FREECAMERA:
+                
+                if (FreeFlg == false)
+                {
+                    CtransformBox = Settransform.position;
+                    CrotationBox = transform.rotation;
+                    transform.position = SetFreetransform.position;
+                    transform.rotation = SetFreetransform.rotation;
+                    
+                    FreeFlg = true;
+                }
+                targetPos = SangoFree.transform.position;
+                InputH = Input.GetAxisRaw("HorizontalR");
+                InputV = Input.GetAxisRaw("VerticalR");
+                
+                break;
+        }
     }
+
+
     private void LateUpdate()
     {
-
-        //Debug.Log("Chang");
-
-        Settransform.position += Player.transform.position - targetPos;
-        targetPos = Player.transform.position;
-        transform.position = Vector3.Lerp(transform.position, Player.transform.position + CameraPos, 2.0f * Time.deltaTime);
-
-
-
-        Settransform.transform.RotateAround(Player.transform.position, Vector3.up, InputH * 1.5f);
-        Settransform.transform.RotateAround(Player.transform.position, -transform.right, InputV * 1.5f);
-        transform.RotateAround(Player.transform.position, Vector3.up, InputH * 1.5f);
-        transform.RotateAround(Player.transform.position, -transform.right, InputV * 1.5f);
         
-
-        if (InputH != 0 || InputV != 0)
+        switch (scene)
         {
-            CameraPos = Settransform.position - Player.transform.position;
-        }
+            case SCENE_TYPE.MAIN:
+                Settransform.position += Player.transform.position - targetPos;
+                targetPos = Player.transform.position;
+                transform.position = Vector3.Lerp(transform.position, Settransform.position, 2.0f * Time.deltaTime);
 
+
+                Settransform.transform.RotateAround(Player.transform.position, Vector3.up, InputH * 1.5f);
+                Settransform.transform.RotateAround(Player.transform.position, -transform.right, InputV * 1.5f);
+
+
+                transform.RotateAround(Player.transform.position, Vector3.up, InputH * 1.5f);
+                transform.RotateAround(Player.transform.position, -transform.right, InputV * 1.5f);
+
+
+                Settransform.transform.rotation = Player.transform.rotation;
+
+                if (InputH != 0 || InputV != 0)
+                {
+                    CameraPos = Settransform.position - Player.transform.position;
+                }
+                break;
+
+            case SCENE_TYPE.FREECAMERA:
+
+                transform.position += SangoFree.transform.position - targetPos;
+               
+                targetPos = SangoFree.transform.position;
+
+                
+
+                transform.RotateAround(SangoFree.transform.position, Vector3.up, InputH * 1.5f);
+                transform.RotateAround(SangoFree.transform.position, -transform.right, InputV * 1.5f);
+
+                
+
+                break;
+        }
+        
     }
 }
