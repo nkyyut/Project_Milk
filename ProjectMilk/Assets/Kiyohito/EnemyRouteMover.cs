@@ -42,8 +42,8 @@ public class EnemyRouteMover : MonoBehaviour {
         RIGHT,
         LEFT,
         UP,
-        DOWN
-
+        DOWN,
+        WAIT
 
     }
     ENEMY_MOVE_STATE NowEnemyState;
@@ -115,6 +115,9 @@ public class EnemyRouteMover : MonoBehaviour {
             case ENEMY_MOVE_STATE.DOWN:
                 DownMove();
                 break;
+            case ENEMY_MOVE_STATE.WAIT:
+                WaitMove();
+                break;
         }
 
         Delta += Time.deltaTime;
@@ -158,6 +161,11 @@ public class EnemyRouteMover : MonoBehaviour {
                 Opposite.Movement = "Right";
                 Opposite.MoveTime = Movement.MoveTime;
                 break;
+            case "Wait":
+                Opposite.Movement = "Wait";
+                Opposite.MoveTime = Movement.MoveTime;
+                break;
+
         }
 
         return Opposite;
@@ -197,6 +205,10 @@ public class EnemyRouteMover : MonoBehaviour {
                 break;
             case "Down":
                 SetNowEnemyState_DOWN();
+                MoveLimitTime = RoundRouteArray[RouteNumber].MoveTime;
+                break;
+            case "Wait":
+                SetNowEnemyState_WAIT();
                 MoveLimitTime = RoundRouteArray[RouteNumber].MoveTime;
                 break;
         }
@@ -330,6 +342,14 @@ public class EnemyRouteMover : MonoBehaviour {
             NextMovement();
         }
     }
+    void WaitMove()
+    {
+        if(Delta>MoveLimitTime)
+        {
+            Delta = 0;
+            NextMovement();
+        }
+    }
 
 
     void SetNowEnemyState_IDLE() { NowEnemyState = ENEMY_MOVE_STATE.IDLE; }
@@ -339,5 +359,6 @@ public class EnemyRouteMover : MonoBehaviour {
     void SetNowEnemyState_DOWN() { NowEnemyState = ENEMY_MOVE_STATE.DOWN; }
     void SetNowEnemyState_RIGHT() { NowEnemyState = ENEMY_MOVE_STATE.RIGHT; }
     void SetNowEnemyState_LEFT() { NowEnemyState = ENEMY_MOVE_STATE.LEFT; }
+    void SetNowEnemyState_WAIT() { NowEnemyState = ENEMY_MOVE_STATE.WAIT; }
 
 }
