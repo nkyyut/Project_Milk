@@ -11,6 +11,7 @@ TagManager:
   - Line
   - DropBlock
   - FootPoint
+  - OldLine
   layers:
   - Default
   - TransparentFX
