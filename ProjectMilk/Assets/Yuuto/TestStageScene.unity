@@ -3296,13 +3296,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 856406159}
-  m_LocalRotation: {x: 0, y: 0.38268343, z: 0, w: 0.92387956}
-  m_LocalPosition: {x: -0.867, y: 0.972, z: -2.057}
+  m_LocalRotation: {x: 0, y: -0.32985538, z: 0, w: 0.94403154}
+  m_LocalPosition: {x: -0.796, y: 0.942, z: -2.083}
   m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 24
-  m_LocalEulerAnglesHint: {x: 0, y: 45, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -38.52, z: 0}
 --- !u!1 &863595866
 GameObject:
   m_ObjectHideFlags: 0
@@ -7461,7 +7461,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1021161382}
   - component: {fileID: 1021161381}
-  - component: {fileID: 1021161380}
   - component: {fileID: 1021161384}
   - component: {fileID: 1021161379}
   - component: {fileID: 1021161383}
@@ -7484,26 +7483,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.0053414935
   m_Center: {x: 0.0000000010251132, y: 4.4659144e-11, z: 0.0033035004}
---- !u!114 &1021161380
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1021161378}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0dda8168323fa8c499a527db44043de6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  RouteArray:
-  - Movement: Right
-    MoveTime: 0.5
-  - Movement: Up
-    MoveTime: 0.5
-  MoveSpeed: 0.5
-  MoveLimit_Ver: 0.25
-  MoveLimit_Hor: 0.25
-  LoopFlg: 1
 --- !u!114 &1021161381
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7525,7 +7504,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1021161378}
   m_LocalRotation: {x: 0, y: 0.9156275, z: 0, w: 0.40202776}
-  m_LocalPosition: {x: -0.606, y: 0.252, z: -1.942}
+  m_LocalPosition: {x: -0.606, y: 0.608, z: -1.942}
   m_LocalScale: {x: 10, y: 10, z: 10.000013}
   m_Children:
   - {fileID: 1109772872}
@@ -7563,10 +7542,14 @@ MonoBehaviour:
     MoveTime: 0.5
   - Movement: Right
     MoveTime: 0.5
+  - Movement: Up
+    MoveTime: 0.5
+  - Movement: Right
+    MoveTime: 0.5
   MoveSpeed: 0.5
   MoveLimit_Ver: 0.25
   MoveLimit_Hor: 0.25
-  LoopFlg: 1
+  LoopFlg: 0
 --- !u!1 &1049243654
 GameObject:
   m_ObjectHideFlags: 0

@@ -20,8 +20,11 @@ public class EnemyRouteMover : MonoBehaviour {
     [SerializeField] float MoveLimit_Hor;
     [SerializeField] bool LoopFlg;
 
+    bool Landing=false;
     bool RoundFlg;
-    Vector3 InitPos;
+    bool[] PosSetFlgArray;
+    bool IdleFlg;
+    Vector3 [] InitPos;
     float Delta;
     float MoveLimitTime;
     int SerchEndPoint;
@@ -44,28 +47,48 @@ public class EnemyRouteMover : MonoBehaviour {
 
     }
     ENEMY_MOVE_STATE NowEnemyState;
+
+
+
+
+
     // Use this for initialization
     void Start () {
         MyTransform = this.gameObject.transform;
         NowEnemyState = ENEMY_MOVE_STATE.IDLE;
-        InitPos = MyTransform.localPosition;
         Switch = true;
         RoundFlg = false;
-        RouteNumber = -1;
-        SerchEndPoint = RouteArray.Length*2;
+        RouteNumber = 0;
+        SerchEndPoint = RouteArray.Length;
+        
+        if (LoopFlg==true)
+            SerchEndPoint = RouteArray.Length*2;
         RoundRouteArray = new Route[SerchEndPoint];
+        PosSetFlgArray = new bool [SerchEndPoint];
+        InitPos = new Vector3[SerchEndPoint];
         SetReturnRoute();
         NextMovement();
-        //NowEnemyState = ENEMY_MOVE_STATE.IDLE;
+       // NowEnemyState = ENEMY_MOVE_STATE.IDLE;
     }
 
 
-	
 	// Update is called once per frame
-	void Update () {
+	void Update () {      
         Switching();
-        Debug.Log("NowEnemyState"+NowEnemyState);
+        //Debug.Log("NowEnemyState"+NowEnemyState);
+        //for (int i = 0; i < SerchEndPoint; i++)
+        //{
+        //    Debug.Log("RoundRouteArray["+i+"].Movement" + RoundRouteArray[i].Movement);
+        //    Debug.Log("RoundRouteArray[" + i + "].MoveTime" + RoundRouteArray[i].MoveTime);
+
+        //}
+        //Debug.Log("↓");
     }
+
+
+
+
+
 
 
     void Switching()
@@ -100,14 +123,15 @@ public class EnemyRouteMover : MonoBehaviour {
 
     void SetReturnRoute()
     {
-        for(int i = 0; i < RouteArray.Length; i++)
+        for (int i = 0; i < RouteArray.Length; i++)
         {
             RoundRouteArray[i] = RouteArray[i];
-            RoundRouteArray[SerchEndPoint - i - 1].Movement = OppositeReturn(RouteArray[i]).Movement;
-            RoundRouteArray[SerchEndPoint - i - 1].MoveTime = OppositeReturn(RouteArray[i]).MoveTime;
-
+            if (LoopFlg)
+            {
+                RoundRouteArray[SerchEndPoint - i - 1].Movement = OppositeReturn(RouteArray[i]).Movement;
+                RoundRouteArray[SerchEndPoint - i - 1].MoveTime = OppositeReturn(RouteArray[i]).MoveTime;
+            }
         }
-
     }
 
     Route OppositeReturn(Route Movement)
@@ -141,11 +165,22 @@ public class EnemyRouteMover : MonoBehaviour {
 
     void NextMovement()
     {
-        if (++RouteNumber >= SerchEndPoint)
+        //Debug.Log("NextMovement");
+        if (RouteNumber >= SerchEndPoint)
         {
-            RouteNumber = 0;
-            SetReturnRoute();
+            if (LoopFlg == true)
+            {
+                RouteNumber = 0;
+                SetReturnRoute();
+            }
+            else {
+                SetNowEnemyState_IDLE();
+                return;
+            }
         }
+
+        //Debug.Log("in:"+RouteNumber);
+        //Debug.Log("MoveLimitTime"+MoveLimitTime);
         switch (RoundRouteArray[RouteNumber].Movement)
         {
             case "Right":
@@ -166,16 +201,40 @@ public class EnemyRouteMover : MonoBehaviour {
                 break;
         }
 
+        if (!PosSetFlgArray[RouteNumber])
+        {
+            InitializePos(RouteNumber);
+            PosSetFlgArray[RouteNumber] = true;
+        }
+        //else
+        //{
+        //    SetPosition(RouteNumber);
+        //    //for (int i=0;i<InitPos.Length;i++) {
+        //    //    Debug.Log(InitPos[i]);
+        //    //}
+        //}
+        RouteNumber++;
     }
 
+    void InitializePos(int RouteNumber)
+    {
+        InitPos[RouteNumber] = this.transform.position;
+        
+    }
 
+    void SetPosition(int RouteNumber)
+    {
+        this.transform.position = InitPos[RouteNumber];
+    }
 
     void OnCollisionEnter(Collision other)
     {
         if (other.transform.tag != "InvisibleObjects") return;
         Debug.Log("hit");
-        RouteNumber = SerchEndPoint - RouteNumber - 1;
+        RouteNumber = SerchEndPoint - RouteNumber;
         RoundRouteArray[RouteNumber].MoveTime = Delta;
+        Delta = 0;
+        //RouteNumber++;
         NextMovement();
     }
 
@@ -217,6 +276,9 @@ public class EnemyRouteMover : MonoBehaviour {
         else
         {
             Delta = 0;
+            Debug.Log(RouteNumber);
+            if (RouteNumber < SerchEndPoint && PosSetFlgArray[RouteNumber])
+                SetPosition(RouteNumber);
             NextMovement();
 
         }
@@ -231,6 +293,9 @@ public class EnemyRouteMover : MonoBehaviour {
         else
         {
             Delta = 0;
+            Debug.Log(RouteNumber);
+            if (RouteNumber < SerchEndPoint && PosSetFlgArray[RouteNumber])
+                SetPosition(RouteNumber);
             NextMovement();
         }
     }
@@ -244,6 +309,9 @@ public class EnemyRouteMover : MonoBehaviour {
         else
         {
             Delta = 0;
+            Debug.Log(RouteNumber);
+            if (RouteNumber < SerchEndPoint && PosSetFlgArray[RouteNumber])
+                SetPosition(RouteNumber);
             NextMovement();
         }
     }
@@ -256,6 +324,9 @@ public class EnemyRouteMover : MonoBehaviour {
         else
         {
             Delta = 0;
+            Debug.Log(RouteNumber);
+            if (RouteNumber<SerchEndPoint&& PosSetFlgArray[RouteNumber])
+                SetPosition(RouteNumber);
             NextMovement();
         }
     }
