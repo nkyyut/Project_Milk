@@ -1,16 +1,15 @@
-﻿//與儀清仁　2019年/4/17
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FauxGravityBody : MonoBehaviour {
+public class EnemyGravityBody : MonoBehaviour {
     RaycastHit hit;
     RaycastHit hitLog;
     RaycastHit Previoushit;
-    public Transform Bottom1;
-    public Transform Bottom2;//Rayの原点
+
+    [SerializeField] Transform Bottom;
+    [SerializeField] Transform Top;
     bool LostFlg;
-    Vector3 NowNormal;
     private GameObject MyGameObject;
     public float Gravity;
     // Use this for initialization
@@ -34,7 +33,7 @@ public class FauxGravityBody : MonoBehaviour {
     RaycastHit CheckPolygonToRayCast()
     {
 
-        float DistanceLog=999999999;
+        float DistanceLog = 999999999;
 
         //if (Physics.Raycast(Bottom1.position, -this.transform.up, out hit, 3.0f))
         //{
@@ -45,37 +44,37 @@ public class FauxGravityBody : MonoBehaviour {
         //return hit;
         //else if (LostFlg)
         //{
-        
-            for (int i = 0; i < 360; i += 60)
+
+        for (int i = 0; i < 360; i += 90)
+        {
+            for (int j = 0; j < 360; j += 90)
             {
-                for (int j = 0; j < 360; j += 60)
+                for (int k = 0; k < 360; k += 90)
                 {
-                    for (int k = 0; k < 360; k += 60)
+                    if (Physics.Raycast(MyGameObject.transform.position, new Vector3(i - 180, j - 180, k - 180), out hit, Mathf.Infinity))
                     {
-                        if (Physics.Raycast(Bottom1.position, new Vector3(i - 180, j - 180, k - 180), out hit, Mathf.Infinity))
+                        //Debug.DrawRay(MyGameObject.transform.position, new Vector3(i - 180, j - 180, k - 180) * 0.1f, Color.red, 0.1f);
+                        if (hit.collider.transform.tag == "Coral")
                         {
-                            //Debug.DrawRay(Bottom1.position, new Vector3(i - 180, j - 180, k - 180) * 0.1f, Color.red, 0.1f);
-                            if (hit.collider.transform.tag == "Coral")
+                            if (hit.distance < DistanceLog)
                             {
-                                if (hit.distance < DistanceLog)
-                                {
-                                    //Debug.Log("in");
-                                    hitLog = hit;
-                                    DistanceLog = hitLog.distance;
-                                }
+                                //Debug.Log("in");
+                                hitLog = hit;
+                                DistanceLog = hitLog.distance;
                             }
                         }
                     }
                 }
             }
-            LostFlg = false;
+        }
+        LostFlg = false;
         //Debug.Log(hitLog.distance);
         //if (hitLog.distance > 2f)
         //{
         //    return Previoushit;
         //}
         //    Previoushit = hitLog;
-            return hitLog;
+        return hitLog;
         //}
         //else
         //{
@@ -96,11 +95,11 @@ public class FauxGravityBody : MonoBehaviour {
         foreach (GameObject Container in GameObject.FindGameObjectsWithTag(TagName))
         {
             //自身と取得したオブジェクトの距離を取得
-            TmpDis = Vector3.Distance(Container.transform.position,OriginObject.transform.position);
+            TmpDis = Vector3.Distance(Container.transform.position, OriginObject.transform.position);
 
             //オブジェクトの距離が近いか、距離0であればオブジェクト名を取得
             //一時変数に距離を格納
-            if ( NearDis > TmpDis|| NearDis == 0)
+            if (NearDis > TmpDis || NearDis == 0)
             {
                 NearDis = TmpDis;
                 MostNearObj = Container;
@@ -118,22 +117,22 @@ public class FauxGravityBody : MonoBehaviour {
     {
         RaycastHit hit;
         hit = CheckPolygonToRayCast();
-        NowNormal = hit.normal;
         return hit.normal;
     }
 
-   
+
     //取得した放線ベクトルの逆向きに重力を与える
     public void Attract(GameObject body, Vector3 NormalVec)
     {
         //Vector3 GravityUp = (body.transform.position - transform.position).normalized;
         Vector3 GravityUp = NormalVec;
-        Vector3 BodyUp = body.transform.up;
+        Vector3 BodyUp = Top.position-Bottom.position;
+        
 
 
         body.GetComponent<Rigidbody>().AddForce(GravityUp * Gravity);
         Quaternion TargetRotation = Quaternion.FromToRotation(BodyUp, GravityUp) * body.transform.rotation;
-        body.transform.rotation = Quaternion.Slerp(body.transform.rotation, TargetRotation,   10*Time.deltaTime);
+        body.transform.rotation = Quaternion.Slerp(body.transform.rotation, TargetRotation, 20 * Time.deltaTime);
+        //body.transform.rotation = TargetRotation;
     }
-    Vector3 GetNowNormal(){return NowNormal;}
 }

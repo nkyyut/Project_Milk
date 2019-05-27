@@ -10,7 +10,7 @@ TagManager:
   - LastLine
   - Line
   - DropBlock
-  - FootPoint
+  - InvisibleObjects
   layers:
   - Default
   - TransparentFX
@@ -20,9 +20,9 @@ TagManager:
   - UI
   - 
   - 
-  - Player
-  - Line
-  - Coral
+  - 
+  - 
+  - 
   - 
   - 
   - 
