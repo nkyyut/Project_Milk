@@ -23,7 +23,7 @@ public class Footprints : MonoBehaviour
 
     Vector3 cameraForward;
 
-    private List<GameObject> _dotList    = new List<GameObject>();
+    public List<GameObject> _dotList = new List<GameObject>();
     private List<List<GameObject>> All_dotList = new List<List<GameObject>>();
 
     private bool IsButtonUp = false;
@@ -47,6 +47,13 @@ public class Footprints : MonoBehaviour
         rendererPositions.Clear();
         VertNum = 0;
         _pointDrawerSc.Clear();
+        foreach (GameObject dot in _dotList)
+            Destroy(dot);
+        _dotList.Clear();
+    }
+
+    public void DotClear()
+    {
         foreach (GameObject dot in _dotList)
             Destroy(dot);
         _dotList.Clear();
@@ -83,6 +90,9 @@ public class Footprints : MonoBehaviour
                 list.AddRange(_pointDrawerSc._lineList);
                 dot.AddRange(_dotList);
 
+                foreach(GameObject Triggerlist in _pointDrawerSc._lineList)
+                    Triggerlist.GetComponent<BoxCollider>().isTrigger = false;
+
                 _pointDrawerSc.All_lineList.Add(list);
                 All_dotList.Add(dot);
                 if (_pointDrawerSc.All_lineList.Count > 3)
@@ -92,7 +102,7 @@ public class Footprints : MonoBehaviour
                         Destroy(_pointDrawerSc.All_lineList[0][i]);
                         Destroy(All_dotList[0][i]);
                     }
-                    foreach(GameObject _dot in All_dotList[0])
+                    foreach (GameObject _dot in All_dotList[0])
                         Destroy(_dot);
 
                     _pointDrawerSc.All_lineList.Remove(_pointDrawerSc.All_lineList[0]);
@@ -103,7 +113,10 @@ public class Footprints : MonoBehaviour
                 VertNum = 0;
                 //Clear();
                 rendererPositions.Clear();
+                _dotList.Clear();
                 _pointDrawerSc._lineList.Clear();
+                _pointDrawerSc._vertices.Clear();
+                _pointDrawerSc.back_vertices.Clear();
                 IsButtonUp = false;
 
             }
@@ -177,6 +190,7 @@ public class Footprints : MonoBehaviour
                     fp2.transform.position = fp.transform.position + fp.transform.up * -0.05f;
                     fp2.GetComponent<MeshRenderer>().material = blueMa;
                     _pointDrawerSc.AddBackVertex(fp2.transform.position);
+                    Destroy(fp2);
                     _pointDrawerSc.LineCreate();
                     fp.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
                     _dotList.Add(fp);
@@ -202,6 +216,7 @@ public class Footprints : MonoBehaviour
         fp2.transform.position = fp.transform.position + fp.transform.up * -0.05f;
         fp2.GetComponent<MeshRenderer>().material = blueMa;
         _pointDrawerSc.AddBackVertex(fp2.transform.position);
+        Destroy(fp2);
         fp.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
         _dotList.Add(fp);
         rendererPositions.Add(CheckPoint());

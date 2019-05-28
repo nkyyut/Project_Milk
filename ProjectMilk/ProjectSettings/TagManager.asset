@@ -11,6 +11,8 @@ TagManager:
   - Line
   - DropBlock
   - InvisibleObjects
+  - OldLine
+  - FootPoint
   layers:
   - Default
   - TransparentFX
@@ -21,9 +23,9 @@ TagManager:
   - 
   - 
   - Enemy
-  - 
-  - 
-  - 
+  - Player
+  - Line
+  - Coral
   - 
   - 
   - 
