@@ -159,7 +159,8 @@ public class TimeManager : MonoBehaviour {
     public void SetNowTimeManagerState_TICK() { NowTimeManagerState = TIMEMANAGER_STATE.TICK; }
     /*現在の時間を渡す*/
     public float GetNowPlayTime() { return NowPlayTime; }
-
+    //制限時間ー経過時間を渡す　　5/28與那覇追加
+    public float GetScoreTime() { return GameLimitTime - NowPlayTime; }
 
 
     /*Readme*************************************************************************************/

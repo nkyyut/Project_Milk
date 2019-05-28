@@ -18,8 +18,6 @@ public class Jin_PointDrawer : MonoBehaviour
     //切断するオブジェクト
     GameObject MARUTA;
 
-    public GameObject FrontMesh;
-
     int dotnum;
     bool IsChangeDirection;
     public bool IsAllMeshCreate;
@@ -36,28 +34,23 @@ public class Jin_PointDrawer : MonoBehaviour
     [SerializeField]
     private Footprints _footPrints;
 
-    //打った点のマテリアル
-    [SerializeField]
-    private Material _dotMat;
-    [SerializeField]
-    private Material Coral_M;
-    [SerializeField]
-    private Material White;
+    //マテリアル
+    [SerializeField] private Material _dotMat;
+    [SerializeField] private Material Coral_M;
+    [SerializeField] private Material Blue;
+    [SerializeField] private Material _material;
+    [SerializeField] private Material _maskMaterial;
 
     [SerializeField]
     private float _dotSize = 0.05f;
-
-    [SerializeField]
-    private Material _material;
-
-    [SerializeField]
-    private Material _maskMaterial;
 
     [SerializeField]
     private float _threshold = 0.1f;
 
     [SerializeField] GameObject footpoints; // 子
     [SerializeField] GameObject FootPoint_Parent; // 親
+
+    [SerializeField] private DurableValueManager _dvManager;
 
     private float _sqrThreshold = 0;
 
@@ -82,11 +75,6 @@ public class Jin_PointDrawer : MonoBehaviour
     public Footprints GetFootprints()
     {
         return _footPrints;
-    }
-
-    public GameObject GetFrontMesh()
-    {
-        return FrontMesh;
     }
 
     public Vector3 MeshObjectForwad()
@@ -248,9 +236,11 @@ public class Jin_PointDrawer : MonoBehaviour
         go.AddComponent<DropEnemy>();
         go.AddComponent<Subtractor>();
         go.GetComponent<Subtractor>().maskMaterial = _maskMaterial;
-        FrontMesh = go;
         go.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
         _meshList.Add(go);
+
+        //コーラルのHP減算処理
+        _dvManager.GetComponent<DurableValueManager>().SubMeshArea(go);
 
         //奥のオブジェクト生成
         GameObject go2 = _drawMesh.CreateMesh(back_vertices);
@@ -312,7 +302,7 @@ public class Jin_PointDrawer : MonoBehaviour
         AllMeshObject.transform.GetComponent<MeshFilter>().mesh.CombineMeshes(_combine);
         AllMeshObject.transform.gameObject.SetActive(true);
 
-        AllMeshObject.AddComponent<MeshCollider>();
+        //AllMeshObject.AddComponent<MeshCollider>();
         AllMeshObject.GetComponent<MeshRenderer>().material = _material;
         AllMeshObject.AddComponent<Subtractor>();
         AllMeshObject.GetComponent<Subtractor>().maskMaterial = _maskMaterial;
@@ -336,15 +326,19 @@ public class Jin_PointDrawer : MonoBehaviour
 
         front.AddComponent<MeshCollider>();
         front.GetComponent<MeshCollider>().convex = true;
+        front.GetComponent<MeshCollider>().isTrigger = true;
+        front.AddComponent<DropEnemy>();
+
         between.AddComponent<MeshCollider>();
         between.GetComponent<MeshCollider>().convex = true;
+        //between.AddComponent<DropEnemy>();
 
         MeshFilter betfilter = between.GetComponent<MeshFilter>();
         betfilter.mesh = mesh;
 
         front.GetComponent<MeshRenderer>().material = Coral_M;
-        back.GetComponent<MeshRenderer>().material = White;
-        between.GetComponent<MeshRenderer>().material = White;
+        back.GetComponent<MeshRenderer>().material = Blue;
+        between.GetComponent<MeshRenderer>().material = Blue;
 
         if (0 > getArea(_dots))
             front.GetComponent<MeshFilter>().mesh.SetTriangles(front.GetComponent<MeshFilter>().mesh.triangles.Reverse().ToArray(), 0);
@@ -353,7 +347,7 @@ public class Jin_PointDrawer : MonoBehaviour
         back.transform.parent = DropMeshObject.transform;
         between.transform.parent = DropMeshObject.transform;
 
-        //DropMeshObject.transform.position -= MeshForawd * 0.3f;
+        DropMeshObject.transform.position -= MeshForawd * 0.08f;
 
         DropMeshObject.AddComponent<Jin_DropMover>();
         DropMeshObject.GetComponent<Jin_DropMover>().SetPieceState_DROP();

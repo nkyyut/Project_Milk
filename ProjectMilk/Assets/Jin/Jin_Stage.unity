@@ -294,6 +294,11 @@ Prefab:
       propertyPath: m_LocalEulerAnglesHint.x
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 65458872102124920, guid: aaba094fe3613644d9c16b466628582e,
+        type: 2}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: aaba094fe3613644d9c16b466628582e, type: 2}
   m_IsPrefabParent: 0
@@ -481,20 +486,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   capMaterial: {fileID: 2100000, guid: 0a1fef63a04dc2c4da17b2fec3460f1c, type: 2}
   Line: {fileID: 1921527470484842, guid: 324e4248051da534e896c3b8624de730, type: 2}
-  FrontMesh: {fileID: 0}
   IsAllMeshCreate: 0
   CutScaleZ: 0.2
   _drawMesh: {fileID: 1601154026}
   _footPrints: {fileID: 160654193}
   _dotMat: {fileID: 2100000, guid: 0a1fef63a04dc2c4da17b2fec3460f1c, type: 2}
   Coral_M: {fileID: 2100000, guid: 5fc63b11fbdb6694f8f0d321e707d558, type: 2}
-  White: {fileID: 2100000, guid: c3ce114ce0eb8b847a068675f528ba50, type: 2}
-  _dotSize: 0.05
+  Blue: {fileID: 2100000, guid: c3ce114ce0eb8b847a068675f528ba50, type: 2}
   _material: {fileID: 2100000, guid: aef3e9503aeaf87478cf32728746333c, type: 2}
   _maskMaterial: {fileID: 2100000, guid: b9b7348442c8d4873a34de4f483d1e93, type: 2}
+  _dotSize: 0.05
   _threshold: 0.1
   footpoints: {fileID: 1181687140550412, guid: 6efe01df9360cf544a5871e239eb0a47, type: 2}
   FootPoint_Parent: {fileID: 941780114}
+  _dvManager: {fileID: 671785109}
   _vertices: []
   _meshList: []
   back_vertices: []
