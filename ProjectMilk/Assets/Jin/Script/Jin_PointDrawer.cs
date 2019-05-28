@@ -305,22 +305,20 @@ public class Jin_PointDrawer : MonoBehaviour
         }
         AllMeshObject.transform.GetComponent<MeshFilter>().mesh = new Mesh();
         AllMeshObject.transform.GetComponent<MeshFilter>().mesh.CombineMeshes(_combine);
+        AllMeshObject.AddComponent<MeshCollider>();
+        AllMeshObject.AddComponent<MeshCollider>().convex = true;
         AllMeshObject.transform.gameObject.SetActive(true);
 
-        //AllMeshObject.AddComponent<MeshCollider>();
         AllMeshObject.GetComponent<MeshRenderer>().material = _material;
         AllMeshObject.AddComponent<Subtractor>();
         AllMeshObject.GetComponent<Subtractor>().maskMaterial = _maskMaterial;
 
-        //AllMeshObject.transform.position += MeshForwad * 0.05f;
-        //AllMeshObject.AddComponent<Jin_DropMover>();
-        //AllMeshObject.GetComponent<Jin_DropMover>().SetPieceState_DROP();
         AllMeshObject.tag = ("DropBlock");
         Mesh allmesh = AllMeshObject.GetComponent<MeshFilter>().mesh;
         if (0 < getArea(_dots))
             AllMeshObject.GetComponent<MeshFilter>().mesh.SetTriangles(allmesh.triangles.Reverse().ToArray(), 0);
         _allMeshObject.Add(AllMeshObject);
-        AllMeshObject.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
+        //AllMeshObject.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
 
 
 

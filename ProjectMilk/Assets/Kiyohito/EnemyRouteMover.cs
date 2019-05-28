@@ -84,7 +84,6 @@ public class EnemyRouteMover : MonoBehaviour {
 
         //}
         //Debug.Log("↓");
-        Debug.Log(NowEnemyState);
     }
 
 
