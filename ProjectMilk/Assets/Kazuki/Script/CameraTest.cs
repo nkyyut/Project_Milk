@@ -135,7 +135,7 @@ public class CameraTest : MonoBehaviour
 
                     FreeFlg = true;
                 }
-                targetPos = SangoFree.transform.position;
+                targetPos = SetFreetransform.transform.position;
                 InputH = Input.GetAxisRaw("HorizontalR");
                 InputV = Input.GetAxisRaw("VerticalR");
 

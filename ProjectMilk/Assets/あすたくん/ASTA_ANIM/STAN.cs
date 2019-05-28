@@ -22,11 +22,11 @@ public class STAN : MonoBehaviour {
 
     public void MoveOff()
     {
-        gameObject.GetComponent<PlayerController>().enabled = false;
+        gameObject.GetComponent<PlayerControl>().enabled = false;
     }
 
     public void MoveOn()
     {
-        gameObject.GetComponent<PlayerController>().enabled = true;
+        gameObject.GetComponent<PlayerControl>().enabled = true;
     }
 }
