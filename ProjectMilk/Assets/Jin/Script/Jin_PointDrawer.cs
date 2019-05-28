@@ -218,9 +218,9 @@ public class Jin_PointDrawer : MonoBehaviour
         MeshForawd = fp.transform.forward;
         Vector3[] forwardArray = new Vector3[1];
         forwardArray[0] = MeshForawd;
-        //fp.transform.position += MeshForawd * 0.05f;
+        fp.transform.position += MeshForawd * 0.05f;
         //Ray_Curvedsurface(forwardArray);
-        fp.transform.position = Ray_Curvedsurface(forwardArray);
+        //fp.transform.position = Ray_Curvedsurface(forwardArray);
 
         GameObject[] _dots = new GameObject[_footPrints._dotList.Count];
         for (int i = 0; i < _footPrints._dotList.Count; i++)
@@ -336,6 +336,8 @@ public class Jin_PointDrawer : MonoBehaviour
 
         front.AddComponent<MeshCollider>();
         front.GetComponent<MeshCollider>().convex = true;
+        between.AddComponent<MeshCollider>();
+        between.GetComponent<MeshCollider>().convex = true;
 
         MeshFilter betfilter = between.GetComponent<MeshFilter>();
         betfilter.mesh = mesh;
@@ -350,6 +352,8 @@ public class Jin_PointDrawer : MonoBehaviour
         front.transform.parent = DropMeshObject.transform;
         back.transform.parent = DropMeshObject.transform;
         between.transform.parent = DropMeshObject.transform;
+
+        //DropMeshObject.transform.position -= MeshForawd * 0.3f;
 
         DropMeshObject.AddComponent<Jin_DropMover>();
         DropMeshObject.GetComponent<Jin_DropMover>().SetPieceState_DROP();
@@ -378,7 +382,7 @@ public class Jin_PointDrawer : MonoBehaviour
         {
             //Vector3 vec = matrix.MultiplyPoint(vertex);
             //vec.y = 1000;
-            vertices[0] += MeshForawd * 0.05f;
+            vertices[0] += MeshForawd * 0.01f;
 
             RaycastHit hit;
             if (Physics.Raycast(vertices[0], -MeshForawd, out hit))
@@ -526,9 +530,9 @@ public class Jin_PointDrawer : MonoBehaviour
 
             GameObject Lineobj = Instantiate(Line, transform.position, transform.rotation) as GameObject;
             Lineobj.transform.position = (myPoint[0] + myPoint[1]) / 2;
-            if (myPoint[0].x < myPoint[1].x)
-                MeshForawd = Lineobj.transform.right = (myPoint[1] - myPoint[0]).normalized;
-            else
+            //if (myPoint[0].x < myPoint[1].x)
+            //    MeshForawd = Lineobj.transform.right = (myPoint[1] - myPoint[0]).normalized;
+            //else
                 MeshForawd = Lineobj.transform.right = (myPoint[0] - myPoint[1]).normalized;
 
             Lineobj.transform.localScale = new Vector3((myPoint[1] - myPoint[0]).magnitude, 0.005f, 0.005f);
@@ -552,7 +556,9 @@ public class Jin_PointDrawer : MonoBehaviour
             Lineobj.GetComponent<Rigidbody>().isKinematic = true;
 
             Lineobj.AddComponent<HitPoint>();
-
+            //当たり判定のサイズ変更
+            BoxCollider b = Lineobj.GetComponent<BoxCollider>();
+            b.size = new Vector3(1,1,8);
         }
 
     }
