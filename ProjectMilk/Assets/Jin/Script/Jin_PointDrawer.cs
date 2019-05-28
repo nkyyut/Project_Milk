@@ -234,7 +234,7 @@ public class Jin_PointDrawer : MonoBehaviour
             _vertices[i] += MeshForawd * 0.1f;
         }
 
-        //Destroy(fp.gameObject);
+        Destroy(fp.gameObject);
 
         //手前のオブジェクト生成
         GameObject go = _drawMesh.CreateMesh(_vertices);

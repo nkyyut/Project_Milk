@@ -90,6 +90,9 @@ public class Footprints : MonoBehaviour
                 list.AddRange(_pointDrawerSc._lineList);
                 dot.AddRange(_dotList);
 
+                foreach(GameObject Triggerlist in _pointDrawerSc._lineList)
+                    Triggerlist.GetComponent<BoxCollider>().isTrigger = false;
+
                 _pointDrawerSc.All_lineList.Add(list);
                 All_dotList.Add(dot);
                 if (_pointDrawerSc.All_lineList.Count > 3)
