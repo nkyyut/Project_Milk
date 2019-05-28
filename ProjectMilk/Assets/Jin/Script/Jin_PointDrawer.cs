@@ -42,6 +42,9 @@ public class Jin_PointDrawer : MonoBehaviour
     [SerializeField] private Material _maskMaterial;
     [SerializeField] private Material m_Yellow;
 
+    [Range(0,20)]
+    public int Line_HeightColliderSize;     //ラインのコライダーの高さ
+
     [SerializeField]
     private float _dotSize = 0.05f;
 
@@ -224,7 +227,7 @@ public class Jin_PointDrawer : MonoBehaviour
             _vertices[i] += MeshForawd * 0.1f;
         }
 
-        //Destroy(fp.gameObject);
+        Destroy(fp.gameObject);
 
         //手前のオブジェクト生成
         GameObject go = _drawMesh.CreateMesh(_vertices);
@@ -554,7 +557,7 @@ public class Jin_PointDrawer : MonoBehaviour
             Lineobj.AddComponent<HitPoint>();
             //当たり判定のサイズ変更
             BoxCollider b = Lineobj.GetComponent<BoxCollider>();
-            b.size = new Vector3(1,1,8);
+            b.size = new Vector3(1,1,Line_HeightColliderSize);
         }
 
     }
