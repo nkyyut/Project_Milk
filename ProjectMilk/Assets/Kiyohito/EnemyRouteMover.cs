@@ -84,6 +84,7 @@ public class EnemyRouteMover : MonoBehaviour {
 
         //}
         //Debug.Log("↓");
+        Debug.Log(NowEnemyState);
     }
 
 
@@ -367,13 +368,13 @@ public class EnemyRouteMover : MonoBehaviour {
     }
 
 
-    void SetNowEnemyState_IDLE() { NowEnemyState = ENEMY_MOVE_STATE.IDLE; }
-    void SetNowEnemyState_VERTICAL() { NowEnemyState = ENEMY_MOVE_STATE.VERTICAL; }
-    void SetNowEnemyState_HORIZONTAL() { NowEnemyState = ENEMY_MOVE_STATE.HORIZONTAL; }
-    void SetNowEnemyState_UP() { NowEnemyState = ENEMY_MOVE_STATE.UP; }
-    void SetNowEnemyState_DOWN() { NowEnemyState = ENEMY_MOVE_STATE.DOWN; }
-    void SetNowEnemyState_RIGHT() { NowEnemyState = ENEMY_MOVE_STATE.RIGHT; }
-    void SetNowEnemyState_LEFT() { NowEnemyState = ENEMY_MOVE_STATE.LEFT; }
-    void SetNowEnemyState_WAIT() { NowEnemyState = ENEMY_MOVE_STATE.WAIT; }
+    public void SetNowEnemyState_IDLE() { NowEnemyState = ENEMY_MOVE_STATE.IDLE; }
+    public void SetNowEnemyState_VERTICAL() { NowEnemyState = ENEMY_MOVE_STATE.VERTICAL; }
+    public void SetNowEnemyState_HORIZONTAL() { NowEnemyState = ENEMY_MOVE_STATE.HORIZONTAL; }
+    public void SetNowEnemyState_UP() { NowEnemyState = ENEMY_MOVE_STATE.UP; }
+    public void SetNowEnemyState_DOWN() { NowEnemyState = ENEMY_MOVE_STATE.DOWN; }
+    public void SetNowEnemyState_RIGHT() { NowEnemyState = ENEMY_MOVE_STATE.RIGHT; }
+    public void SetNowEnemyState_LEFT() { NowEnemyState = ENEMY_MOVE_STATE.LEFT; }
+    public void SetNowEnemyState_WAIT() { NowEnemyState = ENEMY_MOVE_STATE.WAIT; }
 
 }
