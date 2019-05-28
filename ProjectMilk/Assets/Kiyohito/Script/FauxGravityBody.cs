@@ -4,12 +4,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class FauxGravityBody : MonoBehaviour {
+    public  bool GravitySwitch;
     RaycastHit hit;
     RaycastHit hitLog;
     RaycastHit Previoushit;
     public Transform Bottom1;
     public Transform Bottom2;//Rayの原点
     bool LostFlg;
+    Vector3 NowNormal;
     private GameObject MyGameObject;
     public float Gravity;
     // Use this for initialization
@@ -20,13 +22,17 @@ public class FauxGravityBody : MonoBehaviour {
         this.GetComponent<Rigidbody>().useGravity = false;
         MyGameObject = this.gameObject;
         LostFlg = true;
+        GravitySwitch = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        Vector3 NormalVec = CheckNormal();
-        Attract(MyGameObject, NormalVec);
+        if (GravitySwitch)
+        {
+            Vector3 NormalVec = CheckNormal();
+            Attract(MyGameObject, NormalVec);
+        }
     }
 
     /*Rayを飛ばして自分の真下のポリゴンを取得*/
@@ -117,6 +123,7 @@ public class FauxGravityBody : MonoBehaviour {
     {
         RaycastHit hit;
         hit = CheckPolygonToRayCast();
+        NowNormal = hit.normal;
         return hit.normal;
     }
 
@@ -133,4 +140,6 @@ public class FauxGravityBody : MonoBehaviour {
         Quaternion TargetRotation = Quaternion.FromToRotation(BodyUp, GravityUp) * body.transform.rotation;
         body.transform.rotation = Quaternion.Slerp(body.transform.rotation, TargetRotation,   10*Time.deltaTime);
     }
+    Vector3 GetNowNormal(){return NowNormal;}
+    public void SetGravitySwitch() { GravitySwitch = false; }
 }

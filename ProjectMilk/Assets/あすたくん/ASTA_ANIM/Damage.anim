@@ -10529,6 +10529,14 @@ AnimationClip:
   m_GenerateMotionCurves: 1
   m_Events:
   - time: 0
+    functionName: Play
+    data: 
+    objectReferenceParameter: {fileID: 8300000, guid: 3b5507903e09cac418c5ef5cd43231cf,
+      type: 3}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0
     functionName: MoveOff
     data: 
     objectReferenceParameter: {fileID: 0}

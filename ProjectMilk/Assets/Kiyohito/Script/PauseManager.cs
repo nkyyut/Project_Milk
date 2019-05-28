@@ -6,12 +6,13 @@ using UnityEngine;
 
 public class PauseManager : MonoBehaviour {
     Input LogButton;
+    public GameObject HelpCanvas;
+    public GameObject HelpManager;
     public GameObject PauseUI_Canvas;
     public UIGuageMover HelpUIGuage;
     public UIGuageMover BackUIGuage;
     public UIGuageMover TitleUIGuage;
     public UIGuageMover ReTryUIGuage;
-    public SceneTransition ST_ToTitle;
     public TotalManager TotalManager;
     public GameObject TranslucentPanel;
     /////////////////////         A                     B                    X                Y///////////////
@@ -21,10 +22,11 @@ public class PauseManager : MonoBehaviour {
     float XPressTime;
     float YPressTime;
     bool StickBeatFlg;//連続入力回避用フラグ
-    enum PAUSE_MANAGER_STATE
+    public enum PAUSE_MANAGER_STATE
     {
         PAUSE,
-        IDLE
+        IDLE,
+        HELP
     }PAUSE_MANAGER_STATE NowState;
 
     enum PAUSE_MENU
@@ -55,7 +57,7 @@ public class PauseManager : MonoBehaviour {
         Switching();
         //Debug.Log(NowChoice);
         //Debug.Log(Input.GetKey("joystick button 0"));
-	}
+    }
 
     void Switching()
     {
@@ -66,12 +68,22 @@ public class PauseManager : MonoBehaviour {
                 break;
             case PAUSE_MANAGER_STATE.IDLE:
                 break;
+            case PAUSE_MANAGER_STATE.HELP:
+                //それがAボタンなら
+                if (Input.GetKey("joystick button 0"))
+                {
+                    NowState = PAUSE_MANAGER_STATE.PAUSE;
+                    HelpCanvas.SetActive(false);
+                    HelpManager.SetActive(false);
+                }
+                break;
         }
     }
 
     public void SetPauseManagerState_Pause()
     {
-        NowState = PAUSE_MANAGER_STATE.PAUSE;
+        if(NowState != PAUSE_MANAGER_STATE.HELP)
+            NowState = PAUSE_MANAGER_STATE.PAUSE;
         ChangeColorToTranslucent();
         PauseUI_Canvas.SetActive(true);
     }
@@ -136,7 +148,7 @@ public class PauseManager : MonoBehaviour {
                 case PAUSE_MENU.RETRY:
                     break;
                 case PAUSE_MENU.TOTITLE:
-                    ST_ToTitle.Transition();
+                    FadeManager.Instance.LoadScene("TitleScene", 0.3f);
                     break;
                 case PAUSE_MENU.HELP:
                     break;
@@ -193,25 +205,27 @@ public class PauseManager : MonoBehaviour {
         {
             BPressTime += Time.deltaTime;
             TitleUIGuage.FillUp(BPressTime);
-            //長押しされたら""へ
+            //長押しされたら"タイトル"へ
             if (BPressTime >= KiyohitoConst.Const.PressTimeLimit)
             {
                 TitleUIGuage.FillUp(BPressTime);
                 PressTimeInitialize();
-                ST_ToTitle.Transition();
+                FadeManager.Instance.LoadScene("TitleScene", 0.3f);
             }
         }
         //それがXボタンなら
         else if (Input.GetKey("joystick button 2"))
-        {
+        { 
             XPressTime += Time.deltaTime;
             HelpUIGuage.FillUp(XPressTime);
-            //長押しされたらタイトルへ
+            //長押しされた"ヘルプ"へ
             if (XPressTime >= KiyohitoConst.Const.PressTimeLimit)
             {
+                NowState = PAUSE_MANAGER_STATE.HELP;
+                HelpCanvas.SetActive(true);
+                HelpManager.SetActive(true);
                 PressTimeInitialize();
-                XPressTime = 0;
-
+                BackUIGuage.FillUp(0);
             }
         }
         //それがYボタンなら
@@ -219,9 +233,10 @@ public class PauseManager : MonoBehaviour {
         {
             YPressTime += Time.deltaTime;
             ReTryUIGuage.FillUp(YPressTime);
-            //長押しされたら""へ
+            //長押しされたら"リトライ"へ
             if (YPressTime >= KiyohitoConst.Const.PressTimeLimit)
             {
+                Application.LoadLevel("GameMainScene");
                 PressTimeInitialize();
                 YPressTime = 0;
             }
