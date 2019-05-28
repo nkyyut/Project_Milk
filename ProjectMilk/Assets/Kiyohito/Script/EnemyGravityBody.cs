@@ -6,7 +6,7 @@ public class EnemyGravityBody : MonoBehaviour {
     RaycastHit hit;
     RaycastHit hitLog;
     RaycastHit Previoushit;
-
+    public bool GravitySwitch;
     [SerializeField] Transform Bottom;
     [SerializeField] Transform Top;
     bool LostFlg;
@@ -25,8 +25,11 @@ public class EnemyGravityBody : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        Vector3 NormalVec = CheckNormal();
-        Attract(MyGameObject, NormalVec);
+        if (GravitySwitch)
+        {
+            Vector3 NormalVec = CheckNormal();
+            Attract(MyGameObject, NormalVec);
+        }
     }
 
     /*Rayを飛ばして自分の真下のポリゴンを取得*/
@@ -135,4 +138,5 @@ public class EnemyGravityBody : MonoBehaviour {
         body.transform.rotation = Quaternion.Slerp(body.transform.rotation, TargetRotation, 20 * Time.deltaTime);
         //body.transform.rotation = TargetRotation;
     }
+    public void SetGravitySwitch() { GravitySwitch = false; }
 }
