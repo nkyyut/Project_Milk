@@ -2671,8 +2671,8 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.0053414935
-  m_Center: {x: 0.0000000010251132, y: 4.4659144e-11, z: 0.0033035004}
+  m_Radius: 0.0019736537
+  m_Center: {x: 0.000016835333, y: 0, z: 0.0001054144}
 --- !u!114 &796313926
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2695,7 +2695,7 @@ MonoBehaviour:
     MoveTime: 0.5
   ReflectionTagArray:
   - OldLine
-  MoveSpeed: 0.1
+  MoveSpeed: 0.3
   MoveLimit_Ver: 0.25
   MoveLimit_Hor: 0.25
   LoopFlg: 1

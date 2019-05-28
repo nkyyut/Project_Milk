@@ -80,7 +80,7 @@ public class Footprints : MonoBehaviour
             {
                 foreach (GameObject line in _pointDrawerSc._lineList)
                 {
-                    line.AddComponent<HitEnemy>();
+                    line.AddComponent<AgainLinePosition>();
                     line.tag = "OldLine";
                     line.GetComponent<MeshRenderer>().enabled = true;
                 }
