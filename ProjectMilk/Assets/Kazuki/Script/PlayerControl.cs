@@ -1,4 +1,4 @@
-﻿//かずき 5/13
+﻿//かずき 5/28
 
 using System.Collections;
 using System.Collections.Generic;
@@ -6,10 +6,12 @@ using UnityEngine;
 
 public class PlayerControl : MonoBehaviour
 {
-   
+    public CameraTest CameraScene;
+
     [SerializeField] Vector3 StatePos;
     public float movespeed = 0.01f;
-    private Vector3 playerForward;
+    public Vector3 playerForward;
+
 
     private bool PmoveFlg = false;
     public bool chang { get { return PmoveFlg; } }
@@ -23,17 +25,22 @@ public class PlayerControl : MonoBehaviour
     public SCENE_TYPE scene;
     void Start()
     {
-        transform.position = StatePos;
-        
+        // transform.position = StatePos;
+        playerForward = new Vector3(transform.position.x, Camera.main.transform.position.y, transform.position.z);
+
+
     }
 
 
     void Update()
     {
 
-        CameraTest.SCENE_TYPE CameraScene;
-        CameraScene = Camera.main.GetComponent<CameraTest>().scene;
-        int Cscene = (int)CameraScene;
+        //CameraTest.SCENE_TYPE CameraScene;
+        //CameraScene = Camera.main.GetComponent<CameraTest>().scene;
+        //int Cscene = (int)CameraScene;
+        //scene = (SCENE_TYPE)Cscene;
+
+        int Cscene = (int)CameraScene.Pscene;
         scene = (SCENE_TYPE)Cscene;
 
         switch (scene)
@@ -48,19 +55,23 @@ public class PlayerControl : MonoBehaviour
                 else
                     PmoveFlg = false;
 
-                playerForward = new Vector3(transform.position.x, Camera.main.transform.position.y, transform.position.z) - Camera.main.transform.position;
 
-                Vector3 cameraForward = Vector3.Scale(playerForward , new Vector3(1, 1, 1)).normalized;
-                //Debug.Log(cameraForward);
+                playerForward = new Vector3(transform.position.x, transform.position.y, Camera.main.transform.position.z) - Camera.main.transform.position;
+
+
+
+                Vector3 cameraForward = Vector3.Scale(Camera.main.transform.up, new Vector3(1, 1, 1)).normalized;
                 Vector3 moveForward = cameraForward * InputV + Camera.main.transform.right * InputH;
+
 
                 if (InputH != 0 || InputV != 0)
                 {
-                    this.GetComponent<ParticleControl>().Flg = true;
+                    //this.GetComponent<ParticleControl>().Flg = true;
+
                     transform.position += moveForward * movespeed;
-                    transform.rotation = Quaternion.LookRotation(moveForward);
                 }
-                else this.GetComponent<ParticleControl>().Flg = false;
+
+                // else this.GetComponent<ParticleControl>().Flg = false;
                 break;
             case SCENE_TYPE.PAUSE:
                 break;
