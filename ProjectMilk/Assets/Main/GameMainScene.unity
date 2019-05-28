@@ -2980,6 +2980,9 @@ MonoBehaviour:
     MoveTime: 1.5
   - Movement: Wait
     MoveTime: 0.2
+  ReflectionTagArray:
+  - OldLine
+  - DropBlock
   MoveSpeed: 0.5
   MoveLimit_Ver: 0.25
   MoveLimit_Hor: 0.25
@@ -5176,6 +5179,9 @@ MonoBehaviour:
     MoveTime: 2
   - Movement: Wait
     MoveTime: 0.2
+  ReflectionTagArray:
+  - OldLine
+  - DropBlock
   MoveSpeed: 0.5
   MoveLimit_Ver: 0.25
   MoveLimit_Hor: 0.25
@@ -5543,8 +5549,8 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!135 &717219185
-SphereCollider:
+--- !u!65 &717219185
+BoxCollider:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
@@ -5553,7 +5559,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.002
+  m_Size: {x: 0.003, y: 0.003, z: 0.003}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &717219186
 MonoBehaviour:
@@ -5575,6 +5581,9 @@ MonoBehaviour:
     MoveTime: 2
   - Movement: Wait
     MoveTime: 0.3
+  ReflectionTagArray:
+  - OldLine
+  - DropBlock
   MoveSpeed: 0.5
   MoveLimit_Ver: 0.25
   MoveLimit_Hor: 0.25
