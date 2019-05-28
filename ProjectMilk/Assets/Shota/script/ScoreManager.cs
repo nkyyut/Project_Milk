@@ -23,6 +23,7 @@ public class ScoreManager : MonoBehaviour {
         if(nowOniCount != oldOniCount)
         {
            TotalScore += AddScore(oldOniCount - nowOniCount);
+           Debug.Log(TotalScore);
            oldOniCount = nowOniCount;
         }
     }
@@ -31,6 +32,7 @@ public class ScoreManager : MonoBehaviour {
     {
         int rank;
         int score = 0;
+
         if(difference < 4)
         {
             rank = 0;
