@@ -22,15 +22,12 @@ public class Jin_DropMover : MonoBehaviour
     float DropSpeed;/*落ちるスピード*/
     float SwaySpeed;/*揺れるスピード*/
 
-    Vector3 cameraForward;
-
     Jin_PointDrawer _pointDrawer;
 
     void Start()
     {
         _pointDrawer = GameObject.Find("PointDrawer").GetComponent<Jin_PointDrawer>();
         Initialize();
-        cameraForward = Vector3.Scale(Camera.main.transform.forward, new Vector3(1, 0, 1)).normalized;
         StartCoroutine(DelayMethod(60));
     }
 
@@ -39,7 +36,7 @@ public class Jin_DropMover : MonoBehaviour
     {
         Switching();
         if(this.transform.position.y < -5)
-            Destroy(this.gameObject);
+            SetPieceState_DELETE();
     }
     /*いろいろ初期化*/
     void Initialize()
@@ -83,7 +80,7 @@ public class Jin_DropMover : MonoBehaviour
 
     void FrontMoveMesh()
     {
-        this.gameObject.transform.position += cameraForward * -0.005f;
+        this.gameObject.transform.position += _pointDrawer.MeshObjectForwad() * 0.005f;
     }
 
     private IEnumerator DelayMethod(int delayFrameCount)
