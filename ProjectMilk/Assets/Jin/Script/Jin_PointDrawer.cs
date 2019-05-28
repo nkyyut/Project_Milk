@@ -40,6 +40,7 @@ public class Jin_PointDrawer : MonoBehaviour
     [SerializeField] private Material Blue;
     [SerializeField] private Material _material;
     [SerializeField] private Material _maskMaterial;
+    [SerializeField] private Material m_Yellow;
 
     [SerializeField]
     private float _dotSize = 0.05f;
@@ -206,7 +207,8 @@ public class Jin_PointDrawer : MonoBehaviour
         MeshForawd = fp.transform.forward;
         Vector3[] forwardArray = new Vector3[1];
         forwardArray[0] = MeshForawd;
-        fp.transform.position += MeshForawd * 0.05f;
+        fp.transform.Rotate(-MeshForawd);
+        //fp.transform.position += MeshForawd * 0.05f;
         //Ray_Curvedsurface(forwardArray);
         //fp.transform.position = Ray_Curvedsurface(forwardArray);
 
@@ -222,7 +224,7 @@ public class Jin_PointDrawer : MonoBehaviour
             _vertices[i] += MeshForawd * 0.1f;
         }
 
-        Destroy(fp.gameObject);
+        //Destroy(fp.gameObject);
 
         //手前のオブジェクト生成
         GameObject go = _drawMesh.CreateMesh(_vertices);
@@ -530,6 +532,7 @@ public class Jin_PointDrawer : MonoBehaviour
                 MeshForawd = Lineobj.transform.right = (myPoint[0] - myPoint[1]).normalized;
 
             Lineobj.transform.localScale = new Vector3((myPoint[1] - myPoint[0]).magnitude, 0.005f, 0.005f);
+            Lineobj.GetComponent<MeshRenderer>().material = m_Yellow;
             Lineobj.tag = "LastLine";
             Lineobj.layer = LayerMask.NameToLayer("Ignore Raycast");
             _lineList.Add(Lineobj);
@@ -548,7 +551,6 @@ public class Jin_PointDrawer : MonoBehaviour
             Lineobj.GetComponent<BoxCollider>().isTrigger = true;
             Lineobj.AddComponent<Rigidbody>();
             Lineobj.GetComponent<Rigidbody>().isKinematic = true;
-
             Lineobj.AddComponent<HitPoint>();
             //当たり判定のサイズ変更
             BoxCollider b = Lineobj.GetComponent<BoxCollider>();

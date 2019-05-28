@@ -19,10 +19,11 @@ public class DropEnemy : MonoBehaviour
     {
         if (other.gameObject.tag == "Onihitode")
         {
-            //Debug.Log("Onihitode");
             other.gameObject.transform.parent = this.transform.gameObject.transform;
             other.gameObject.GetComponent<BoxCollider>().enabled = false;
             other.gameObject.transform.position += other.transform.forward * -0.005f;
+
+            
         }
     }
 }

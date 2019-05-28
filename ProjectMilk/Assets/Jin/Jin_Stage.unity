@@ -495,6 +495,7 @@ MonoBehaviour:
   Blue: {fileID: 2100000, guid: c3ce114ce0eb8b847a068675f528ba50, type: 2}
   _material: {fileID: 2100000, guid: aef3e9503aeaf87478cf32728746333c, type: 2}
   _maskMaterial: {fileID: 2100000, guid: b9b7348442c8d4873a34de4f483d1e93, type: 2}
+  m_Yellow: {fileID: 2100000, guid: 8991c583bdfc8b14e90a252593293233, type: 2}
   _dotSize: 0.05
   _threshold: 0.1
   footpoints: {fileID: 1181687140550412, guid: 6efe01df9360cf544a5871e239eb0a47, type: 2}
