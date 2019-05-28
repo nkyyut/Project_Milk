@@ -39,6 +39,10 @@ public class Jin_PointDrawer : MonoBehaviour
     //打った点のマテリアル
     [SerializeField]
     private Material _dotMat;
+    [SerializeField]
+    private Material Coral_M;
+    [SerializeField]
+    private Material White;
 
     [SerializeField]
     private float _dotSize = 0.05f;
@@ -212,6 +216,11 @@ public class Jin_PointDrawer : MonoBehaviour
         Quaternion TargetRotation = Quaternion.FromToRotation(fp.gameObject.transform.forward, _footPrints.CheckNormal()) * fp.gameObject.transform.rotation;
         fp.transform.rotation = Quaternion.Slerp(fp.transform.rotation, TargetRotation, 10);
         MeshForawd = fp.transform.forward;
+        Vector3[] forwardArray = new Vector3[1];
+        forwardArray[0] = MeshForawd;
+        //fp.transform.position += MeshForawd * 0.05f;
+        //Ray_Curvedsurface(forwardArray);
+        fp.transform.position = Ray_Curvedsurface(forwardArray);
 
         GameObject[] _dots = new GameObject[_footPrints._dotList.Count];
         for (int i = 0; i < _footPrints._dotList.Count; i++)
@@ -225,7 +234,7 @@ public class Jin_PointDrawer : MonoBehaviour
             _vertices[i] += MeshForawd * 0.1f;
         }
 
-        Destroy(fp.gameObject);
+        //Destroy(fp.gameObject);
 
         //手前のオブジェクト生成
         GameObject go = _drawMesh.CreateMesh(_vertices);
@@ -319,25 +328,28 @@ public class Jin_PointDrawer : MonoBehaviour
         AllMeshObject.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
 
 
+
         GameObject DropMeshObject = new GameObject("DropMeshObject");
-        GameObject front = Instantiate(go);
-        GameObject back = Instantiate(go2);
-        GameObject between = Instantiate(meshob);
+        GameObject front = _drawMesh.CreateMesh(_vertices);
+        GameObject back = _drawMesh.CreateMesh(back_vertices);
+        GameObject between = new GameObject("Between",typeof(MeshFilter), typeof(MeshRenderer));
 
-        Destroy(back.GetComponent<MeshCollider>());
-        Destroy(between.GetComponent<MeshCollider>());
+        front.AddComponent<MeshCollider>();
+        front.GetComponent<MeshCollider>().convex = true;
 
-        front.SetActive(true);
-        back.SetActive(true);
-        between.SetActive(true);
+        MeshFilter betfilter = between.GetComponent<MeshFilter>();
+        betfilter.mesh = mesh;
+
+        front.GetComponent<MeshRenderer>().material = Coral_M;
+        back.GetComponent<MeshRenderer>().material = White;
+        between.GetComponent<MeshRenderer>().material = White;
+
+        if (0 > getArea(_dots))
+            front.GetComponent<MeshFilter>().mesh.SetTriangles(front.GetComponent<MeshFilter>().mesh.triangles.Reverse().ToArray(), 0);
 
         front.transform.parent = DropMeshObject.transform;
         back.transform.parent = DropMeshObject.transform;
         between.transform.parent = DropMeshObject.transform;
-
-        front.GetComponent<MeshRenderer>().material = _dotMat;
-        back.GetComponent<MeshRenderer>().material = _dotMat;
-        between.GetComponent<MeshRenderer>().material = _dotMat;
 
         DropMeshObject.AddComponent<Jin_DropMover>();
         DropMeshObject.GetComponent<Jin_DropMover>().SetPieceState_DROP();
@@ -356,6 +368,35 @@ public class Jin_PointDrawer : MonoBehaviour
         IsChangeDirection = false;
         //_vertices.Clear();
         //back_dotList.Clear();
+    }
+    //頂点位置の再計算
+    private Vector3 Ray_Curvedsurface(Vector3[] vertices)
+    {
+        Vector3[] newVerticies = new Vector3[vertices.Length];
+        int i=0;
+        foreach (Vector3 vertex in vertices)
+        {
+            //Vector3 vec = matrix.MultiplyPoint(vertex);
+            //vec.y = 1000;
+            vertices[0] += MeshForawd * 0.05f;
+
+            RaycastHit hit;
+            if (Physics.Raycast(vertices[0], -MeshForawd, out hit))
+            {
+                Vector3 newVert = vertices[0];
+                newVert = hit.point;
+                newVerticies[i] = newVert;
+                return newVert;
+            }
+            else
+            {
+                //vertices[0] = 0;
+                newVerticies[i] = vertices[0];
+                return newVerticies[0];
+            }
+            i++;       
+        }
+        return newVerticies[0];
     }
 
     //多角形の右回り左回りを判定

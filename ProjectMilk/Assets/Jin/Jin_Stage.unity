@@ -487,6 +487,8 @@ MonoBehaviour:
   _drawMesh: {fileID: 1601154026}
   _footPrints: {fileID: 160654193}
   _dotMat: {fileID: 2100000, guid: 0a1fef63a04dc2c4da17b2fec3460f1c, type: 2}
+  Coral_M: {fileID: 2100000, guid: 5fc63b11fbdb6694f8f0d321e707d558, type: 2}
+  White: {fileID: 2100000, guid: c3ce114ce0eb8b847a068675f528ba50, type: 2}
   _dotSize: 0.05
   _material: {fileID: 2100000, guid: aef3e9503aeaf87478cf32728746333c, type: 2}
   _maskMaterial: {fileID: 2100000, guid: b9b7348442c8d4873a34de4f483d1e93, type: 2}
