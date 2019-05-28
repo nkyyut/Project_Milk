@@ -11,6 +11,7 @@ public class EnemyRouteMover : MonoBehaviour {
         public float MoveTime;
     }
     public Route[] RouteArray;
+    public string[] ReflectionTagArray; 
     Route[] RoundRouteArray;
 
 
@@ -241,13 +242,27 @@ public class EnemyRouteMover : MonoBehaviour {
 
     void OnCollisionEnter(Collision other)
     {
-        if (other.transform.tag != "InvisibleObjects") return;
-        Debug.Log("hit");
-        RouteNumber = SerchEndPoint - RouteNumber;
-        RoundRouteArray[RouteNumber].MoveTime = Delta;
-        Delta = 0;
-        //RouteNumber++;
-        NextMovement();
+        for (int i = 0; i < ReflectionTagArray.Length; i++)
+        {
+            if (other.transform.tag == ReflectionTagArray[i])
+            {
+                Debug.Log("hit");
+                RouteNumber = SerchEndPoint - RouteNumber;
+                RoundRouteArray[RouteNumber].MoveTime = Delta;
+                Delta = 0;
+                //RouteNumber++;
+                NextMovement();
+                return;
+            }
+        }
+
+        //if (other.transform.tag != "InvisibleObjects") return;
+        //Debug.Log("hit");
+        //RouteNumber = SerchEndPoint - RouteNumber;
+        //RoundRouteArray[RouteNumber].MoveTime = Delta;
+        //Delta = 0;
+        ////RouteNumber++;
+        //NextMovement();
     }
 
     void VerticalMove()
