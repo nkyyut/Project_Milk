@@ -366,6 +366,8 @@ MonoBehaviour:
   footpoints: {fileID: 1181687140550412, guid: 6efe01df9360cf544a5871e239eb0a47, type: 2}
   FootPoint: {fileID: 941780114}
   pointDrawer: {fileID: 216786540}
+  Hed: {fileID: 0}
+  blueMa: {fileID: 0}
   PointRange: 0.03
 --- !u!114 &160654194
 MonoBehaviour:
@@ -564,23 +566,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4bf98c6da9a39b4dbd5664f6e985349, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DurableValueManager: {fileID: 671785109}
   capMaterial: {fileID: 2100000, guid: 0a1fef63a04dc2c4da17b2fec3460f1c, type: 2}
   Line: {fileID: 1921527470484842, guid: 324e4248051da534e896c3b8624de730, type: 2}
   FrontMesh: {fileID: 0}
-  _AllMeshObject: {fileID: 0}
-  IsMeshCreate: 0
+  IsAllMeshCreate: 0
   CutScaleZ: 0.2
   _drawMesh: {fileID: 1601154026}
   _footPrints: {fileID: 160654193}
   _dotMat: {fileID: 2100000, guid: 0a1fef63a04dc2c4da17b2fec3460f1c, type: 2}
   _dotSize: 0.05
   _material: {fileID: 2100000, guid: 0a1fef63a04dc2c4da17b2fec3460f1c, type: 2}
+  _maskMaterial: {fileID: 0}
   _threshold: 0.1
+  footpoints: {fileID: 0}
   _vertices: []
   _meshList: []
   back_vertices: []
   _lineList: []
+  _allMeshObject: []
 --- !u!4 &216786542
 Transform:
   m_ObjectHideFlags: 0
@@ -1792,6 +1795,10 @@ Prefab:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 8be67e39dc24ad141b9a7eda7ed07fb8, type: 2}
+    - target: {fileID: 4398822602874514, guid: 0cc9b2c67291d8143bb34861d128b9cf, type: 2}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0cc9b2c67291d8143bb34861d128b9cf, type: 2}
   m_IsPrefabParent: 0
@@ -1867,6 +1874,7 @@ MonoBehaviour:
     MoveTime: 1
   - Movement: Wait
     MoveTime: 0.5
+  ReflectionTagArray: []
   MoveSpeed: 0.5
   MoveLimit_Ver: 0.25
   MoveLimit_Hor: 0.25
@@ -8225,6 +8233,9 @@ MonoBehaviour:
     MoveTime: 0.5
   - Movement: Wait
     MoveTime: 0.5
+  ReflectionTagArray:
+  - InvisibleObject
+  - OldLine
   MoveSpeed: 0.5
   MoveLimit_Ver: 0.25
   MoveLimit_Hor: 0.25
@@ -8809,7 +8820,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!23 &1166192534
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -8870,7 +8881,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1166192533}
   m_LocalRotation: {x: 0, y: -0.32985538, z: 0, w: 0.94403154}
-  m_LocalPosition: {x: -0.785, y: 0.845, z: -2.076}
+  m_LocalPosition: {x: -0.764, y: 0.908, z: -2.031}
   m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_Children: []
   m_Father: {fileID: 0}
@@ -9800,9 +9811,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b71527eee62d08438e2d64c0ee112e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Playercontrol: {fileID: 0}
   Player: {fileID: 160654192}
+  SangoFree: {fileID: 0}
   OffsetPos: {x: 0, y: 0.3, z: 0.7}
   Settransform: {fileID: 1337897379}
+  SetFreetransform: {fileID: 0}
+  PmoveFlg: 0
   scene: 0
 --- !u!1 &1527078791
 GameObject:
@@ -11401,12 +11416,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2275176195777254e9fc4d97f54dde6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HelpCanvas: {fileID: 0}
+  HelpManager: {fileID: 0}
   PauseUI_Canvas: {fileID: 1632773597}
   HelpUIGuage: {fileID: 278642826}
   BackUIGuage: {fileID: 992206811}
   TitleUIGuage: {fileID: 704220729}
   ReTryUIGuage: {fileID: 1613026016}
-  ST_ToTitle: {fileID: 276877400}
   TotalManager: {fileID: 469952510}
   TranslucentPanel: {fileID: 247676132}
 --- !u!4 &1982734817
