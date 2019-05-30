@@ -1639,7 +1639,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 297, y: -174}
+  m_AnchoredPosition: {x: 297, y: -162.00002}
   m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &157920709
@@ -2275,6 +2275,10 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11460108, guid: fd9d58dbfb8f846f58b62a48334a0058, type: 2}
       propertyPath: DebugMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11460108, guid: fd9d58dbfb8f846f58b62a48334a0058, type: 2}
+      propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -7155,7 +7159,7 @@ Prefab:
     - target: {fileID: 224660417046391710, guid: c83f44441e17da54baa9d54f1a566dbc,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -174
+      value: -162.00002
       objectReference: {fileID: 0}
     - target: {fileID: 224660417046391710, guid: c83f44441e17da54baa9d54f1a566dbc,
         type: 2}
@@ -7205,6 +7209,21 @@ Prefab:
     - target: {fileID: 1353290325696270, guid: c83f44441e17da54baa9d54f1a566dbc, type: 2}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224660417046391710, guid: c83f44441e17da54baa9d54f1a566dbc,
+        type: 2}
+      propertyPath: m_LocalScale.x
+      value: 0.99999994
+      objectReference: {fileID: 0}
+    - target: {fileID: 224660417046391710, guid: c83f44441e17da54baa9d54f1a566dbc,
+        type: 2}
+      propertyPath: m_LocalScale.y
+      value: 0.99999994
+      objectReference: {fileID: 0}
+    - target: {fileID: 224660417046391710, guid: c83f44441e17da54baa9d54f1a566dbc,
+        type: 2}
+      propertyPath: m_LocalScale.z
+      value: 0.99999994
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c83f44441e17da54baa9d54f1a566dbc, type: 2}
@@ -8604,7 +8623,7 @@ MonoBehaviour:
   TimeManager: {fileID: 383028820}
   DurableValueManager: {fileID: 721118717}
   PauseManager: {fileID: 58122334}
-  onicount: {fileID: 0}
+  onicount: {fileID: 84942796}
 --- !u!4 &1031843117
 Transform:
   m_ObjectHideFlags: 0
@@ -9013,7 +9032,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.766}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -9040,8 +9059,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fadeSpeed: 0.01
-  alphaLimit: 0
-  mycolor: {r: 0, g: 0, b: 0, a: 0}
+  alphaLimit: 0.8
+  mycolor: {r: 0, g: 0, b: 0, a: 1}
 --- !u!222 &1157688972
 CanvasRenderer:
   m_ObjectHideFlags: 0
