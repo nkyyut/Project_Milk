@@ -26,6 +26,8 @@ public class EnemyRouteMover : MonoBehaviour {
     bool[] PosSetFlgArray;
     bool IdleFlg;
     bool ReflectionFlg = false;
+    bool HitFlg=false;
+    GameObject HitGameObject;
     Vector3 [] InitPos;
     float Delta;
     float MoveLimitTime;
@@ -95,6 +97,7 @@ public class EnemyRouteMover : MonoBehaviour {
 
     void Switching()
     {
+
         switch (NowEnemyState)
         {
             case ENEMY_MOVE_STATE.IDLE:
@@ -243,7 +246,25 @@ public class EnemyRouteMover : MonoBehaviour {
         this.transform.position = InitPos[RouteNumber];
     }
 
-    void OnCollisionEnter(Collision other)
+    //void OnCollisionEnter(Collision other)
+    //{
+    //    for (int i = 0; i < ReflectionTagArray.Length; i++)
+    //    {
+    //        if (other.transform.tag == ReflectionTagArray[i])
+    //        {
+    //            Debug.Log("hit");
+    //            RouteNumber = SerchEndPoint - RouteNumber;
+    //            RoundRouteArray[RouteNumber].MoveTime = Delta;
+    //            Delta = 0;
+    //            //RouteNumber++;
+    //            NextMovement();
+    //            break;
+    //        }
+    //    }
+
+    //}
+
+    void OnTriggerEnter(Collider other)
     {
         for (int i = 0; i < ReflectionTagArray.Length; i++)
         {
@@ -251,7 +272,7 @@ public class EnemyRouteMover : MonoBehaviour {
             {
                 Debug.Log("hit");
                 RouteNumber = SerchEndPoint - RouteNumber;
-                RoundRouteArray[RouteNumber].MoveTime = Delta;
+                RoundRouteArray[RouteNumber].MoveTime = Delta-Time.deltaTime;
                 Delta = 0;
                 //RouteNumber++;
                 NextMovement();
@@ -259,14 +280,8 @@ public class EnemyRouteMover : MonoBehaviour {
             }
         }
 
-        //if (other.transform.tag != "InvisibleObjects") return;
-        //Debug.Log("hit");
-        //RouteNumber = SerchEndPoint - RouteNumber;
-        //RoundRouteArray[RouteNumber].MoveTime = Delta;
-        //Delta = 0;
-        ////RouteNumber++;
-        //NextMovement();
     }
+
 
     void VerticalMove()
     {
