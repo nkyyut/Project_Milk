@@ -10,6 +10,7 @@ public class GameOverManager : MonoBehaviour {
     [SerializeField] GameObject ReTryUIGuage;
     [SerializeField] SceneTransition ST_ToTitle;
     [SerializeField] CanvasGroup CanvasGroup;
+    [SerializeField] GameOver GameOver;
     float BPressTime;
     float YPressTime;
     float Delta;
@@ -23,17 +24,19 @@ public class GameOverManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        Now_State = GAMEOVER_STATE.INPUT_RECEPTION;
+        //Now_State = GAMEOVER_STATE.INPUT_RECEPTION;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetMouseButtonUp(0))
+        if (GameOver.finish)
         {
             SetNowState_FADE_IN();
         }
+
         Switching();
-	}
+        Debug.Log("NowState"+Now_State);
+    }
 
     void Switching()
     {
@@ -66,6 +69,7 @@ public class GameOverManager : MonoBehaviour {
         if (Delta >= 1)
         {
             Delta = 0;
+
             SetNowState_INPUT_RECEPTION();
         }
     }

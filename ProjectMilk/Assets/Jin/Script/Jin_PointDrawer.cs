@@ -15,9 +15,6 @@ public class Jin_PointDrawer : MonoBehaviour
     [SerializeField]
     GameObject Line;
 
-    //切断するオブジェクト
-    GameObject MARUTA;
-
     int dotnum;
     bool IsChangeDirection;
     public bool IsAllMeshCreate;
@@ -27,6 +24,8 @@ public class Jin_PointDrawer : MonoBehaviour
 
     [SerializeField]
     public float CutScaleZ = 0.1f;
+
+    private RingSound _ringSound;
 
     [SerializeField]
     private DrawMesh _drawMesh;
@@ -139,7 +138,7 @@ public class Jin_PointDrawer : MonoBehaviour
 
     private void Awake()
     {
-        MARUTA = GameObject.Find("edasan1");
+        _ringSound = this.gameObject.GetComponent<RingSound>();
         IsAllMeshCreate = false;
         _sqrThreshold = _threshold * _threshold;
     }
@@ -195,11 +194,10 @@ public class Jin_PointDrawer : MonoBehaviour
         int _verticesNum = _vertices.Count;
         int poriNum = (_vertices.Count + back_vertices.Count) * 3;
 
-        //for (int i = 0; i < back_vertices.Count; i++)
-        //{
-        //    //奥のMeshObjectを作るための頂点を打つ
-        //    CreateDot(back_vertices[i]);
-        //}
+        //囲んだときのエフェクト
+        this.gameObject.GetComponent<ParticleTest>().Ring_Effect(_vertices);
+        //囲んだときのSE
+        _ringSound.SE_MeshCreate();
 
         //真ん中に頂点追加
         GameObject fp = Instantiate(footpoints, FootPoint_Parent.transform);
@@ -758,12 +756,13 @@ public class Jin_PointDrawer : MonoBehaviour
             if (_lineList.Count > 1)
             {
                 Destroy(_lineList[_lineList.Count - 2].GetComponent<HitPoint>());
-                _lineList[_lineList.Count - 2].tag = "Line";
-                _lineList[_lineList.Count - 2].layer = LayerMask.NameToLayer("Player");
+                
+                _lineList[_lineList.Count - 2].layer = LayerMask.NameToLayer("Line");
             }
             //最後の線から二つ前の線
             if (_lineList.Count > 2)
             {
+                _lineList[_lineList.Count - 2].tag = "Line";
                 _lineList[_lineList.Count - 3].layer = LayerMask.NameToLayer("Ignore Raycast");
             }
 
@@ -786,7 +785,6 @@ public class Jin_PointDrawer : MonoBehaviour
     {
         //CreateDot(point);
         _vertices.Add(point);
-        //_localvertices.Add(MARUTA.transform.InverseTransformPoint(point));
         //_samplingVertices.Clear();
     }
 
@@ -794,7 +792,6 @@ public class Jin_PointDrawer : MonoBehaviour
     {
         //CreateDot(point);
         back_vertices.Add(backpoint);
-        //_localvertices.Add(MARUTA.transform.InverseTransformPoint(point));
         //_samplingVertices.Clear();
     }
 

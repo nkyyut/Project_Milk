@@ -51,8 +51,8 @@ public class HitPoint : MonoBehaviour
 
         if (c.gameObject.tag == "Line")
         {
-            if (c != _pointDrawer_script._lineList[_pointDrawer_script._lineList.Count - 2].GetComponent<BoxCollider>())
-            {
+            //if (c != _pointDrawer_script._lineList[_pointDrawer_script._lineList.Count - 2].GetComponent<BoxCollider>())
+            //{
                 Debug.Log("囲む");
 
                 //重なったところに点を打つ
@@ -89,7 +89,7 @@ public class HitPoint : MonoBehaviour
                 //footscript.DotClear();
                 footscript.Clear();
 
-            }
+            //}
         }
     }
 }

@@ -15,7 +15,7 @@ public class DropEnemy : MonoBehaviour
 
     }
 
-    private void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Onihitode")
         {
@@ -23,8 +23,8 @@ public class DropEnemy : MonoBehaviour
             other.gameObject.GetComponent<SphereCollider>().enabled = false;
             other.gameObject.transform.position += other.transform.forward * -0.005f;
 
-            other.gameObject.GetComponent<EnemyRouteMover>().SetNowEnemyState_IDLE();
-            other.gameObject.GetComponent<EnemyGravityBody>().SetGravitySwitch();
+            other.gameObject.GetComponent<EnemyRouteMover>().enabled = false;
+            other.gameObject.GetComponent<EnemyGravityBody>().enabled = false;
         }
     }
 }

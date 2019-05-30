@@ -1,4 +1,4 @@
-﻿//かずき 5/13
+﻿//かずき 5/28
 
 using System.Collections;
 using System.Collections.Generic;
@@ -14,6 +14,8 @@ public class CameraTest : MonoBehaviour
     [SerializeField] Vector3 OffsetPos;
     Vector3 targetPos;
     Vector3 CameraPos;
+    public Transform cameraPoint;
+    public bool outoFlg;
 
     private Vector3 CtransformBox;
     private Quaternion CrotationBox;
@@ -48,32 +50,33 @@ public class CameraTest : MonoBehaviour
     void Start()
     {
         transform.position = Player.transform.position - OffsetPos;
-        targetPos = Player.transform.position;
+        targetPos = cameraPoint.transform.position;
         CameraPos = transform.position;
         Settransform.position = CameraPos;
         MoveFlg = false;
         FreeFlg = false;
+        outoFlg = true;
     }
 
 
     void Update()
     {
-       
+
         if (Input.GetAxis("TriggerL") < 0)
             scene = SCENE_TYPE.FREECAMERA;
-        else 
+        else
             scene = SCENE_TYPE.MAIN;
 
 
         switch (scene)
         {
             case SCENE_TYPE.MAIN:
-                if(FreeFlg == true)
+                if (FreeFlg == true)
                 {
                     transform.position = CtransformBox;
-                    targetPos = Player.transform.position;
+                    targetPos = cameraPoint.transform.position;
                     transform.rotation = CrotationBox;
-                    //CameraPos = Settransform.position - Player.transform.position;
+                    CameraPos = Settransform.position - Player.transform.position;
                     FreeFlg = false;
                 }
 
@@ -83,9 +86,14 @@ public class CameraTest : MonoBehaviour
                     InputV = Input.GetAxisRaw("VerticalR");
 
                     if (InputH + InputV != 0)
+                    {
                         MoveFlg = false;
+                        outoFlg = false;
+                    }
+                    else
                     if (MoveFlg == false)
                     {
+
                         movepos = transform.position;
                         moverote = transform.rotation;
                         Setmovepos = Settransform.position;
@@ -96,16 +104,18 @@ public class CameraTest : MonoBehaviour
                 }
                 else
                 {
-                    if(MoveFlg == true)
+                    if (MoveFlg == true)
                     {
                         //transform.position = movepos;
-                        transform.rotation = moverote;
-                        Settransform.position = Setmovepos;
-                        Settransform.rotation = Setmoverote;
+                        //transform.rotation = moverote;
+                        //Settransform.position = Setmovepos;
+                        //Settransform.rotation = Setmoverote;
                         MoveFlg = false;
                     }
+                    outoFlg = true;
                     InputH = 0;
                     InputV = 0;
+                    //transform.rotation = Quaternion.LookRotation(cameraPoint.transform.forward);
                 }
                 break;
 
@@ -115,20 +125,20 @@ public class CameraTest : MonoBehaviour
                 break;
 
             case SCENE_TYPE.FREECAMERA:
-                
+                outoFlg = false;
                 if (FreeFlg == false)
                 {
                     CtransformBox = Settransform.position;
                     CrotationBox = transform.rotation;
                     transform.position = SetFreetransform.position;
                     transform.rotation = SetFreetransform.rotation;
-                    
+
                     FreeFlg = true;
                 }
-                targetPos = SangoFree.transform.position;
+                targetPos = SetFreetransform.transform.position;
                 InputH = Input.GetAxisRaw("HorizontalR");
                 InputV = Input.GetAxisRaw("VerticalR");
-                
+
                 break;
         }
     }
@@ -136,13 +146,13 @@ public class CameraTest : MonoBehaviour
 
     private void LateUpdate()
     {
-        
+
         switch (scene)
         {
             case SCENE_TYPE.MAIN:
-                Settransform.position += Player.transform.position - targetPos;
-                targetPos = Player.transform.position;
-                transform.position = Vector3.Lerp(transform.position, Settransform.position, 2.0f * Time.deltaTime);
+                Settransform.position += cameraPoint.position - targetPos;
+                targetPos = cameraPoint.position;
+                //transform.position = Vector3.Lerp(transform.position, Settransform.position, 2.0f * Time.deltaTime);
 
 
                 Settransform.transform.RotateAround(Player.transform.position, Vector3.up, InputH * 1.5f);
@@ -153,7 +163,9 @@ public class CameraTest : MonoBehaviour
                 transform.RotateAround(Player.transform.position, -transform.right, InputV * 1.5f);
 
 
-                Settransform.transform.rotation = Player.transform.rotation;
+                //Settransform.transform.rotation = Player.transform.rotation;
+
+
 
                 if (InputH != 0 || InputV != 0)
                 {
@@ -163,19 +175,19 @@ public class CameraTest : MonoBehaviour
 
             case SCENE_TYPE.FREECAMERA:
 
-                transform.position += SangoFree.transform.position - targetPos;
-               
-                targetPos = SangoFree.transform.position;
+                transform.position += SetFreetransform.position - targetPos;
 
-                
+                targetPos = SetFreetransform.position;
+
+
 
                 transform.RotateAround(SangoFree.transform.position, Vector3.up, InputH * 1.5f);
                 transform.RotateAround(SangoFree.transform.position, -transform.right, InputV * 1.5f);
 
-                
+
 
                 break;
         }
-        
+
     }
 }

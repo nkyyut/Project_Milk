@@ -22,9 +22,11 @@ public class EnemyRouteMover : MonoBehaviour {
     [SerializeField] bool LoopFlg;
 
     bool Landing=false;
-    bool RoundFlg;
     bool[] PosSetFlgArray;
     bool IdleFlg;
+    bool ReflectionFlg = false;
+    bool HitedFlg=false;
+    GameObject HitGameObject;
     Vector3 [] InitPos;
     float Delta;
     float MoveLimitTime;
@@ -58,7 +60,6 @@ public class EnemyRouteMover : MonoBehaviour {
         MyTransform = this.gameObject.transform;
         NowEnemyState = ENEMY_MOVE_STATE.IDLE;
         Switch = true;
-        RoundFlg = false;
         RouteNumber = 0;
         SerchEndPoint = RouteArray.Length;
         
@@ -74,15 +75,19 @@ public class EnemyRouteMover : MonoBehaviour {
 
 
 	// Update is called once per frame
-	void Update () {      
-        Switching();
+	void Update () {
+        //Debug.Log("RouteNumber"+RouteNumber);
         //Debug.Log("NowEnemyState"+NowEnemyState);
+        Switching();
+        //Debug.Log("RouteNumber"+RouteNumber);
         //for (int i = 0; i < SerchEndPoint; i++)
         //{
-        //    Debug.Log("RoundRouteArray["+i+"].Movement" + RoundRouteArray[i].Movement);
+        //    Debug.Log("RoundRouteArray[" + i + "].Movement" + RoundRouteArray[i].Movement);
         //    Debug.Log("RoundRouteArray[" + i + "].MoveTime" + RoundRouteArray[i].MoveTime);
 
         //}
+
+        //Debug.Log(HitedFlg);
         //Debug.Log("↓");
     }
 
@@ -94,6 +99,7 @@ public class EnemyRouteMover : MonoBehaviour {
 
     void Switching()
     {
+
         switch (NowEnemyState)
         {
             case ENEMY_MOVE_STATE.IDLE:
@@ -174,8 +180,10 @@ public class EnemyRouteMover : MonoBehaviour {
 
     void NextMovement()
     {
-        //Debug.Log("NextMovement");
-        if (RouteNumber >= SerchEndPoint)
+
+
+
+        if (RouteNumber >= SerchEndPoint&&!HitedFlg)
         {
             if (LoopFlg == true)
             {
@@ -190,41 +198,42 @@ public class EnemyRouteMover : MonoBehaviour {
 
         //Debug.Log("in:"+RouteNumber);
         //Debug.Log("MoveLimitTime"+MoveLimitTime);
-        switch (RoundRouteArray[RouteNumber].Movement)
-        {
-            case "Right":
-                SetNowEnemyState_RIGHT();
-                MoveLimitTime = RoundRouteArray[RouteNumber].MoveTime;
-                break;
-            case "Left":
-                SetNowEnemyState_LEFT();
-                MoveLimitTime = RoundRouteArray[RouteNumber].MoveTime;
-                break;
-            case "Up":
-                SetNowEnemyState_UP();
-                MoveLimitTime = RoundRouteArray[RouteNumber].MoveTime;
-                break;
-            case "Down":
-                SetNowEnemyState_DOWN();
-                MoveLimitTime = RoundRouteArray[RouteNumber].MoveTime;
-                break;
-            case "Wait":
-                SetNowEnemyState_WAIT();
-                MoveLimitTime = RoundRouteArray[RouteNumber].MoveTime;
-                break;
-        }
+        //if (!RoundFlg) {
+            switch (RoundRouteArray[RouteNumber].Movement)
+            {
+                case "Right":
+                    SetNowEnemyState_RIGHT();
+                    MoveLimitTime = RoundRouteArray[RouteNumber].MoveTime;
+                    break;
+                case "Left":
+                    SetNowEnemyState_LEFT();
+                    MoveLimitTime = RoundRouteArray[RouteNumber].MoveTime;
+                    break;
+                case "Up":
+                    SetNowEnemyState_UP();
+                    MoveLimitTime = RoundRouteArray[RouteNumber].MoveTime;
+                    break;
+                case "Down":
+                    SetNowEnemyState_DOWN();
+                    MoveLimitTime = RoundRouteArray[RouteNumber].MoveTime;
+                    break;
+                case "Wait":
+                    SetNowEnemyState_WAIT();
+                    MoveLimitTime = RoundRouteArray[RouteNumber].MoveTime;
+                    break;
+            }
+        //}
 
-        if (!PosSetFlgArray[RouteNumber])
-        {
-            InitializePos(RouteNumber);
-            PosSetFlgArray[RouteNumber] = true;
-        }
-        //else
+        //if (!PosSetFlgArray[RouteNumber])
+        //{
+        //    //Debug.Log("in");
+        //    InitializePos(RouteNumber);
+        //    PosSetFlgArray[RouteNumber] = true;
+        //}
+
+        //if (RouteNumber == 0 || RouteNumber == RouteArray.Length)
         //{
         //    SetPosition(RouteNumber);
-        //    //for (int i=0;i<InitPos.Length;i++) {
-        //    //    Debug.Log(InitPos[i]);
-        //    //}
         //}
         RouteNumber++;
     }
@@ -232,7 +241,6 @@ public class EnemyRouteMover : MonoBehaviour {
     void InitializePos(int RouteNumber)
     {
         InitPos[RouteNumber] = this.transform.position;
-        
     }
 
     void SetPosition(int RouteNumber)
@@ -242,28 +250,53 @@ public class EnemyRouteMover : MonoBehaviour {
 
     void OnCollisionEnter(Collision other)
     {
-        for (int i = 0; i < ReflectionTagArray.Length; i++)
+        if (!HitedFlg)
         {
-            if (other.transform.tag == ReflectionTagArray[i])
+            for (int i = 0; i < ReflectionTagArray.Length; i++)
             {
-                Debug.Log("hit");
-                RouteNumber = SerchEndPoint - RouteNumber;
-                RoundRouteArray[RouteNumber].MoveTime = Delta;
-                Delta = 0;
-                //RouteNumber++;
-                NextMovement();
-                return;
-            }
-        }
 
-        //if (other.transform.tag != "InvisibleObjects") return;
-        //Debug.Log("hit");
-        //RouteNumber = SerchEndPoint - RouteNumber;
-        //RoundRouteArray[RouteNumber].MoveTime = Delta;
-        //Delta = 0;
-        ////RouteNumber++;
-        //NextMovement();
+                if (other.transform.tag == ReflectionTagArray[i])
+                {
+                    Debug.Log("hit");
+                    RouteNumber = SerchEndPoint - RouteNumber;
+                    RoundRouteArray[RouteNumber].MoveTime = Delta - Time.deltaTime;
+                    Delta = 0;
+                    //RouteNumber++;
+                    NextMovement();
+                    break;
+                }
+            }
+
+        }
+        HitedFlg = true;
+
     }
+
+    void OnCollisionExit(Collision other)
+    {
+        HitedFlg = false;
+    }
+
+
+
+    //void OnTriggerEnter(Collider other)
+    //{
+    //    for (int i = 0; i < ReflectionTagArray.Length; i++)
+    //    {
+    //        if (other.transform.tag == ReflectionTagArray[i])
+    //        {
+    //            Debug.Log("hit");
+    //            RouteNumber = SerchEndPoint - RouteNumber;
+    //            RoundRouteArray[RouteNumber].MoveTime = Delta-Time.deltaTime;
+    //            Delta = 0;
+    //            //RouteNumber++;
+    //            NextMovement();
+    //            break;
+    //        }
+    //    }
+
+    //}
+
 
     void VerticalMove()
     {
@@ -302,10 +335,11 @@ public class EnemyRouteMover : MonoBehaviour {
         }
         else
         {
+            HitedFlg = false;
             Delta = 0;
-            Debug.Log(RouteNumber);
-            if (RouteNumber < SerchEndPoint && PosSetFlgArray[RouteNumber])
-                SetPosition(RouteNumber);
+            //Debug.Log(RouteNumber);
+            //if (RouteNumber < SerchEndPoint && PosSetFlgArray[RouteNumber])
+            //    SetPosition(RouteNumber);
             NextMovement();
 
         }
@@ -319,10 +353,11 @@ public class EnemyRouteMover : MonoBehaviour {
         }
         else
         {
+            HitedFlg = false;
             Delta = 0;
-            Debug.Log(RouteNumber);
-            if (RouteNumber < SerchEndPoint && PosSetFlgArray[RouteNumber])
-                SetPosition(RouteNumber);
+            //Debug.Log(RouteNumber);
+            //if (RouteNumber < SerchEndPoint && PosSetFlgArray[RouteNumber])
+            //    SetPosition(RouteNumber);
             NextMovement();
         }
     }
@@ -335,10 +370,11 @@ public class EnemyRouteMover : MonoBehaviour {
         }
         else
         {
+            HitedFlg = false;
             Delta = 0;
-            Debug.Log(RouteNumber);
-            if (RouteNumber < SerchEndPoint && PosSetFlgArray[RouteNumber])
-                SetPosition(RouteNumber);
+            //Debug.Log(RouteNumber);
+            //if (RouteNumber < SerchEndPoint && PosSetFlgArray[RouteNumber])
+            //    SetPosition(RouteNumber);
             NextMovement();
         }
     }
@@ -350,10 +386,11 @@ public class EnemyRouteMover : MonoBehaviour {
         }
         else
         {
+            HitedFlg = false;
             Delta = 0;
-            Debug.Log(RouteNumber);
-            if (RouteNumber<SerchEndPoint&& PosSetFlgArray[RouteNumber])
-                SetPosition(RouteNumber);
+            //Debug.Log(RouteNumber);
+            //if (RouteNumber < SerchEndPoint && PosSetFlgArray[RouteNumber])
+            //    SetPosition(RouteNumber);
             NextMovement();
         }
     }

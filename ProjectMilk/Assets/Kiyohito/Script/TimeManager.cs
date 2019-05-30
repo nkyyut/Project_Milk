@@ -52,7 +52,7 @@ public class TimeManager : MonoBehaviour {
         {
             /*以下いろいろ初期化*/
             TotalOfTinAnago = TinAnago_gameObject.Length;
-            GameLimitTime = 30.0f;
+            GameLimitTime = 90.0f;
             NowPlayTime = 0.0f;
             NowTimeManagerState = TIMEMANAGER_STATE.TICK;
             TimeSpeed = 1.0f;
@@ -159,7 +159,8 @@ public class TimeManager : MonoBehaviour {
     public void SetNowTimeManagerState_TICK() { NowTimeManagerState = TIMEMANAGER_STATE.TICK; }
     /*現在の時間を渡す*/
     public float GetNowPlayTime() { return NowPlayTime; }
-
+    //制限時間ー経過時間を渡す　　5/28與那覇追加
+    public float GetScoreTime() { return GameLimitTime - NowPlayTime; }
 
 
     /*Readme*************************************************************************************/
