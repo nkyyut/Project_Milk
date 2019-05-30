@@ -247,11 +247,11 @@ public class EnemyRouteMover : MonoBehaviour {
 
     void OnCollisionEnter(Collision other)
     {
-
-        for (int i = 0; i < ReflectionTagArray.Length; i++)
+        if (HitedFlg == false)
         {
-            if (HitedFlg == false)
+            for (int i = 0; i < ReflectionTagArray.Length; i++)
             {
+
                 if (other.transform.tag == ReflectionTagArray[i])
                 {
                     Debug.Log("hit");
@@ -262,12 +262,14 @@ public class EnemyRouteMover : MonoBehaviour {
                     NextMovement();
                     break;
                 }
-                HitedFlg = true;
             }
 
         }
+        HitedFlg = true;
 
     }
+
+
 
     //void OnTriggerEnter(Collider other)
     //{
