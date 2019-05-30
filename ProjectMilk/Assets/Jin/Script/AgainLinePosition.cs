@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AgainLinePosition : MonoBehaviour {
 
-    private void OnCollisionStay(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         //埋まらないように位置を再調整
         if(other.gameObject.tag == "Coral")

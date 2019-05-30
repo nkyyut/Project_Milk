@@ -95,6 +95,7 @@ public class Footprints : MonoBehaviour
 
                 _pointDrawerSc.All_lineList.Add(list);
                 All_dotList.Add(dot);
+
                 if (_pointDrawerSc.All_lineList.Count > 3)
                 {
                     for (int i = 0; i < _pointDrawerSc.All_lineList[0].Count; i++)

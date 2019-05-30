@@ -42,7 +42,7 @@ public class Jin_PointDrawer : MonoBehaviour
     [SerializeField] private Material _maskMaterial;
     [SerializeField] private Material m_Yellow;
 
-    [Range(0,20)]
+    [Range(0, 20)]
     public int Line_HeightColliderSize;     //ラインのコライダーの高さ
 
     [SerializeField]
@@ -208,12 +208,18 @@ public class Jin_PointDrawer : MonoBehaviour
         Quaternion TargetRotation = Quaternion.FromToRotation(fp.gameObject.transform.forward, _footPrints.CheckNormal()) * fp.gameObject.transform.rotation;
         fp.transform.rotation = Quaternion.Slerp(fp.transform.rotation, TargetRotation, 10);
         MeshForawd = fp.transform.forward;
+        fp.transform.position += MeshForawd * 0.5f;
         Vector3[] forwardArray = new Vector3[1];
-        forwardArray[0] = MeshForawd;
-        fp.transform.Rotate(-MeshForawd);
-        //fp.transform.position += MeshForawd * 0.05f;
-        //Ray_Curvedsurface(forwardArray);
-        //fp.transform.position = Ray_Curvedsurface(forwardArray);
+        forwardArray[0] = fp.transform.position;
+        //fp.transform.Rotate(-MeshForawd);
+
+        fp.transform.position = Ray_Curvedsurface(forwardArray);
+        Quaternion TargetRotation2 = Quaternion.FromToRotation(fp.gameObject.transform.forward, _footPrints.CheckNormal()) * fp.gameObject.transform.rotation;
+        fp.transform.rotation = Quaternion.Slerp(fp.transform.rotation, TargetRotation2, 10);
+        MeshForawd = fp.transform.forward;
+        Debug.DrawRay(fp.transform.position, fp.transform.forward * 1, Color.blue, 50, false);
+        //メッシュ頂点の間に点を追加（Lerp)
+        //AllRay_CurvedSurface(_vertices.ToArray());
 
         GameObject[] _dots = new GameObject[_footPrints._dotList.Count];
         for (int i = 0; i < _footPrints._dotList.Count; i++)
@@ -305,7 +311,7 @@ public class Jin_PointDrawer : MonoBehaviour
         }
         AllMeshObject.transform.GetComponent<MeshFilter>().mesh = new Mesh();
         AllMeshObject.transform.GetComponent<MeshFilter>().mesh.CombineMeshes(_combine);
-        AllMeshObject.AddComponent<MeshCollider>();
+        //AllMeshObject.AddComponent<MeshCollider>();
         AllMeshObject.AddComponent<MeshCollider>().convex = true;
         AllMeshObject.transform.gameObject.SetActive(true);
 
@@ -314,6 +320,7 @@ public class Jin_PointDrawer : MonoBehaviour
         AllMeshObject.GetComponent<Subtractor>().maskMaterial = _maskMaterial;
 
         AllMeshObject.tag = ("DropBlock");
+        //AllMeshObject.layer = LayerMask.NameToLayer("Ignore Raycast");
         Mesh allmesh = AllMeshObject.GetComponent<MeshFilter>().mesh;
         if (0 < getArea(_dots))
             AllMeshObject.GetComponent<MeshFilter>().mesh.SetTriangles(allmesh.triangles.Reverse().ToArray(), 0);
@@ -325,7 +332,7 @@ public class Jin_PointDrawer : MonoBehaviour
         GameObject DropMeshObject = new GameObject("DropMeshObject");
         GameObject front = _drawMesh.CreateMesh(_vertices);
         GameObject back = _drawMesh.CreateMesh(back_vertices);
-        GameObject between = new GameObject("Between",typeof(MeshFilter), typeof(MeshRenderer));
+        GameObject between = new GameObject("Between", typeof(MeshFilter), typeof(MeshRenderer));
 
         front.AddComponent<MeshCollider>();
         front.GetComponent<MeshCollider>().convex = true;
@@ -349,6 +356,10 @@ public class Jin_PointDrawer : MonoBehaviour
         front.transform.parent = DropMeshObject.transform;
         back.transform.parent = DropMeshObject.transform;
         between.transform.parent = DropMeshObject.transform;
+
+        front.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
+        back.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
+        between.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
 
         DropMeshObject.transform.position -= MeshForawd * 0.08f;
 
@@ -374,30 +385,173 @@ public class Jin_PointDrawer : MonoBehaviour
     private Vector3 Ray_Curvedsurface(Vector3[] vertices)
     {
         Vector3[] newVerticies = new Vector3[vertices.Length];
-        int i=0;
+        int i = 0;
         foreach (Vector3 vertex in vertices)
         {
             //Vector3 vec = matrix.MultiplyPoint(vertex);
-            //vec.y = 1000;
-            vertices[0] += MeshForawd * 0.01f;
-
             RaycastHit hit;
-            if (Physics.Raycast(vertices[0], -MeshForawd, out hit))
+            if (Physics.Raycast(vertex, -MeshForawd, out hit))
             {
-                Vector3 newVert = vertices[0];
+                //Debug.DrawRay(vertex, hit.point - vertex, Color.blue, 50, false);
+                Vector3 newVert = vertex;
                 newVert = hit.point;
                 newVerticies[i] = newVert;
                 return newVert;
             }
             else
             {
+                //Debug.DrawRay(vertex, vertex * 10, Color.green, 50, false);
                 //vertices[0] = 0;
                 newVerticies[i] = vertices[0];
                 return newVerticies[0];
             }
-            i++;       
+            i++;
         }
         return newVerticies[0];
+    }
+
+    private void AllRay_CurvedSurface(Vector3[] vec)
+    {
+        List<Vector3> _newVec = new List<Vector3>();
+        List<Vector3> _newVector0 = new List<Vector3>();
+        List<Vector3> _newVector1 = new List<Vector3>();
+        List<Vector3> _newVector2 = new List<Vector3>();
+        List<Vector3> _newVector3 = new List<Vector3>();
+        List<Vector3> _newVector4 = new List<Vector3>();
+        List<Vector3> _newVector5 = new List<Vector3>();
+        List<Vector3> _newVector6 = new List<Vector3>();
+        List<Vector3> _newVector7 = new List<Vector3>();
+        List<Vector3> _newVector8 = new List<Vector3>();
+        List<Vector3> _newVector9 = new List<Vector3>();
+
+        List<List<Vector3>> AllVectorList = new List<List<Vector3>>();
+
+        AllVectorList.Add(_newVector0);
+        AllVectorList.Add(_newVector1);
+        AllVectorList.Add(_newVector2);
+        AllVectorList.Add(_newVector3);
+        AllVectorList.Add(_newVector4);
+        AllVectorList.Add(_newVector5);
+        AllVectorList.Add(_newVector6);
+        AllVectorList.Add(_newVector7);
+        AllVectorList.Add(_newVector8);
+        AllVectorList.Add(_newVector9);
+
+        for (int k = 0; k < _vertices.Count / 2; k++)
+        {
+            for (float j = 0.05f; j < 1.0f; j += 0.1f)
+            {
+                j = j * 100;
+                j = Mathf.Floor(j) / 100;
+
+                int Iswitch = (int)(j * 10);
+
+                switch (Iswitch)
+                {
+                    case 0:
+                        AllVectorList[Iswitch].Add(Vector3.Lerp(_vertices[k], _vertices[_vertices.Count / 2 + k], j));
+                        break;
+                    //case 1:
+                    //    AllVectorList[Iswitch].Add(Vector3.Lerp(_vertices[k], _vertices[_vertices.Count / 2 + k], j));
+                    //    break;
+                    //case 2:
+                    //    AllVectorList[Iswitch].Add(Vector3.Lerp(_vertices[k], _vertices[_vertices.Count / 2 + k], j));
+                    //    break;
+                    //case 3:
+                    //    AllVectorList[Iswitch].Add(Vector3.Lerp(_vertices[k], _vertices[_vertices.Count / 2 + k], j));
+                    //    break;
+                    //case 4:
+                    //    AllVectorList[Iswitch].Add(Vector3.Lerp(_vertices[k], _vertices[_vertices.Count / 2 + k], j));
+                    //    break;
+                    //case 5:
+                    //    AllVectorList[Iswitch].Add(Vector3.Lerp(_vertices[k], _vertices[_vertices.Count / 2 + k], j));
+                    //    break;
+                    //case 6:
+                    //    AllVectorList[Iswitch].Add(Vector3.Lerp(_vertices[k], _vertices[_vertices.Count / 2 + k], j));
+                    //    break;
+                    //case 7:
+                    //    AllVectorList[Iswitch].Add(Vector3.Lerp(_vertices[k], _vertices[_vertices.Count / 2 + k], j));
+                    //    break;
+                    //case 8:
+                    //    AllVectorList[Iswitch].Add(Vector3.Lerp(_vertices[k], _vertices[_vertices.Count / 2 + k], j));
+                    //    break;
+                    case 9:
+                        AllVectorList[Iswitch].Add(Vector3.Lerp(_vertices[k], _vertices[_vertices.Count / 2 + k], j));
+                        break;
+                }
+            }
+        }
+        //_AllVec.AddRange(_vertices);
+        //_AllVec.AddRange(_newVector);
+        List<Vector3> tmpVertices0 = new List<Vector3>();
+        List<Vector3> tmpVertices1 = new List<Vector3>();
+        List<Vector3> tmpVertices2 = new List<Vector3>();
+        List<Vector3> tmpVertices3 = new List<Vector3>();
+        List<Vector3> tmpVertices4 = new List<Vector3>();
+        List<List<Vector3>> AlltmpList = new List<List<Vector3>>();
+
+
+        AlltmpList.Add(tmpVertices0);
+        AlltmpList.Add(tmpVertices1);
+        AlltmpList.Add(tmpVertices2);
+        AlltmpList.Add(tmpVertices3);
+        AlltmpList.Add(tmpVertices4);
+
+        AlltmpList[0].AddRange(AllVectorList[0]);
+        AlltmpList[0].AddRange(AllVectorList[9]);
+
+        AlltmpList[1].AddRange(AllVectorList[1]);
+        AlltmpList[1].AddRange(AllVectorList[8]);
+
+        AlltmpList[2].AddRange(AllVectorList[2]);
+        AlltmpList[2].AddRange(AllVectorList[7]);
+
+        AlltmpList[3].AddRange(AllVectorList[3]);
+        AlltmpList[3].AddRange(AllVectorList[6]);
+
+        AlltmpList[4].AddRange(AllVectorList[4]);
+        AlltmpList[4].AddRange(AllVectorList[5]);
+
+        for (int k = 0; k < 1; k++)
+        {
+            List<Vector3> newVertices = new List<Vector3>();
+
+            for (int i = 0; i < AlltmpList[k].Count; i++)
+            {
+
+                Vector3 pos = AlltmpList[k][i];
+                pos += MeshForawd * 5.0f;
+                AlltmpList[k][i] = pos;
+
+                //Debug.Log(tmpVertices[i]);
+
+                RaycastHit hit;
+                int layerMask = 1 << 9;
+                if (Physics.Raycast(AlltmpList[k][i], -MeshForawd, out hit, 10.0f , layerMask))
+                {
+                    Vector3 newVert = AlltmpList[k][i];
+                    newVert = hit.point;
+                    AlltmpList[k][i] = hit.point;
+                    newVertices.Add(newVert);
+
+                    GameObject dot = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                    dot.transform.localScale = Vector3.one * 0.005f;
+                    dot.transform.position = newVertices.Last();
+                    //dot.transform.position += dot.transform.forward * -0.1f;
+                    dot.layer = LayerMask.NameToLayer("Ignore Raycast");
+
+                }
+                else
+                {
+                    Vector3 pos2 = AlltmpList[k][i];
+                    pos2.z = 0;
+                    newVertices[i] = pos2;
+                }
+            }
+            //AlltmpList[0].Clear();
+            //AlltmpList[0].AddRange(newVertices);
+        }
+        Curve_CreateMesh(_vertices , AlltmpList[0]);
     }
 
     //多角形の右回り左回りを判定
@@ -461,6 +615,68 @@ public class Jin_PointDrawer : MonoBehaviour
         meshob.GetComponent<MeshFilter>().mesh = mesh;
 
         return meshob;
+    }
+
+    //表面に沿ってメッシュ作成
+    private void Curve_CreateMesh(List<Vector3> vertices1 , List<Vector3> vertices2)
+    {
+        List<Vector3> combineMesh = new List<Vector3>();
+        combineMesh.AddRange(vertices2);
+        combineMesh.AddRange(vertices1);
+
+        //Debug.Log(vertices1.Count);
+        //Debug.Log(vertices2.Count);
+        //foreach(Vector3 vec in vertices2)
+        //    Debug.Log(vec);
+
+        int PorigonArray = combineMesh.Count * 3;
+        int[] cmeshTriangles = new int[PorigonArray];
+        //Debug.Log(PorigonArray);
+        Mesh cMesh = new Mesh();
+        cMesh.SetVertices(combineMesh);
+
+        int j = 0;
+        for (int i = 0; i < PorigonArray; i += 3)
+        {
+            if (!(i == PorigonArray - _JinConst.ORDERTRIANGLES_NUM))
+            {
+                cmeshTriangles[i] = j;
+                cmeshTriangles[i + 1] = j + 1;
+                cmeshTriangles[i + 2] = j + vertices2.Count;
+            }
+            else
+            {
+                cmeshTriangles[i] = j;
+                cmeshTriangles[i + 1] = 0;
+                cmeshTriangles[i + 2] = j + vertices2.Count;
+            }
+            j++;
+        }
+        j = 0;
+        for (int i = 3; i < PorigonArray; i += _JinConst.ORDERTRIANGLES_NUM)
+        {
+            if (!(i == PorigonArray - _JinConst.ORDERTRIANGLES_PORIGON))
+            {
+                cmeshTriangles[i] = j + 1;
+                cmeshTriangles[i + 1] = j + vertices2.Count + 1;
+                cmeshTriangles[i + 2] = j + vertices2.Count;
+            }
+            else
+            {
+                cmeshTriangles[i] = 0;
+                cmeshTriangles[i + 1] = vertices2.Count;
+                cmeshTriangles[i + 2] = j + vertices2.Count;
+            }
+            j++;
+        }
+        cMesh.SetTriangles(cmeshTriangles, 0);
+
+        GameObject CombineMeshObj = new GameObject("CombineMeshObj", typeof(MeshFilter), typeof(MeshRenderer));
+        CombineMeshObj.GetComponent<MeshRenderer>().material = m_Yellow;
+        //CombineMeshObj.GetComponent<MeshFilter>().mesh = cMesh;
+        //CombineMeshObj.AddComponent<MeshCollider>().convex = true;
+        MeshFilter filter = CombineMeshObj.GetComponent<MeshFilter>();
+        filter.mesh = cMesh;
     }
 
     /// <summary>
@@ -530,20 +746,22 @@ public class Jin_PointDrawer : MonoBehaviour
             //if (myPoint[0].x < myPoint[1].x)
             //    MeshForawd = Lineobj.transform.right = (myPoint[1] - myPoint[0]).normalized;
             //else
-                MeshForawd = Lineobj.transform.right = (myPoint[0] - myPoint[1]).normalized;
+            MeshForawd = Lineobj.transform.right = (myPoint[0] - myPoint[1]).normalized;
 
             Lineobj.transform.localScale = new Vector3((myPoint[1] - myPoint[0]).magnitude, 0.005f, 0.005f);
             Lineobj.GetComponent<MeshRenderer>().material = m_Yellow;
             Lineobj.tag = "LastLine";
             Lineobj.layer = LayerMask.NameToLayer("Ignore Raycast");
             _lineList.Add(Lineobj);
-            //All_lineList[AllList_Index].Add(Lineobj);
+
+            //最後の線から一つ前の線
             if (_lineList.Count > 1)
             {
                 Destroy(_lineList[_lineList.Count - 2].GetComponent<HitPoint>());
                 _lineList[_lineList.Count - 2].tag = "Line";
-                _lineList[_lineList.Count - 2].layer = LayerMask.NameToLayer("Coral");
+                _lineList[_lineList.Count - 2].layer = LayerMask.NameToLayer("Player");
             }
+            //最後の線から二つ前の線
             if (_lineList.Count > 2)
             {
                 _lineList[_lineList.Count - 3].layer = LayerMask.NameToLayer("Ignore Raycast");
@@ -555,7 +773,7 @@ public class Jin_PointDrawer : MonoBehaviour
             Lineobj.AddComponent<HitPoint>();
             //当たり判定のサイズ変更
             BoxCollider b = Lineobj.GetComponent<BoxCollider>();
-            b.size = new Vector3(1,1,Line_HeightColliderSize);
+            b.size = new Vector3(1, 1, Line_HeightColliderSize);
         }
 
     }
