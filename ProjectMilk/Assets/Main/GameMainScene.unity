@@ -5909,8 +5909,8 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!65 &717219185
-BoxCollider:
+--- !u!135 &717219185
+SphereCollider:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
@@ -5919,7 +5919,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.003, y: 0.003, z: 0.003}
+  m_Radius: 0.002
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &717219186
 MonoBehaviour:
@@ -5944,7 +5944,6 @@ MonoBehaviour:
   ReflectionTagArray:
   - OldLine
   - DropBlock
-  - Player
   MoveSpeed: 0.5
   MoveLimit_Ver: 0.25
   MoveLimit_Hor: 0.25
@@ -6288,7 +6287,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: cc647b98665061c41bf0dc03d9e2c64d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -22.848202
+      value: -22.79
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: cc647b98665061c41bf0dc03d9e2c64d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -6321,7 +6320,7 @@ Prefab:
     - target: {fileID: 9500000, guid: cc647b98665061c41bf0dc03d9e2c64d, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: efc042fe0bcfea74198f9f7ec7b13004, type: 2}
+      objectReference: {fileID: 9100000, guid: dad7165548339004e94086032fa23bc4, type: 2}
     - target: {fileID: 400004, guid: cc647b98665061c41bf0dc03d9e2c64d, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.1

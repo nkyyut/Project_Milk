@@ -52,7 +52,7 @@ public class TimeManager : MonoBehaviour {
         {
             /*以下いろいろ初期化*/
             TotalOfTinAnago = TinAnago_gameObject.Length;
-            GameLimitTime = 30.0f;
+            GameLimitTime = 90.0f;
             NowPlayTime = 0.0f;
             NowTimeManagerState = TIMEMANAGER_STATE.TICK;
             TimeSpeed = 1.0f;
