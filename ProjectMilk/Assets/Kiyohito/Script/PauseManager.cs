@@ -27,7 +27,7 @@ public class PauseManager : MonoBehaviour {
         PAUSE,
         IDLE,
         HELP
-    }PAUSE_MANAGER_STATE NowState;
+    }public PAUSE_MANAGER_STATE NowState;
 
     enum PAUSE_MENU
     {
