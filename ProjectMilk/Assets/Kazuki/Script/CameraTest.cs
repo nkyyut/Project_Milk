@@ -11,6 +11,9 @@ public class CameraTest : MonoBehaviour
 
     public GameObject Player;
     public GameObject SangoFree;
+    public PauseManager Pause;
+
+
     [SerializeField] Vector3 OffsetPos;
     Vector3 targetPos;
     Vector3 CameraPos;
@@ -19,11 +22,6 @@ public class CameraTest : MonoBehaviour
 
     private Vector3 CtransformBox;
     private Quaternion CrotationBox;
-
-    private Vector3 movepos;
-    private Quaternion moverote;
-    private Vector3 Setmovepos;
-    private Quaternion Setmoverote;
 
     public Transform Settransform;
     public Transform SetFreetransform;
@@ -61,8 +59,12 @@ public class CameraTest : MonoBehaviour
 
     void Update()
     {
+        PauseManager.PAUSE_MANAGER_STATE pause = Pause.NowState;
+        int Cscene = (int)pause;
 
-        if (Input.GetAxis("TriggerL") < 0)
+        if (Cscene == 0)
+            scene = SCENE_TYPE.PAUSE;
+        else if (Input.GetAxis("TriggerL") < 0)
             scene = SCENE_TYPE.FREECAMERA;
         else
             scene = SCENE_TYPE.MAIN;
@@ -77,6 +79,7 @@ public class CameraTest : MonoBehaviour
                     targetPos = cameraPoint.transform.position;
                     transform.rotation = CrotationBox;
                     CameraPos = Settransform.position - Player.transform.position;
+                    outoFlg = true;
                     FreeFlg = false;
                 }
 
@@ -90,32 +93,17 @@ public class CameraTest : MonoBehaviour
                         MoveFlg = false;
                         outoFlg = false;
                     }
-                    else
-                    if (MoveFlg == false)
-                    {
-
-                        movepos = transform.position;
-                        moverote = transform.rotation;
-                        Setmovepos = Settransform.position;
-                        Setmoverote = Player.transform.rotation;
+                    else if (MoveFlg == false)
                         MoveFlg = true;
-                    }
 
                 }
                 else
                 {
                     if (MoveFlg == true)
-                    {
-                        //transform.position = movepos;
-                        //transform.rotation = moverote;
-                        //Settransform.position = Setmovepos;
-                        //Settransform.rotation = Setmoverote;
                         MoveFlg = false;
-                    }
                     outoFlg = true;
                     InputH = 0;
                     InputV = 0;
-                    //transform.rotation = Quaternion.LookRotation(cameraPoint.transform.forward);
                 }
                 break;
 
@@ -155,11 +143,11 @@ public class CameraTest : MonoBehaviour
                 //transform.position = Vector3.Lerp(transform.position, Settransform.position, 2.0f * Time.deltaTime);
 
 
-                Settransform.transform.RotateAround(Player.transform.position, Vector3.up, InputH * 1.5f);
+                Settransform.transform.RotateAround(Player.transform.position, transform.up, InputH * 1.5f);
                 Settransform.transform.RotateAround(Player.transform.position, -transform.right, InputV * 1.5f);
 
 
-                transform.RotateAround(Player.transform.position, Vector3.up, InputH * 1.5f);
+                transform.RotateAround(Player.transform.position, transform.up, InputH * 1.5f);
                 transform.RotateAround(Player.transform.position, -transform.right, InputV * 1.5f);
 
 
