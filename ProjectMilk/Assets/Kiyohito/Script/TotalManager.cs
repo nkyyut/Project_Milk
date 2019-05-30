@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class TotalManager : MonoBehaviour {
 
+    // リザルトでポーズが開けてしまうのでフラグを使って修正 5/30與那覇
+    private bool isResult;
     public TimeManager TimeManager;
     public DurableValueManager DurableValueManager;
     public PauseManager PauseManager;
+
+    public OniCount onicount;
 
     enum TOTAL_MANAGER_STATE
     {
@@ -17,14 +21,22 @@ public class TotalManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         NowState = TOTAL_MANAGER_STATE.KEEP;
+        isResult = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
         Switching();
+        if(onicount.Count() == 0)
+        {
+            isResult = true;
+        }
         if (Input.GetKeyUp("joystick button 7"))
         {
-            SetTotalManagerState_Pause();
+            if (!isResult)
+            {
+                SetTotalManagerState_Pause();
+            }
         }
 	}
 
@@ -58,7 +70,6 @@ public class TotalManager : MonoBehaviour {
         PauseManager.SetPauseManagerState_Pause();
 
     }
-    
 
     void SetTotalManagerState_Play() { NowState = TOTAL_MANAGER_STATE.SET_PLAY; }
     void SetTotalManagerState_Pause() { NowState = TOTAL_MANAGER_STATE.SET_PAUSE; }
