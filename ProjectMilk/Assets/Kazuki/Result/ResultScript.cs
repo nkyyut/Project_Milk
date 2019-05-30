@@ -5,10 +5,13 @@ using UnityEngine.UI;
 
 public class ResultScript : MonoBehaviour {
 
+    // 新規にタイトルへ遷移するボタンを追加しました5/30與那覇
+
     [SerializeField] RawImage manta;
     [SerializeField] Text winner;
     [SerializeField] Text result;
     [SerializeField] Text score;
+    [SerializeField] GameObject TitleButtom;
 
     RawImage imageBox;
     Text[] textBox = new Text[3];
@@ -25,6 +28,10 @@ public class ResultScript : MonoBehaviour {
 
     public bool fadeflg;
     public bool scoreflg;
+    public bool buttomflg;
+
+    private float BPressTime;
+    public UIGuageMover TitleUIGuage;
 
     public enum TYPE_RESULT
     {
@@ -38,6 +45,7 @@ public class ResultScript : MonoBehaviour {
         LOSER,
 
         SCORE,
+        BUTTOM,
     }
     public TYPE_RESULT resultType;
 
@@ -49,6 +57,23 @@ public class ResultScript : MonoBehaviour {
 
 
     void Update() {
+
+        if (buttomflg)
+        {
+            if (Input.GetKey("joystick button 1"))
+            {
+                BPressTime += Time.deltaTime;
+                TitleUIGuage.FillUp(BPressTime);
+                //長押しされたら"タイトル"へ
+                if (BPressTime >= KiyohitoConst.Const.PressTimeLimit)
+                {
+                    TitleUIGuage.FillUp(BPressTime);
+                    PressTimeInitialize();
+                    FadeManager.Instance.LoadScene("TitleScene", 0.3f);
+
+                }
+            }
+        }
 
         switch (resultType) {
             case TYPE_RESULT.MANTA:
@@ -156,16 +181,34 @@ public class ResultScript : MonoBehaviour {
                         else if(count > 4 && count < 5)
                         {
                             countdown[3] = scorebox[3];
+                            count += Time.deltaTime;
                             Debug.Log("OK4");
                         }
+                        else if(count > 5 && count < 6)
+                        {
+                            resultType = TYPE_RESULT.BUTTOM;
+                        }
+                        
+                        //Debug.Log(count);
+                        }
+                    
+                }
 
 
+                break;
 
-                        Debug.Log(count);
-
-                    }
+            case TYPE_RESULT.BUTTOM:
+                if (!buttomflg)
+                {
+                    TitleButtom.SetActive(true);
+                    buttomflg = true;
                 }
                 break;
            }
+    }
+
+    private void PressTimeInitialize()
+    {
+        BPressTime = 0;
     }
 }
