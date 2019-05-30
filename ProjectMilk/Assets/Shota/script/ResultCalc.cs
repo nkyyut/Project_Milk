@@ -38,7 +38,9 @@ public class ResultCalc : MonoBehaviour {
     {
         float Score = 0;
         // スコア　＝　オニヒトデ討伐ポイント+-*/　残り時間　+-*/　のこりHP  
-
+        Debug.Log("討伐P"+scoremanager.GetOnihitodeScore());
+        Debug.Log("残り時間" + timemanager.GetScoreTime());
+        Debug.Log("のこりHP" + durablevaluemanager.GetDurableValue());
         Score = scoremanager.GetOnihitodeScore() + timemanager.GetScoreTime() + durablevaluemanager.GetDurableValue();
 
         return (int)Score;
