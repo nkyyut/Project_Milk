@@ -22,11 +22,10 @@ public class EnemyRouteMover : MonoBehaviour {
     [SerializeField] bool LoopFlg;
 
     bool Landing=false;
-    bool RoundFlg;
     bool[] PosSetFlgArray;
     bool IdleFlg;
     bool ReflectionFlg = false;
-    bool HitFlg=false;
+    bool HitedFlg=false;
     GameObject HitGameObject;
     Vector3 [] InitPos;
     float Delta;
@@ -61,7 +60,6 @@ public class EnemyRouteMover : MonoBehaviour {
         MyTransform = this.gameObject.transform;
         NowEnemyState = ENEMY_MOVE_STATE.IDLE;
         Switch = true;
-        RoundFlg = false;
         RouteNumber = 0;
         SerchEndPoint = RouteArray.Length;
         
@@ -87,6 +85,7 @@ public class EnemyRouteMover : MonoBehaviour {
 
         //}
         //Debug.Log("↓");
+        Debug.Log(HitedFlg);
     }
 
 
@@ -246,7 +245,31 @@ public class EnemyRouteMover : MonoBehaviour {
         this.transform.position = InitPos[RouteNumber];
     }
 
-    //void OnCollisionEnter(Collision other)
+    void OnCollisionEnter(Collision other)
+    {
+
+        for (int i = 0; i < ReflectionTagArray.Length; i++)
+        {
+            if (HitedFlg == false)
+            {
+                if (other.transform.tag == ReflectionTagArray[i])
+                {
+                    Debug.Log("hit");
+                    RouteNumber = SerchEndPoint - RouteNumber;
+                    RoundRouteArray[RouteNumber].MoveTime = Delta - Time.deltaTime;
+                    Delta = 0;
+                    //RouteNumber++;
+                    NextMovement();
+                    break;
+                }
+                HitedFlg = true;
+            }
+
+        }
+
+    }
+
+    //void OnTriggerEnter(Collider other)
     //{
     //    for (int i = 0; i < ReflectionTagArray.Length; i++)
     //    {
@@ -254,7 +277,7 @@ public class EnemyRouteMover : MonoBehaviour {
     //        {
     //            Debug.Log("hit");
     //            RouteNumber = SerchEndPoint - RouteNumber;
-    //            RoundRouteArray[RouteNumber].MoveTime = Delta;
+    //            RoundRouteArray[RouteNumber].MoveTime = Delta-Time.deltaTime;
     //            Delta = 0;
     //            //RouteNumber++;
     //            NextMovement();
@@ -263,24 +286,6 @@ public class EnemyRouteMover : MonoBehaviour {
     //    }
 
     //}
-
-    void OnTriggerEnter(Collider other)
-    {
-        for (int i = 0; i < ReflectionTagArray.Length; i++)
-        {
-            if (other.transform.tag == ReflectionTagArray[i])
-            {
-                Debug.Log("hit");
-                RouteNumber = SerchEndPoint - RouteNumber;
-                RoundRouteArray[RouteNumber].MoveTime = Delta-Time.deltaTime;
-                Delta = 0;
-                //RouteNumber++;
-                NextMovement();
-                break;
-            }
-        }
-
-    }
 
 
     void VerticalMove()
@@ -320,6 +325,7 @@ public class EnemyRouteMover : MonoBehaviour {
         }
         else
         {
+            HitedFlg = false;
             Delta = 0;
             //Debug.Log(RouteNumber);
             //if (RouteNumber < SerchEndPoint && PosSetFlgArray[RouteNumber])
@@ -337,6 +343,7 @@ public class EnemyRouteMover : MonoBehaviour {
         }
         else
         {
+            HitedFlg = false;
             Delta = 0;
             //Debug.Log(RouteNumber);
             //if (RouteNumber < SerchEndPoint && PosSetFlgArray[RouteNumber])
@@ -353,6 +360,7 @@ public class EnemyRouteMover : MonoBehaviour {
         }
         else
         {
+            HitedFlg = false;
             Delta = 0;
             //Debug.Log(RouteNumber);
             //if (RouteNumber < SerchEndPoint && PosSetFlgArray[RouteNumber])
@@ -368,6 +376,7 @@ public class EnemyRouteMover : MonoBehaviour {
         }
         else
         {
+            HitedFlg = false;
             Delta = 0;
             //Debug.Log(RouteNumber);
             //if (RouteNumber < SerchEndPoint && PosSetFlgArray[RouteNumber])
