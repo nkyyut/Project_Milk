@@ -86,7 +86,7 @@ public class GameOver : MonoBehaviour {
                 }
 
             if (numbers.Count == 0)
-                generateFlg = false;
+                generateFlg = true;
 
         }
 

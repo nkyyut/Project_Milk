@@ -11,6 +11,9 @@ TagManager:
   - Line
   - DropBlock
   - InvisibleObjects
+  - FxTemporaire
+  - area
+  - OldLine
   layers:
   - Default
   - TransparentFX

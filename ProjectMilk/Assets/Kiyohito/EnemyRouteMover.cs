@@ -25,6 +25,7 @@ public class EnemyRouteMover : MonoBehaviour {
     bool RoundFlg;
     bool[] PosSetFlgArray;
     bool IdleFlg;
+    bool ReflectionFlg = false;
     Vector3 [] InitPos;
     float Delta;
     float MoveLimitTime;
@@ -76,10 +77,10 @@ public class EnemyRouteMover : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {      
         Switching();
-        //Debug.Log("NowEnemyState"+NowEnemyState);
+        //Debug.Log("RouteNumber"+RouteNumber);
         //for (int i = 0; i < SerchEndPoint; i++)
         //{
-        //    Debug.Log("RoundRouteArray["+i+"].Movement" + RoundRouteArray[i].Movement);
+        //    Debug.Log("RoundRouteArray[" + i + "].Movement" + RoundRouteArray[i].Movement);
         //    Debug.Log("RoundRouteArray[" + i + "].MoveTime" + RoundRouteArray[i].MoveTime);
 
         //}
@@ -174,7 +175,9 @@ public class EnemyRouteMover : MonoBehaviour {
 
     void NextMovement()
     {
-        //Debug.Log("NextMovement");
+
+
+
         if (RouteNumber >= SerchEndPoint)
         {
             if (LoopFlg == true)
@@ -190,41 +193,42 @@ public class EnemyRouteMover : MonoBehaviour {
 
         //Debug.Log("in:"+RouteNumber);
         //Debug.Log("MoveLimitTime"+MoveLimitTime);
-        switch (RoundRouteArray[RouteNumber].Movement)
-        {
-            case "Right":
-                SetNowEnemyState_RIGHT();
-                MoveLimitTime = RoundRouteArray[RouteNumber].MoveTime;
-                break;
-            case "Left":
-                SetNowEnemyState_LEFT();
-                MoveLimitTime = RoundRouteArray[RouteNumber].MoveTime;
-                break;
-            case "Up":
-                SetNowEnemyState_UP();
-                MoveLimitTime = RoundRouteArray[RouteNumber].MoveTime;
-                break;
-            case "Down":
-                SetNowEnemyState_DOWN();
-                MoveLimitTime = RoundRouteArray[RouteNumber].MoveTime;
-                break;
-            case "Wait":
-                SetNowEnemyState_WAIT();
-                MoveLimitTime = RoundRouteArray[RouteNumber].MoveTime;
-                break;
-        }
+        //if (!RoundFlg) {
+            switch (RoundRouteArray[RouteNumber].Movement)
+            {
+                case "Right":
+                    SetNowEnemyState_RIGHT();
+                    MoveLimitTime = RoundRouteArray[RouteNumber].MoveTime;
+                    break;
+                case "Left":
+                    SetNowEnemyState_LEFT();
+                    MoveLimitTime = RoundRouteArray[RouteNumber].MoveTime;
+                    break;
+                case "Up":
+                    SetNowEnemyState_UP();
+                    MoveLimitTime = RoundRouteArray[RouteNumber].MoveTime;
+                    break;
+                case "Down":
+                    SetNowEnemyState_DOWN();
+                    MoveLimitTime = RoundRouteArray[RouteNumber].MoveTime;
+                    break;
+                case "Wait":
+                    SetNowEnemyState_WAIT();
+                    MoveLimitTime = RoundRouteArray[RouteNumber].MoveTime;
+                    break;
+            }
+        //}
 
-        if (!PosSetFlgArray[RouteNumber])
-        {
-            InitializePos(RouteNumber);
-            PosSetFlgArray[RouteNumber] = true;
-        }
-        //else
+        //if (!PosSetFlgArray[RouteNumber])
+        //{
+        //    //Debug.Log("in");
+        //    InitializePos(RouteNumber);
+        //    PosSetFlgArray[RouteNumber] = true;
+        //}
+
+        //if (RouteNumber == 0 || RouteNumber == RouteArray.Length)
         //{
         //    SetPosition(RouteNumber);
-        //    //for (int i=0;i<InitPos.Length;i++) {
-        //    //    Debug.Log(InitPos[i]);
-        //    //}
         //}
         RouteNumber++;
     }
@@ -232,7 +236,6 @@ public class EnemyRouteMover : MonoBehaviour {
     void InitializePos(int RouteNumber)
     {
         InitPos[RouteNumber] = this.transform.position;
-        
     }
 
     void SetPosition(int RouteNumber)
@@ -252,7 +255,7 @@ public class EnemyRouteMover : MonoBehaviour {
                 Delta = 0;
                 //RouteNumber++;
                 NextMovement();
-                return;
+                break;
             }
         }
 
@@ -303,9 +306,9 @@ public class EnemyRouteMover : MonoBehaviour {
         else
         {
             Delta = 0;
-            Debug.Log(RouteNumber);
-            if (RouteNumber < SerchEndPoint && PosSetFlgArray[RouteNumber])
-                SetPosition(RouteNumber);
+            //Debug.Log(RouteNumber);
+            //if (RouteNumber < SerchEndPoint && PosSetFlgArray[RouteNumber])
+            //    SetPosition(RouteNumber);
             NextMovement();
 
         }
@@ -320,9 +323,9 @@ public class EnemyRouteMover : MonoBehaviour {
         else
         {
             Delta = 0;
-            Debug.Log(RouteNumber);
-            if (RouteNumber < SerchEndPoint && PosSetFlgArray[RouteNumber])
-                SetPosition(RouteNumber);
+            //Debug.Log(RouteNumber);
+            //if (RouteNumber < SerchEndPoint && PosSetFlgArray[RouteNumber])
+            //    SetPosition(RouteNumber);
             NextMovement();
         }
     }
@@ -336,9 +339,9 @@ public class EnemyRouteMover : MonoBehaviour {
         else
         {
             Delta = 0;
-            Debug.Log(RouteNumber);
-            if (RouteNumber < SerchEndPoint && PosSetFlgArray[RouteNumber])
-                SetPosition(RouteNumber);
+            //Debug.Log(RouteNumber);
+            //if (RouteNumber < SerchEndPoint && PosSetFlgArray[RouteNumber])
+            //    SetPosition(RouteNumber);
             NextMovement();
         }
     }
@@ -351,9 +354,9 @@ public class EnemyRouteMover : MonoBehaviour {
         else
         {
             Delta = 0;
-            Debug.Log(RouteNumber);
-            if (RouteNumber<SerchEndPoint&& PosSetFlgArray[RouteNumber])
-                SetPosition(RouteNumber);
+            //Debug.Log(RouteNumber);
+            //if (RouteNumber < SerchEndPoint && PosSetFlgArray[RouteNumber])
+            //    SetPosition(RouteNumber);
             NextMovement();
         }
     }
