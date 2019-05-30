@@ -13,6 +13,8 @@ TagManager:
   - InvisibleObjects
   - OldLine
   - FootPoint
+  - area
+  - FxTemporaire
   layers:
   - Default
   - TransparentFX

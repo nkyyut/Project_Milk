@@ -488,6 +488,8 @@ MonoBehaviour:
   Blue: {fileID: 2100000, guid: c3ce114ce0eb8b847a068675f528ba50, type: 2}
   _material: {fileID: 2100000, guid: aef3e9503aeaf87478cf32728746333c, type: 2}
   _maskMaterial: {fileID: 2100000, guid: b9b7348442c8d4873a34de4f483d1e93, type: 2}
+  m_Yellow: {fileID: 0}
+  Line_HeightColliderSize: 0
   _dotSize: 0.05
   _threshold: 0.1
   footpoints: {fileID: 1181687140550412, guid: 6efe01df9360cf544a5871e239eb0a47, type: 2}
@@ -3230,6 +3232,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b1d54b02db152d4ebda645c5788370f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GravitySwitch: 1
   Bottom: {fileID: 34166262}
   Top: {fileID: 273287441}
   Gravity: -5
@@ -3480,6 +3483,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 088968bccf84e2c4eae68e6b1adc329c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GravitySwitch: 0
   Bottom1: {fileID: 1665104893}
   Bottom2: {fileID: 1527285868}
   Gravity: -50
@@ -5462,6 +5466,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b1d54b02db152d4ebda645c5788370f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GravitySwitch: 1
   Bottom: {fileID: 1874154634}
   Top: {fileID: 813098616}
   Gravity: -5
@@ -5951,6 +5956,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b1d54b02db152d4ebda645c5788370f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GravitySwitch: 1
   Bottom: {fileID: 1729165354}
   Top: {fileID: 436355999}
   Gravity: -5
@@ -8598,7 +8604,7 @@ MonoBehaviour:
   TimeManager: {fileID: 383028820}
   DurableValueManager: {fileID: 721118717}
   PauseManager: {fileID: 58122334}
-  onicount: {fileID: 84942796}
+  onicount: {fileID: 0}
 --- !u!4 &1031843117
 Transform:
   m_ObjectHideFlags: 0
@@ -9034,7 +9040,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fadeSpeed: 0.01
-  alphaLimit: 0.6
+  alphaLimit: 0
   mycolor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!222 &1157688972
 CanvasRenderer:
