@@ -75,7 +75,9 @@ public class EnemyRouteMover : MonoBehaviour {
 
 
 	// Update is called once per frame
-	void Update () {      
+	void Update () {
+        Debug.Log("RouteNumber"+RouteNumber);
+        Debug.Log("NowEnemyState"+NowEnemyState);
         Switching();
         //Debug.Log("RouteNumber"+RouteNumber);
         //for (int i = 0; i < SerchEndPoint; i++)
@@ -84,8 +86,9 @@ public class EnemyRouteMover : MonoBehaviour {
         //    Debug.Log("RoundRouteArray[" + i + "].MoveTime" + RoundRouteArray[i].MoveTime);
 
         //}
-        //Debug.Log("↓");
+
         Debug.Log(HitedFlg);
+        Debug.Log("↓");
     }
 
 
@@ -180,7 +183,7 @@ public class EnemyRouteMover : MonoBehaviour {
 
 
 
-        if (RouteNumber >= SerchEndPoint)
+        if (RouteNumber >= SerchEndPoint&&!HitedFlg)
         {
             if (LoopFlg == true)
             {
@@ -247,7 +250,7 @@ public class EnemyRouteMover : MonoBehaviour {
 
     void OnCollisionEnter(Collision other)
     {
-        if (HitedFlg == false)
+        if (!HitedFlg)
         {
             for (int i = 0; i < ReflectionTagArray.Length; i++)
             {
@@ -267,6 +270,11 @@ public class EnemyRouteMover : MonoBehaviour {
         }
         HitedFlg = true;
 
+    }
+
+    void OnCollisionExit(Collision other)
+    {
+        HitedFlg = false;
     }
 
 
