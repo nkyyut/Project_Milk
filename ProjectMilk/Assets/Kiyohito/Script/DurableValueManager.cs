@@ -191,4 +191,9 @@ public class DurableValueManager : MonoBehaviour {
         TotalAreaValue = InitAreaValue;
     }
 
+
+    public int GetDurableValue()
+    {
+        return NowDurableValue;
+    }
 }

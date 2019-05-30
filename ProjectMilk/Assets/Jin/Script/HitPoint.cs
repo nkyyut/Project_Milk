@@ -7,6 +7,8 @@ public class HitPoint : MonoBehaviour
 {
     private GameObject _pointDrawer;
     private Jin_PointDrawer _pointDrawer_script;
+    private GameObject Player;
+    private Footprints footscript;
     private bool IsMeshCreate = false;
     private List<GameObject> colList = new List<GameObject>();
 
@@ -19,6 +21,8 @@ public class HitPoint : MonoBehaviour
     {
         _pointDrawer = GameObject.Find("PointDrawer");
         _pointDrawer_script = _pointDrawer.GetComponent<Jin_PointDrawer>();
+        Player = GameObject.FindGameObjectWithTag("Player");
+        footscript = Player.GetComponent<Footprints>();
         this.gameObject.GetComponent<MeshRenderer>().enabled = false;
     }
 
@@ -74,6 +78,7 @@ public class HitPoint : MonoBehaviour
                 //削除した点の避難先
                 List<Vector3> vec = new List<Vector3>();
                 List<Vector3> back_vec = new List<Vector3>();
+                List<GameObject> dot = new List<GameObject>();
 
                 //_pointDrawer_script._vertices.Clear();
                 //_pointDrawer_script._lineList.Clear();
@@ -87,7 +92,7 @@ public class HitPoint : MonoBehaviour
                     //vec.Add(_pointDrawer_script._vertices[i]);
                     _pointDrawer_script.back_vertices.RemoveAt(i);
                     //back_vec.Add(_pointDrawer_script.back_vertices[i]);
-
+                    Destroy(footscript._dotList[i]);
                 }
                 //for(int i=RemoveIndex; i < _pointDrawer_script._lineList.Count - RemoveIndex; i++)
                 //{
@@ -103,11 +108,11 @@ public class HitPoint : MonoBehaviour
                 //obj.transform.position = Lerp;
 
                 //_pointDrawer_script.MeshCuting();
-                //Debug.Log("HitPoint");
-
+                
                 _pointDrawer_script.MeshCreate();
                 _pointDrawer_script.Clear();
-                //_pointDrawer_script.GetFootprints().Clear();
+                //footscript.DotClear();
+                footscript.Clear();
 
 
             }
