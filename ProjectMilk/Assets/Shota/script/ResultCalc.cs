@@ -12,13 +12,20 @@ public class ResultCalc : MonoBehaviour {
     public TimeManager timemanager;
     public DurableValueManager durablevaluemanager;
     public ScoreManager scoremanager;
-    
+    public GameObject _BGMManager;
+
+
+    [SerializeField] private AudioClip _ResultBGM;
+
+    private AudioSource _audiosource_BGM;
+
     private bool resultflg;
     bool AnimeStartFlg;
     private void Start()
     {
         AnimeStartFlg = true;
         resultflg = false;
+        _audiosource_BGM = _BGMManager.GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -39,6 +46,8 @@ public class ResultCalc : MonoBehaviour {
                 ResultManager.GetComponent<ResultScript>().Score = GetResultScore();
                 resultflg = true;
                 Debug.Log(GetResultScore());
+                _audiosource_BGM.Stop();
+                Invoke("OnResultBGM", 2.0f);
             }
         }
     }
@@ -54,4 +63,11 @@ public class ResultCalc : MonoBehaviour {
 
         return (int)Score;
     }
+
+    public void OnResultBGM()
+    {
+        _audiosource_BGM.clip = _ResultBGM;
+        _audiosource_BGM.Play();
+    }
+
 }
