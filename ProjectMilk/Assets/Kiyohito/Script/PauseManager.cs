@@ -8,6 +8,7 @@ public class PauseManager : MonoBehaviour {
     Input LogButton;
     public GameObject HelpCanvas;
     public GameObject HelpManager;
+    public CameraTest CameraTest;
     public GameObject PauseUI_Canvas;
     public UIGuageMover HelpUIGuage;
     public UIGuageMover BackUIGuage;
@@ -86,11 +87,13 @@ public class PauseManager : MonoBehaviour {
             NowState = PAUSE_MANAGER_STATE.PAUSE;
         ChangeColorToTranslucent();
         PauseUI_Canvas.SetActive(true);
+        CameraTest.SetPause();
     }
     public void SetPauseManagerState_Idle()
     {
         NowState = PAUSE_MANAGER_STATE.IDLE;
         ChangeColorToTransparent();
+        CameraTest.SetMain();
         PauseUI_Canvas.SetActive(false);
     }
 

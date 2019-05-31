@@ -2,20 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
-
+[DefaultExecutionOrder(-1)]
 public class GameOverManager : MonoBehaviour {
-
+    
     [SerializeField] GameObject LoseFrame;
     [SerializeField] GameObject TitleUIGuage;
     [SerializeField] GameObject ReTryUIGuage;
     [SerializeField] SceneTransition ST_ToTitle;
     [SerializeField] CanvasGroup CanvasGroup;
     [SerializeField] GameOver GameOver;
+    [SerializeField] CameraTest CameraTest;
+    [SerializeField] AnimCon AnimCon;
     float BPressTime;
     float YPressTime;
     bool OnePass;
     float Delta;
-    bool GameOverStartFlg;
+    public  bool GameOverStartFlg;
     enum GAMEOVER_STATE
     {
         IDLE,
@@ -28,6 +30,7 @@ public class GameOverManager : MonoBehaviour {
 	void Start () {
         //Now_State = GAMEOVER_STATE.INPUT_RECEPTION;
         OnePass = true;
+        GameOverStartFlg = false;
 	}
 	
 	// Update is called once per frame
@@ -54,7 +57,7 @@ public class GameOverManager : MonoBehaviour {
             case GAMEOVER_STATE.IDLE:
                 break;
             case GAMEOVER_STATE.COVER_ANIMATION:
-
+                CoverAnimation();
                 break;
             case GAMEOVER_STATE.FADE_IN:
                 FadeIn();
@@ -80,6 +83,14 @@ public class GameOverManager : MonoBehaviour {
             Delta = 0;
 
             SetNowState_INPUT_RECEPTION();
+        }
+    }
+
+    void CoverAnimation()
+    {
+        if (AnimCon.AnimEndCheck())
+        {
+            GameOver.SetGameOver();
         }
     }
 
@@ -135,7 +146,10 @@ public class GameOverManager : MonoBehaviour {
 
     public void SetGameOverStart()
     {
-        GameOver.SetGameOver();
+        CameraTest.SetPause();
+        //Debug.Log("In");
+        AnimCon.PlayGameOverAnim();
+        SetNowState_COVER_ANIMATION();
         GameOverStartFlg = true;
     }
 }

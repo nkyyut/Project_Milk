@@ -15,6 +15,7 @@ TagManager:
   - FootPoint
   - area
   - FxTemporaire
+  - DeadOnihitode
   layers:
   - Default
   - TransparentFX
