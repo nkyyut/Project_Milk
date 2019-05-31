@@ -31,6 +31,10 @@ public class TotalManager : MonoBehaviour {
         {
             isResult = true;
         }
+        else if (DurableValueManager.GetDurableValue() <= 0)
+        {
+
+        }
         if (Input.GetKeyUp("joystick button 7"))
         {
             if (!isResult)

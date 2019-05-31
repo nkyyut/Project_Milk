@@ -76,8 +76,8 @@ public class EnemyRouteMover : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-        Debug.Log("RouteNumber"+RouteNumber);
-        Debug.Log("NowEnemyState"+NowEnemyState);
+        //Debug.Log("RouteNumber"+RouteNumber);
+        //Debug.Log("NowEnemyState"+NowEnemyState);
         Switching();
         //Debug.Log("RouteNumber"+RouteNumber);
         //for (int i = 0; i < SerchEndPoint; i++)
@@ -87,8 +87,8 @@ public class EnemyRouteMover : MonoBehaviour {
 
         //}
 
-        Debug.Log(HitedFlg);
-        Debug.Log("↓");
+        //Debug.Log(HitedFlg);
+        //Debug.Log("↓");
     }
 
 
@@ -254,7 +254,6 @@ public class EnemyRouteMover : MonoBehaviour {
         {
             for (int i = 0; i < ReflectionTagArray.Length; i++)
             {
-
                 if (other.transform.tag == ReflectionTagArray[i])
                 {
                     Debug.Log("hit");

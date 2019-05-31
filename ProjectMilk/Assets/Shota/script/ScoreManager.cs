@@ -6,7 +6,7 @@ public class ScoreManager : MonoBehaviour {
 
     private int nowOniCount;
     private int oldOniCount;
-
+    [SerializeField] EffectUIManager EffectUIManager;
     [SerializeField] OniCount oniCount;
 
     private int TotalScore;
@@ -22,7 +22,9 @@ public class ScoreManager : MonoBehaviour {
         nowOniCount = oniCount.Count();
         if(nowOniCount != oldOniCount)
         {
-           TotalScore += AddScore(oldOniCount - nowOniCount);
+            int SubValue=oldOniCount - nowOniCount;
+            EffectUIManager.SetEffectUI(SubValue);
+           TotalScore += AddScore(SubValue);
            Debug.Log(TotalScore);
            oldOniCount = nowOniCount;
         }

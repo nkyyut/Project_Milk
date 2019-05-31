@@ -13,7 +13,9 @@ public class GameOverManager : MonoBehaviour {
     [SerializeField] GameOver GameOver;
     float BPressTime;
     float YPressTime;
+    bool OnePass;
     float Delta;
+    bool GameOverStartFlg;
     enum GAMEOVER_STATE
     {
         IDLE,
@@ -25,17 +27,24 @@ public class GameOverManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         //Now_State = GAMEOVER_STATE.INPUT_RECEPTION;
+        OnePass = true;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        if (GameOver.finish)
+
+        if (Input.GetMouseButtonUp(0))
+        {
+            SetGameOverStart();
+        }
+
+        if (GameOver.finish&&OnePass)
         {
             SetNowState_FADE_IN();
+            OnePass = false;
         }
 
         Switching();
-        Debug.Log("NowState"+Now_State);
     }
 
     void Switching()
@@ -48,7 +57,7 @@ public class GameOverManager : MonoBehaviour {
 
                 break;
             case GAMEOVER_STATE.FADE_IN:
-                FadeIn();;
+                FadeIn();
                 break;
             case GAMEOVER_STATE.INPUT_RECEPTION:
                 InputReception();
@@ -77,18 +86,18 @@ public class GameOverManager : MonoBehaviour {
     void InputReception()
     {
 
-        if (Input.GetKeyUp("joystick button 3"))
+        if (Input.GetKeyUp("joystick button 1"))
         {
             PressTimeInitialize();
             TitleUIGuage.GetComponent<UIGuageMover>().SetFillDownFlg();
         }
-        else if (Input.GetKeyUp("joystick button 1"))
+        else if (Input.GetKeyUp("joystick button 3"))
         {
             PressTimeInitialize();
             ReTryUIGuage.GetComponent<UIGuageMover>().SetFillDownFlg();
         }
 
-        if (Input.GetKey("joystick button 3"))
+        if (Input.GetKey("joystick button 1"))
         {
             BPressTime += Time.deltaTime;
             Debug.Log("in");
@@ -101,7 +110,7 @@ public class GameOverManager : MonoBehaviour {
                 ST_ToTitle.Transition();
             }
         }
-        else if (Input.GetKey("joystick button 1"))
+        else if (Input.GetKey("joystick button 3"))
         {
             YPressTime += Time.deltaTime;
             ReTryUIGuage.GetComponent<UIGuageMover>().FillUp(YPressTime);
@@ -124,4 +133,9 @@ public class GameOverManager : MonoBehaviour {
     public void SetNowState_FADE_IN(){ Now_State = GAMEOVER_STATE.FADE_IN; }
     public void SetNowState_INPUT_RECEPTION(){ Now_State = GAMEOVER_STATE.INPUT_RECEPTION; }
 
+    public void SetGameOverStart()
+    {
+        GameOver.SetGameOver();
+        GameOverStartFlg = true;
+    }
 }

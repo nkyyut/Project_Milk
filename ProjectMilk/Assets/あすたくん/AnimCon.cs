@@ -9,7 +9,14 @@ public class AnimCon : MonoBehaviour {
 
     [SerializeField] Color[] color; // 変更前後 0:キリトリ　1:通常 2:変数
     [SerializeField] float ColorSpeed;
-    
+
+    public bool isEnd;
+
+    private void Start()
+    {
+        isEnd = false;
+    }
+
     private void FixedUpdate()
     {
         anim.SetFloat("X", Input.GetAxis("Horizontal"));
@@ -68,4 +75,21 @@ public class AnimCon : MonoBehaviour {
 
         return w;
     }
+
+    public void PlayClearAnim()
+    {
+        anim.SetBool("isClear", true);
+    }
+
+    public void PlayGameOverAnim()
+    {
+        anim.SetBool("isGameOver", true);
+    }
+
+    public bool AnimEndCheck()
+    {
+        return isEnd;
+    }
 }
+
+// Play○○Animの後AnimEndCheckを呼びtrueが返ってくると終了してる扱いです。
