@@ -71,7 +71,7 @@ public class GameOver : MonoBehaviour {
             if ((time += Time.deltaTime * speed) >= 0.75f && Keyflg == false)
                 if (numbers.Count > 0)
                 {
-                    Debug.Log(Screen.height);
+                    //Debug.Log(Screen.height);
                     int index = Random.Range(0, numbers.Count);
                     int ransu = numbers[index];
 
