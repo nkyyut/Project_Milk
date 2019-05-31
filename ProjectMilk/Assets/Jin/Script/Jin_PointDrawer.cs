@@ -747,7 +747,7 @@ public class Jin_PointDrawer : MonoBehaviour
             MeshForawd = Lineobj.transform.right = (myPoint[0] - myPoint[1]).normalized;
 
             Lineobj.transform.localScale = new Vector3((myPoint[1] - myPoint[0]).magnitude, 0.005f, 0.005f);
-            Lineobj.GetComponent<MeshRenderer>().material = m_Yellow;
+            Lineobj.GetComponent<MeshRenderer>().material = _dotMat;
             Lineobj.tag = "LastLine";
             Lineobj.layer = LayerMask.NameToLayer("Ignore Raycast");
             _lineList.Add(Lineobj);
@@ -756,13 +756,13 @@ public class Jin_PointDrawer : MonoBehaviour
             if (_lineList.Count > 1)
             {
                 Destroy(_lineList[_lineList.Count - 2].GetComponent<HitPoint>());
-                
-                _lineList[_lineList.Count - 2].layer = LayerMask.NameToLayer("Line");
+                _lineList[_lineList.Count - 2].tag = "Line";
+                _lineList[_lineList.Count - 2].layer = LayerMask.NameToLayer("Player");
             }
             //最後の線から二つ前の線
             if (_lineList.Count > 2)
             {
-                _lineList[_lineList.Count - 2].tag = "Line";
+                
                 _lineList[_lineList.Count - 3].layer = LayerMask.NameToLayer("Ignore Raycast");
             }
 
