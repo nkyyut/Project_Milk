@@ -124,6 +124,7 @@ public class GameOverManager : MonoBehaviour {
             //長押しされたら""へ
             if (YPressTime >= KiyohitoConst.Const.PressTimeLimit)
             {
+                Application.LoadLevel("GameMainScene");
                 PressTimeInitialize();
                 YPressTime = 0;
             }
