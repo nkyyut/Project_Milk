@@ -80,10 +80,11 @@ public class ResultScript : MonoBehaviour {
                 if (imageBox == null)
                 {
                     imageBox = Instantiate(manta);
+                    imageBox.rectTransform.localScale *= 1.5f;
                     imageBox.transform.SetParent(parentImage.transform, false);
                 }
                 Vector3 Box = imageBox.rectTransform.position;
-                imageBox.rectTransform.position = Vector3.Lerp(imageBox.transform.position, new Vector3(Screen.width / 2, Screen.height / 2), 2 * Time.deltaTime);
+                imageBox.rectTransform.position = Vector3.Lerp(imageBox.transform.position, new Vector3(Screen.width / 1.5f, Screen.height / 2), 2 * Time.deltaTime);
                 
                 if (imageBox.rectTransform.position.normalized - Box.normalized == Vector3.zero)
                     resultType = TYPE_RESULT.WINNER;

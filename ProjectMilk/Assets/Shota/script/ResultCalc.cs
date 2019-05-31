@@ -6,16 +6,18 @@ public class ResultCalc : MonoBehaviour {
 
     public GameObject ResultManager;
     public GameObject ResultPanel;
-
+    public AnimCon AnimCon;
+    public CameraTest CameraTest;
     public OniCount onicount;
     public TimeManager timemanager;
     public DurableValueManager durablevaluemanager;
     public ScoreManager scoremanager;
     
     private bool resultflg;
-
+    bool AnimeStartFlg;
     private void Start()
     {
+        AnimeStartFlg = true;
         resultflg = false;
     }
 
@@ -23,7 +25,14 @@ public class ResultCalc : MonoBehaviour {
     {
         if(onicount.Count() == 0)
         {
-            if (!resultflg)
+            if (AnimeStartFlg)
+            {
+                CameraTest.SetPause();
+                timemanager.SetNowTimeManagerState_IDLE();
+                AnimCon.PlayClearAnim();
+                AnimeStartFlg = false;
+            }
+            if (AnimeStartFlg==false&&AnimCon.AnimEndCheck()&&!resultflg)
             {
                 ResultManager.SetActive(true);
                 ResultPanel.SetActive(true);

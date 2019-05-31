@@ -8,7 +8,9 @@ public class EffectUIManager : MonoBehaviour {
     [SerializeField] GameObject EffectUIImage;
     [SerializeField] GameObject EffectUIText;
     [SerializeField] Sprite[] Image;
+    [SerializeField] AudioClip[] AudioClipArray;
     [SerializeField] float FadeSpeed;
+    AudioSource AudioSource;
     float DeltaTime;
     float LimitTime=1;
 
@@ -20,7 +22,7 @@ public class EffectUIManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
+        AudioSource = GetComponent<AudioSource>();
 	}
 	
 	// Update is called once per frame
@@ -66,16 +68,23 @@ public class EffectUIManager : MonoBehaviour {
     {
         Debug.Log("BigIn");
         ChangeSprite(Image[2]);
+        SetAudioClip(AudioClipArray[2]);
+        AudioSource.Play();
     }
     void SetEffectNormal()
     {
         Debug.Log("NormalIn");
         ChangeSprite(Image[1]);
+        SetAudioClip(AudioClipArray[1]);
+        AudioSource.Play();
     }
     void SetEffectSmall()
     {
         Debug.Log("SmallIn");
+
         ChangeSprite(Image[0]);
+        SetAudioClip(AudioClipArray[0]);
+        AudioSource.Play();
     }
 
     void ChangeSprite(Sprite NewSprite)
@@ -105,6 +114,11 @@ public class EffectUIManager : MonoBehaviour {
             DeltaTime = 0;
             SetNowEnemyState_FADEOUT();
         }
+    }
+
+    void SetAudioClip(AudioClip NextSound)
+    {
+        AudioSource.clip = NextSound;
     }
 
     void SetNowEnemyState_STAY() { NowEffectState = EFFECT_STATE.STAY; }

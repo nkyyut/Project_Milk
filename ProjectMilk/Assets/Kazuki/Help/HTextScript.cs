@@ -19,7 +19,7 @@ public class HTextScript : MonoBehaviour {
 	
 	
 	void Update () {
-
+        textBox.transform.position = new Vector3(Screen.width * 0.1f, Screen.height * 0.7f);
         HelpScript.HELP_LIST listt;
         listt = manager.GetComponent<HelpScript>().list;
 
