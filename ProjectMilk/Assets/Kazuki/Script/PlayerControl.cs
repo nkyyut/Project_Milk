@@ -35,10 +35,7 @@ public class PlayerControl : MonoBehaviour
     void Update()
     {
 
-        //CameraTest.SCENE_TYPE CameraScene;
-        //CameraScene = Camera.main.GetComponent<CameraTest>().scene;
-        //int Cscene = (int)CameraScene;
-        //scene = (SCENE_TYPE)Cscene;
+       
 
         int Cscene = (int)CameraScene.Pscene;
         scene = (SCENE_TYPE)Cscene;
