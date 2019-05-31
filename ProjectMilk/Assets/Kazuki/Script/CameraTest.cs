@@ -12,14 +12,14 @@ public class CameraTest : MonoBehaviour
     public GameObject Player;
     public GameObject SangoFree;
     public PauseManager Pause;
-
+    public GameOverManager GameOverManager;
 
     [SerializeField] Vector3 OffsetPos;
     Vector3 targetPos;
     Vector3 CameraPos;
     public Transform cameraPoint;
     public bool outoFlg;
-
+    PauseManager.PAUSE_MANAGER_STATE pause;
     private Vector3 CtransformBox;
     private Quaternion CrotationBox;
 
@@ -59,15 +59,16 @@ public class CameraTest : MonoBehaviour
 
     void Update()
     {
-        PauseManager.PAUSE_MANAGER_STATE pause = Pause.NowState;
-        int Cscene = (int)pause;
+        Debug.Log("Scene" +scene);
+        if (!GameOverManager.GameOverStartFlg)
+        {
+            Debug.Log("In");
+            pause = Pause.NowState;
+        }
+        else SetPause();
+        
 
-        if (Cscene == 0)
-            scene = SCENE_TYPE.PAUSE;
-        else if (Input.GetAxis("TriggerL") < 0)
-            scene = SCENE_TYPE.FREECAMERA;
-        else
-            scene = SCENE_TYPE.MAIN;
+
 
 
         switch (scene)
@@ -130,8 +131,6 @@ public class CameraTest : MonoBehaviour
                 break;
         }
     }
-
-
     private void LateUpdate()
     {
 
@@ -178,4 +177,7 @@ public class CameraTest : MonoBehaviour
         }
 
     }
+
+    public void SetPause() { scene = SCENE_TYPE.PAUSE; }
+    public void SetMain() { scene = SCENE_TYPE.MAIN; }
 }
