@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameOver : MonoBehaviour {
+public class GameOver : MonoBehaviour
+{
 
     [SerializeField] RawImage hitode;
     [SerializeField] Transform generatePos;
@@ -16,35 +17,37 @@ public class GameOver : MonoBehaviour {
     int end = 60;
     List<int> numbers = new List<int>();
 
+    private bool Doonce = false;
     private bool generateFlg = false;
-    
+
     public bool finish { get { return generateFlg; } }
-    
+
 
     bool Keyflg = false;
     bool State = false;
     float speed = 1f;
     float time = 0;
-    
 
+    private Audio_GameOver _audioGameOver;
 
-	void Start () {
+    void Start()
+    {
         ScreenSizeRation = Screen.height / (float)KiyohitoConst.Const.FoundationScreenSize;
 
         //State = false;
-        for(int i = start; i <= end; i++)
+        for (int i = start; i <= end; i++)
         {
             numbers.Add(i);
         }
-      
+
         int BoxCount = 0;
-        for(int i = 1; i <= 5; i++)
+        for (int i = 1; i <= 5; i++)
         {
             for (int y = 1; y <= 10; y++)
-                generateBox[BoxCount++] = new Vector3(Screen.width*y/10-60, Screen.height*i/5-50/*y * 40f - 10, i * 40 , 0*/);
+                generateBox[BoxCount++] = new Vector3(Screen.width * y / 10 - 60, Screen.height * i / 5 - 50/*y * 40f - 10, i * 40 , 0*/);
         }
 
-
+        _audioGameOver = this.gameObject.GetComponent<Audio_GameOver>();
     }
 
 
@@ -53,8 +56,10 @@ public class GameOver : MonoBehaviour {
         if (State == true)
         {
             if (Input.anyKey)
-                for (int i = 0; i < numbers.Count; )
+                for (int i = 0; i < numbers.Count;)
                 {
+                    _audioGameOver.SE_OnihitodeBan();
+
                     int index = Random.Range(0, numbers.Count);
                     int ransu = numbers[index];
                     generatePos.position = generateBox[ransu];
@@ -71,6 +76,8 @@ public class GameOver : MonoBehaviour {
             if ((time += Time.deltaTime * speed) >= 0.75f && Keyflg == false)
                 if (numbers.Count > 0)
                 {
+                    _audioGameOver.SE_OnihitodeBan();
+
                     //Debug.Log(Screen.height);
                     int index = Random.Range(0, numbers.Count);
                     int ransu = numbers[index];
@@ -79,7 +86,7 @@ public class GameOver : MonoBehaviour {
                     // Debug.Log(generatePos.position);
                     hitodeBox[ransu] = Instantiate(hitode, generatePos);
                     hitodeBox[ransu].transform.SetParent(parentPos, true);
-                   // hitodeBox[ransu].transform.localScale *= 0.5f;
+                    // hitodeBox[ransu].transform.localScale *= 0.5f;
 
                     numbers.Remove(ransu);
 
@@ -88,7 +95,15 @@ public class GameOver : MonoBehaviour {
                 }
 
             if (numbers.Count == 0)
-                generateFlg = true;
+            {
+                if (!Doonce)
+                {
+                    _audioGameOver.MainBGM_Stop();
+                    _audioGameOver.BGM_GameOver();
+                    generateFlg = true;
+                    Doonce = true;
+                }
+            }
 
         }
 
@@ -106,6 +121,6 @@ public class GameOver : MonoBehaviour {
         //}
     }
 
-   public  void SetGameOver() { State = true; }
-    
+    public void SetGameOver() { State = true; }
+
 }

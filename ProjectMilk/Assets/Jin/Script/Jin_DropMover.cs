@@ -35,7 +35,7 @@ public class Jin_DropMover : MonoBehaviour
     void Update()
     {
         Switching();
-        if(this.transform.position.y < -5)
+        if(this.transform.position.y < -1)
             SetPieceState_DELETE();
     }
     /*いろいろ初期化*/

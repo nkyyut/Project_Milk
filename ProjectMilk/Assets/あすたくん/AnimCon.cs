@@ -83,7 +83,7 @@ public class AnimCon : MonoBehaviour {
 
     public void PlayGameOverAnim()
     {
-        //Debug.Log("In");
+        Debug.Log("In");
         anim.SetBool("isGameOver", true);
     }
 

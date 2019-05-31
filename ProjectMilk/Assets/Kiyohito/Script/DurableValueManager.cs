@@ -140,7 +140,7 @@ public class DurableValueManager : MonoBehaviour {
         Debug.Log("TotalAreaValue" + TotalAreaValue);
         Debug.Log("SubValue" + SubValue);
         
-        TotalAreaValue -= SubValue;
+        TotalAreaValue -= (SubValue*0.7f);
         if (TotalAreaValue <= 0)
             TotalAreaValue = 0;
         float Work = TotalAreaValue / InitAreaValue;
