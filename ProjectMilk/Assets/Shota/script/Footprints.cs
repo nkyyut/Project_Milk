@@ -9,8 +9,9 @@ public class Footprints : MonoBehaviour
     [SerializeField] GameObject footpoints; // 子
     [SerializeField] GameObject FootPoint; // 親
     [SerializeField] GameObject pointDrawer;
-    [SerializeField] GameObject Hed;
     Jin_PointDrawer _pointDrawerSc;
+
+    PlayerSE _playerSE;
 
     public Material blueMa;
 
@@ -20,8 +21,6 @@ public class Footprints : MonoBehaviour
 
     private Vector3 OldRotation;
     private Vector3 OldNormal;
-
-    Vector3 cameraForward;
 
     public List<GameObject> _dotList = new List<GameObject>();
     private List<List<GameObject>> All_dotList = new List<List<GameObject>>();
@@ -62,7 +61,7 @@ public class Footprints : MonoBehaviour
     private void Start()
     {
         _pointDrawerSc = pointDrawer.GetComponent<Jin_PointDrawer>();
-        cameraForward = Vector3.Scale(Camera.main.transform.forward, new Vector3(1, 0, 1)).normalized;
+        _playerSE = this.gameObject.GetComponent<PlayerSE>();
     }
 
     void Update()
@@ -78,6 +77,7 @@ public class Footprints : MonoBehaviour
         {
             if (IsButtonUp)
             {
+                _playerSE.SE_LineCreate();
                 foreach (GameObject line in _pointDrawerSc._lineList)
                 {
                     line.AddComponent<AgainLinePosition>();
@@ -90,11 +90,12 @@ public class Footprints : MonoBehaviour
                 list.AddRange(_pointDrawerSc._lineList);
                 dot.AddRange(_dotList);
 
-                foreach(GameObject Triggerlist in _pointDrawerSc._lineList)
+                foreach (GameObject Triggerlist in _pointDrawerSc._lineList)
                     Triggerlist.GetComponent<BoxCollider>().isTrigger = false;
 
                 _pointDrawerSc.All_lineList.Add(list);
                 All_dotList.Add(dot);
+
                 if (_pointDrawerSc.All_lineList.Count > 3)
                 {
                     for (int i = 0; i < _pointDrawerSc.All_lineList[0].Count; i++)
@@ -173,10 +174,12 @@ public class Footprints : MonoBehaviour
             float z = Mathf.Abs(rendererPositions[VertNum - 1].z - pos.z);
             // 各軸一定量以上移動確認後、頂点設定
             if (x > PointRange || y > PointRange || z > PointRange)
+            {
                 // その地点に頂点を打っていなければ
                 if (!rendererPositions.Contains(pos))
                 //if(CheckNormal() != OldNormal)
                 {
+                    
                     VertNum++;
                     GameObject fp = Instantiate(footpoints, FootPoint.transform);
                     //fp.transform.rotation = gameObject.transform.rotation;
@@ -197,6 +200,7 @@ public class Footprints : MonoBehaviour
 
                     OldNormal = CheckNormal();
                 }
+            }
         }
     }
 
