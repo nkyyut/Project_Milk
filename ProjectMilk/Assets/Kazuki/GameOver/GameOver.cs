@@ -10,10 +10,10 @@ public class GameOver : MonoBehaviour {
     [SerializeField] Transform parentPos;
     private RawImage[] hitodeBox = new RawImage[100];
     private Vector3[] generateBox = new Vector3[100];
-
+    float ScreenSizeRation;
 
     int start = 1;
-    int end = 50;
+    int end = 60;
     List<int> numbers = new List<int>();
 
     private bool generateFlg = false;
@@ -29,8 +29,10 @@ public class GameOver : MonoBehaviour {
 
 
 	void Start () {
-        State = false;
-      for(int i = start; i <= end; i++)
+        ScreenSizeRation = Screen.height / (float)KiyohitoConst.Const.FoundationScreenSize;
+
+        //State = false;
+        for(int i = start; i <= end; i++)
         {
             numbers.Add(i);
         }
@@ -41,15 +43,13 @@ public class GameOver : MonoBehaviour {
             for (int y = 1; y <= 10; y++)
                 generateBox[BoxCount++] = new Vector3(Screen.width*y/10-60, Screen.height*i/5-50/*y * 40f - 10, i * 40 , 0*/);
         }
-        if (BoxCount >= 50)
-            State = true;
+
 
     }
 
 
     void Update()
     {
-
         if (State == true)
         {
             if (Input.anyKey)
@@ -61,6 +61,8 @@ public class GameOver : MonoBehaviour {
                     // Debug.Log(generatePos.position);
                     hitodeBox[ransu] = Instantiate(hitode, generatePos);
                     hitodeBox[ransu].transform.SetParent(parentPos, true);
+
+                    //hitodeBox[ransu].transform.localScale *= ScreenSizeRation;
                     numbers.Remove(ransu);
                     Keyflg = true;
                     Debug.Log(numbers.Count);
@@ -69,7 +71,7 @@ public class GameOver : MonoBehaviour {
             if ((time += Time.deltaTime * speed) >= 0.75f && Keyflg == false)
                 if (numbers.Count > 0)
                 {
-
+                    Debug.Log(Screen.height);
                     int index = Random.Range(0, numbers.Count);
                     int ransu = numbers[index];
 
@@ -77,7 +79,7 @@ public class GameOver : MonoBehaviour {
                     // Debug.Log(generatePos.position);
                     hitodeBox[ransu] = Instantiate(hitode, generatePos);
                     hitodeBox[ransu].transform.SetParent(parentPos, true);
-
+                   // hitodeBox[ransu].transform.localScale *= 0.5f;
 
                     numbers.Remove(ransu);
 
@@ -103,5 +105,7 @@ public class GameOver : MonoBehaviour {
         //    flg = false;
         //}
     }
+
+   public  void SetGameOver() { State = true; }
     
 }

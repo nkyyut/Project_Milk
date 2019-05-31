@@ -24,7 +24,7 @@ public class DropEnemy : MonoBehaviour
             other.gameObject.transform.parent = this.transform.gameObject.transform;
             other.gameObject.GetComponent<SphereCollider>().enabled = false;
             other.gameObject.transform.position += other.transform.forward * -0.005f;
-
+            other.gameObject.transform.tag = "DeadOnihitode";
             other.gameObject.GetComponent<EnemyRouteMover>().SetNowEnemyState_IDLE();
             other.gameObject.GetComponent<EnemyGravityBody>().SetGravitySwitch();
         }

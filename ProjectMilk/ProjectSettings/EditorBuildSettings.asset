@@ -20,3 +20,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Main/StoryScene.unity
     guid: 86b3c62a43d0b81459eff3dbc4b914cb
+  - enabled: 1
+    path: Assets/Kiyohito/GameOver.unity
+    guid: 2eb650e1de0c31a478114231eb0dc096
