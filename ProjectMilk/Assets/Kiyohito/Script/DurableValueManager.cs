@@ -138,7 +138,7 @@ public class DurableValueManager : MonoBehaviour {
         Debug.Log("TotalAreaValue" + TotalAreaValue);
         Debug.Log("SubValue" + SubValue);
 
-        TotalAreaValue -= SubValue;
+        TotalAreaValue -= SubValue * 0.3f;
         float Work = TotalAreaValue / InitAreaValue;
         NowDurableValue= (int)(KiyohitoConst.Const.DurableValueMax * Work);
         ChangeString(NowDurableValue);
