@@ -77,11 +77,7 @@ public class Footprints : MonoBehaviour
         {
             if (IsButtonUp)
             {                    
-
-                Debug.Log("怒りの日");
                 _playerSE.SE_LineCreate();
-                Debug.Log(_pointDrawerSc._lineList.Count);
-                Debug.Log("geki");
                 foreach (GameObject line in _pointDrawerSc._lineList)
                 {
                     line.AddComponent<AgainLinePosition>();
