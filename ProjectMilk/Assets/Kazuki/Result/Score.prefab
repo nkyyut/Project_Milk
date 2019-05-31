@@ -75,7 +75,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fadeSpeed: 0.01
   alphaLimit: 1
-  mycolor: {r: 1, g: 1, b: 1, a: 0}
+  mycolor: {r: 0.986207, g: 1, b: 0, a: 1}
 --- !u!222 &222366057524248898
 CanvasRenderer:
   m_ObjectHideFlags: 1

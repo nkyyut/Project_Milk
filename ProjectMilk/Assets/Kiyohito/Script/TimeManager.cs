@@ -9,11 +9,11 @@ public class TimeManager : MonoBehaviour {
 
     public GameObject[]TinAnago_gameObject;
     public bool[] TinAnago_bool;
-
+    public GameOverManager GameOverManager;
     
     int IntervalPoint;//IntervalTimeの係数
     int TotalOfTinAnago;//チンアナゴの数
-    float GameLimitTime;//ゲームの制限時間
+    public float GameLimitTime;//ゲームの制限時間
     float NowPlayTime;//現在の経過時間
     float TimeSpeed;//時間の進み具合基本1/*使う予定はないが一応*/
     float PullBackInterval;//チンアナゴが引っ込む時間の間隔
@@ -52,7 +52,7 @@ public class TimeManager : MonoBehaviour {
         {
             /*以下いろいろ初期化*/
             TotalOfTinAnago = TinAnago_gameObject.Length;
-            GameLimitTime = 90.0f;
+            //GameLimitTime = 10.0f;
             NowPlayTime = 0.0f;
             NowTimeManagerState = TIMEMANAGER_STATE.TICK;
             TimeSpeed = 1.0f;
@@ -79,7 +79,7 @@ public class TimeManager : MonoBehaviour {
             case TIMEMANAGER_STATE.TICK:
                 if (!CheckLimitTime())
                 {
-                    Debug.Log("timeup");
+                    GameOverManager.SetGameOverStart();
                     SetNowTimeManagerState_IDLE();
                     break;
                 }
