@@ -75,7 +75,7 @@ public class PauseManager : MonoBehaviour {
                 {
                     NowState = PAUSE_MANAGER_STATE.PAUSE;
                     HelpCanvas.SetActive(false);
-                    HelpManager.SetActive(false);
+                    //HelpManager.SetActive(false);
                 }
                 break;
         }
@@ -226,7 +226,7 @@ public class PauseManager : MonoBehaviour {
             {
                 NowState = PAUSE_MANAGER_STATE.HELP;
                 HelpCanvas.SetActive(true);
-                HelpManager.SetActive(true);
+                //HelpManager.SetActive(true);
                 PressTimeInitialize();
                 BackUIGuage.FillUp(0);
             }
