@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class DurableValueManager : MonoBehaviour {
     public GameObject[] CoralPartsArray;
+    public GameOverManager GameOverManager;
+    public TimeManager TimeManager;
     int RecoveryPoint;
     float InitAreaValue;
     float TotalAreaValue;
@@ -137,13 +139,20 @@ public class DurableValueManager : MonoBehaviour {
         float SubValue = CalculateMeshArea(SubObject);
         Debug.Log("TotalAreaValue" + TotalAreaValue);
         Debug.Log("SubValue" + SubValue);
-
-        TotalAreaValue -= SubValue;
+        
+        TotalAreaValue -= (SubValue*0.4f);
+        if (TotalAreaValue <= 0)
+            TotalAreaValue = 0;
         float Work = TotalAreaValue / InitAreaValue;
         NowDurableValue= (int)(KiyohitoConst.Const.DurableValueMax * Work);
         ChangeString(NowDurableValue);
         SetSprite();
         SetColor();
+        if (TotalAreaValue <= 0)
+        {
+            TimeManager.SetNowTimeManagerState_IDLE();
+            GameOverManager.SetGameOverStart();
+        }
 
     }
 

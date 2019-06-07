@@ -96,19 +96,19 @@ public class Footprints : MonoBehaviour
                 _pointDrawerSc.All_lineList.Add(list);
                 All_dotList.Add(dot);
 
-                if (_pointDrawerSc.All_lineList.Count > 3)
-                {
-                    for (int i = 0; i < _pointDrawerSc.All_lineList[0].Count; i++)
-                    {
-                        Destroy(_pointDrawerSc.All_lineList[0][i]);
-                        Destroy(All_dotList[0][i]);
-                    }
-                    foreach (GameObject _dot in All_dotList[0])
-                        Destroy(_dot);
+                //if (_pointDrawerSc.All_lineList.Count > 3)
+                //{
+                //    for (int i = 0; i < _pointDrawerSc.All_lineList[0].Count; i++)
+                //    {
+                //        Destroy(_pointDrawerSc.All_lineList[0][i]);
+                //        Destroy(All_dotList[0][i]);
+                //    }
+                //    foreach (GameObject _dot in All_dotList[0])
+                //        Destroy(_dot);
 
-                    _pointDrawerSc.All_lineList.Remove(_pointDrawerSc.All_lineList[0]);
-                    All_dotList.Remove(All_dotList[0]);
-                }
+                //    _pointDrawerSc.All_lineList.Remove(_pointDrawerSc.All_lineList[0]);
+                //    All_dotList.Remove(All_dotList[0]);
+                //}
 
                 isDrawing = false;
                 VertNum = 0;
