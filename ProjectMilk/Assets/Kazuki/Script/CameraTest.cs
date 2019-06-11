@@ -65,6 +65,8 @@ public class CameraTest : MonoBehaviour
             Debug.Log("In");
             pause = Pause.NowState;
         }
+        else if (Input.GetAxis("TriggerL") > 0)
+            SetFreeCamera();
         else SetPause();
         
 
@@ -180,4 +182,6 @@ public class CameraTest : MonoBehaviour
 
     public void SetPause() { scene = SCENE_TYPE.PAUSE; }
     public void SetMain() { scene = SCENE_TYPE.MAIN; }
+    public void SetFreeCamera() { scene = SCENE_TYPE.FREECAMERA; }
+
 }
