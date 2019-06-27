@@ -59,10 +59,10 @@ public class CameraTest : MonoBehaviour
 
     void Update()
     {
-        Debug.Log("Scene" +scene);
+        //Debug.Log("Scene" +scene);
         if (!GameOverManager.GameOverStartFlg)
         {
-            Debug.Log("In");
+            //Debug.Log("In");
             pause = Pause.NowState;
         }
         else SetPause();

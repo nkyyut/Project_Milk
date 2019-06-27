@@ -280,6 +280,7 @@ MonoBehaviour:
   - {r: 0.90344834, g: 1, b: 0, a: 0}
   - {r: 0.94482756, g: 1, b: 0, a: 0}
   ColorSpeed: 0
+  isEnd: 0
 --- !u!114 &160654195
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1040,6 +1041,8 @@ MonoBehaviour:
   - {fileID: 1247029397}
   - {fileID: 530925198}
   TinAnago_bool: 01010101010101010101
+  GameOverManager: {fileID: 0}
+  GameLimitTime: 0
 --- !u!4 &304525501
 Transform:
   m_ObjectHideFlags: 0
@@ -1174,7 +1177,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!82 &336022847
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2661,6 +2664,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CoralPartsArray: []
+  GameOverManager: {fileID: 0}
+  TimeManager: {fileID: 0}
   DurableIMG: {fileID: 1148807343}
   DurableTXT: {fileID: 336623990}
   ImageChangeSpriteArray:
@@ -8382,6 +8387,8 @@ MonoBehaviour:
   Playercontrol: {fileID: 160654195}
   Player: {fileID: 100004, guid: b0e55b961d67dd6479e11f41344d01fc, type: 3}
   SangoFree: {fileID: 0}
+  Pause: {fileID: 0}
+  GameOverManager: {fileID: 0}
   OffsetPos: {x: 0, y: -0.5, z: 0.7}
   cameraPoint: {fileID: 2041484508}
   outoFlg: 0
@@ -9667,6 +9674,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HelpCanvas: {fileID: 0}
   HelpManager: {fileID: 0}
+  CameraTest: {fileID: 0}
   PauseUI_Canvas: {fileID: 1632773597}
   HelpUIGuage: {fileID: 278642826}
   BackUIGuage: {fileID: 992206811}
@@ -9674,6 +9682,7 @@ MonoBehaviour:
   ReTryUIGuage: {fileID: 1613026016}
   TotalManager: {fileID: 469952510}
   TranslucentPanel: {fileID: 247676132}
+  NowState: 0
 --- !u!4 &1982734817
 Transform:
   m_ObjectHideFlags: 0

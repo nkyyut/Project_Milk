@@ -53,7 +53,7 @@ public class HitPoint : MonoBehaviour
         {
             //if (c != _pointDrawer_script._lineList[_pointDrawer_script._lineList.Count - 2].GetComponent<BoxCollider>())
             //{
-                Debug.Log("囲む");
+                //Debug.Log("囲む");
 
                 //重なったところに点を打つ
                 Vector3 position = c.ClosestPoint(transform.position);
