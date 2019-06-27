@@ -7,10 +7,11 @@ using UnityEngine;
 using KiyohitoConst;
 public class TimeManager : MonoBehaviour {
 
+    public GameObject[] TimeTxtArray;
+    public GameObject[] TimeFrameArray;
     public GameObject[]TinAnago_gameObject;
     public bool[] TinAnago_bool;
     public GameOverManager GameOverManager;
-    
     int IntervalPoint;//IntervalTimeの係数
     int TotalOfTinAnago;//チンアナゴの数
     public float GameLimitTime;//ゲームの制限時間
@@ -48,8 +49,6 @@ public class TimeManager : MonoBehaviour {
     /*いろいろ初期化*/
     void Initialize()
     {
-        try
-        {
             /*以下いろいろ初期化*/
             TotalOfTinAnago = TinAnago_gameObject.Length;
             //GameLimitTime = 10.0f;
@@ -58,14 +57,8 @@ public class TimeManager : MonoBehaviour {
             TimeSpeed = 1.0f;
             IntervalPoint = 1;
             PullBackInterval = GameLimitTime / (TotalOfTinAnago + 1);
-
+            TimeTxtArray[9].GetComponent<ChangeTimeTxt>().ChangeTxt(GameLimitTime);
             /*以上いろいろ初期化*/
-        }
-        catch
-        {
-            Debug.Log("TimeManagerInitialize_err");
-
-        }
 
     }
 
@@ -96,15 +89,20 @@ public class TimeManager : MonoBehaviour {
     /*チンアナゴの管理*/
     void TinAnagoManager()
     {
-        if(IntervalPoint<=TotalOfTinAnago)
-        if (NowPlayTime>=PullBackInterval*IntervalPoint)
-        {
-            IntervalPoint++;
-            int Index;
-            Index=SearchTinAnagoBackmost()-1;
-            TinAnago_bool[Index] = false;
-            HideCalling(Index);
-        }   
+        if (IntervalPoint <= TotalOfTinAnago)
+            if (NowPlayTime > PullBackInterval * IntervalPoint)
+            {
+                IntervalPoint++;
+                int Index;
+                Index = SearchTinAnagoBackmost() - 1;
+                TinAnago_bool[Index] = false;
+                HideCalling(Index);
+                TimeFrameArray[Index - 1].SetActive(true);
+                TimeFrameArray[Index].SetActive(false);
+                
+                Debug.Log(NowPlayTime);
+                TimeTxtArray[Index-1].GetComponent<ChangeTimeTxt>().ChangeTxt(GameLimitTime-(int)NowPlayTime);
+            }   
     }
 
     /*チンアナゴ配列の最後尾をさがすよ*/

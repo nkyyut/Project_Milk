@@ -206,6 +206,7 @@ public class Footprints : MonoBehaviour
 
     void CreateLineRoot()
     {
+        Debug.Log("点打つ");
         //新規生成
         OldNormal = CheckNormal();
         OldRotation = this.gameObject.transform.rotation.eulerAngles;
