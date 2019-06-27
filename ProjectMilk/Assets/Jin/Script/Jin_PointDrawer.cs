@@ -29,7 +29,6 @@ public class Jin_PointDrawer : MonoBehaviour
 
     [SerializeField]
     private DrawMesh _drawMesh;
-
     [SerializeField]
     private Footprints _footPrints;
 
@@ -187,7 +186,7 @@ public class Jin_PointDrawer : MonoBehaviour
     /// </summary>
     public void MeshCreate()
     {
-
+        //Debug.Log("クリエイト");
         dotnum = 0;
         IsChangeDirection = true;
 
@@ -222,6 +221,8 @@ public class Jin_PointDrawer : MonoBehaviour
         GameObject[] _dots = new GameObject[_footPrints._dotList.Count];
         for (int i = 0; i < _footPrints._dotList.Count; i++)
         {
+            //真ん中の点が親、周りの複数の点が子
+            //３Ｄだと法線の反転が上手くいかないため
             _footPrints._dotList[i].transform.parent = fp.transform;
             _dots[i] = _footPrints._dotList[i];
         }
@@ -290,7 +291,7 @@ public class Jin_PointDrawer : MonoBehaviour
         meshob.GetComponent<Subtractor>().maskMaterial = _maskMaterial;
         _meshList.Add(meshob);
 
-
+        AllRay_CurvedSurface();
 
         GameObject AllMeshObject = new GameObject("AllMeshObject", typeof(MeshFilter), typeof(MeshRenderer));
         go.transform.parent = AllMeshObject.transform;
@@ -325,46 +326,8 @@ public class Jin_PointDrawer : MonoBehaviour
         _allMeshObject.Add(AllMeshObject);
         //AllMeshObject.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
 
+        DropAllMeshCreate(mesh, _dots);
 
-
-        GameObject DropMeshObject = new GameObject("DropMeshObject");
-        GameObject front = _drawMesh.CreateMesh(_vertices);
-        GameObject back = _drawMesh.CreateMesh(back_vertices);
-        GameObject between = new GameObject("Between", typeof(MeshFilter), typeof(MeshRenderer));
-
-        front.AddComponent<MeshCollider>();
-        front.GetComponent<MeshCollider>().convex = true;
-        front.GetComponent<MeshCollider>().isTrigger = true;
-        front.AddComponent<DropEnemy>();
-
-        between.AddComponent<MeshCollider>();
-        between.GetComponent<MeshCollider>().convex = true;
-        //between.AddComponent<DropEnemy>();
-
-        MeshFilter betfilter = between.GetComponent<MeshFilter>();
-        betfilter.mesh = mesh;
-
-        front.GetComponent<MeshRenderer>().material = Coral_M;
-        back.GetComponent<MeshRenderer>().material = Blue;
-        between.GetComponent<MeshRenderer>().material = Blue;
-
-        if (0 > getArea(_dots))
-            front.GetComponent<MeshFilter>().mesh.SetTriangles(front.GetComponent<MeshFilter>().mesh.triangles.Reverse().ToArray(), 0);
-
-        front.transform.parent = DropMeshObject.transform;
-        back.transform.parent = DropMeshObject.transform;
-        between.transform.parent = DropMeshObject.transform;
-
-        front.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
-        back.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
-        between.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
-
-        DropMeshObject.transform.position -= MeshForawd * 0.08f;
-
-        DropMeshObject.AddComponent<Jin_DropMover>();
-        DropMeshObject.GetComponent<Jin_DropMover>().SetPieceState_DROP();
-
-        DropMeshObject.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
 
         IsAllMeshCreate = true;
         //メッシュを表示するため
@@ -372,6 +335,8 @@ public class Jin_PointDrawer : MonoBehaviour
         //go2.gameObject.AddComponent<MeshInfo>();
         //meshob.gameObject.AddComponent<MeshInfo>();
         //gogo.gameObject.AddComponent<MeshInfo>();
+
+        //AllRay_CurvedSurface();
 
         //前作ったメッシュとつながってしまうためクリア
         _subMesh_vertices.Clear();
@@ -408,7 +373,50 @@ public class Jin_PointDrawer : MonoBehaviour
         return newVerticies[0];
     }
 
-    private void AllRay_CurvedSurface(Vector3[] vec)
+    private void DropAllMeshCreate(Mesh middleMesh, GameObject[] dots)
+    {
+        GameObject DropMeshObject = new GameObject("DropMeshObject");
+        GameObject FrontMesh = _drawMesh.CreateMesh(_vertices);
+        GameObject BackMesh = _drawMesh.CreateMesh(back_vertices);
+        GameObject between = new GameObject("Between", typeof(MeshFilter), typeof(MeshRenderer));
+
+        FrontMesh.AddComponent<MeshCollider>();
+        FrontMesh.GetComponent<MeshCollider>().convex = true;
+        FrontMesh.GetComponent<MeshCollider>().isTrigger = true;
+        FrontMesh.AddComponent<DropEnemy>();
+
+        between.AddComponent<MeshCollider>();
+        between.GetComponent<MeshCollider>().convex = true;
+        //between.AddComponent<DropEnemy>();
+
+        MeshFilter betfilter = between.GetComponent<MeshFilter>();
+        betfilter.mesh = middleMesh;
+
+        FrontMesh.GetComponent<MeshRenderer>().material = Coral_M;
+        BackMesh.GetComponent<MeshRenderer>().material = Blue;
+        between.GetComponent<MeshRenderer>().material = Blue;
+
+        if (0 > getArea(dots))
+            FrontMesh.GetComponent<MeshFilter>().mesh.SetTriangles(FrontMesh.GetComponent<MeshFilter>().mesh.triangles.Reverse().ToArray(), 0);
+
+        FrontMesh.transform.parent = DropMeshObject.transform;
+        BackMesh.transform.parent = DropMeshObject.transform;
+        between.transform.parent = DropMeshObject.transform;
+
+        FrontMesh.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
+        BackMesh.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
+        between.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
+
+        DropMeshObject.transform.position -= MeshForawd * 0.08f;
+
+        DropMeshObject.AddComponent<Jin_DropMover>();
+        DropMeshObject.GetComponent<Jin_DropMover>().SetPieceState_DROP();
+
+        DropMeshObject.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
+
+    }
+
+    private void AllRay_CurvedSurface()
     {
         List<Vector3> _newVec = new List<Vector3>();
         List<Vector3> _newVector0 = new List<Vector3>();
@@ -449,30 +457,30 @@ public class Jin_PointDrawer : MonoBehaviour
                     case 0:
                         AllVectorList[Iswitch].Add(Vector3.Lerp(_vertices[k], _vertices[_vertices.Count / 2 + k], j));
                         break;
-                    //case 1:
-                    //    AllVectorList[Iswitch].Add(Vector3.Lerp(_vertices[k], _vertices[_vertices.Count / 2 + k], j));
-                    //    break;
-                    //case 2:
-                    //    AllVectorList[Iswitch].Add(Vector3.Lerp(_vertices[k], _vertices[_vertices.Count / 2 + k], j));
-                    //    break;
-                    //case 3:
-                    //    AllVectorList[Iswitch].Add(Vector3.Lerp(_vertices[k], _vertices[_vertices.Count / 2 + k], j));
-                    //    break;
-                    //case 4:
-                    //    AllVectorList[Iswitch].Add(Vector3.Lerp(_vertices[k], _vertices[_vertices.Count / 2 + k], j));
-                    //    break;
-                    //case 5:
-                    //    AllVectorList[Iswitch].Add(Vector3.Lerp(_vertices[k], _vertices[_vertices.Count / 2 + k], j));
-                    //    break;
-                    //case 6:
-                    //    AllVectorList[Iswitch].Add(Vector3.Lerp(_vertices[k], _vertices[_vertices.Count / 2 + k], j));
-                    //    break;
-                    //case 7:
-                    //    AllVectorList[Iswitch].Add(Vector3.Lerp(_vertices[k], _vertices[_vertices.Count / 2 + k], j));
-                    //    break;
-                    //case 8:
-                    //    AllVectorList[Iswitch].Add(Vector3.Lerp(_vertices[k], _vertices[_vertices.Count / 2 + k], j));
-                    //    break;
+                    case 1:
+                        AllVectorList[Iswitch].Add(Vector3.Lerp(_vertices[k], _vertices[_vertices.Count / 2 + k], j));
+                        break;
+                    case 2:
+                        AllVectorList[Iswitch].Add(Vector3.Lerp(_vertices[k], _vertices[_vertices.Count / 2 + k], j));
+                        break;
+                    case 3:
+                        AllVectorList[Iswitch].Add(Vector3.Lerp(_vertices[k], _vertices[_vertices.Count / 2 + k], j));
+                        break;
+                    case 4:
+                        AllVectorList[Iswitch].Add(Vector3.Lerp(_vertices[k], _vertices[_vertices.Count / 2 + k], j));
+                        break;
+                    case 5:
+                        AllVectorList[Iswitch].Add(Vector3.Lerp(_vertices[k], _vertices[_vertices.Count / 2 + k], j));
+                        break;
+                    case 6:
+                        AllVectorList[Iswitch].Add(Vector3.Lerp(_vertices[k], _vertices[_vertices.Count / 2 + k], j));
+                        break;
+                    case 7:
+                        AllVectorList[Iswitch].Add(Vector3.Lerp(_vertices[k], _vertices[_vertices.Count / 2 + k], j));
+                        break;
+                    case 8:
+                        AllVectorList[Iswitch].Add(Vector3.Lerp(_vertices[k], _vertices[_vertices.Count / 2 + k], j));
+                        break;
                     case 9:
                         AllVectorList[Iswitch].Add(Vector3.Lerp(_vertices[k], _vertices[_vertices.Count / 2 + k], j));
                         break;
@@ -510,7 +518,7 @@ public class Jin_PointDrawer : MonoBehaviour
         AlltmpList[4].AddRange(AllVectorList[4]);
         AlltmpList[4].AddRange(AllVectorList[5]);
 
-        for (int k = 0; k < 1; k++)
+        for (int k = 0; k < AlltmpList.Count; k++)
         {
             List<Vector3> newVertices = new List<Vector3>();
 
@@ -521,33 +529,28 @@ public class Jin_PointDrawer : MonoBehaviour
                 pos += MeshForawd * 5.0f;
                 AlltmpList[k][i] = pos;
 
-                //Debug.Log(tmpVertices[i]);
-
                 RaycastHit hit;
-                int layerMask = 1 << 9;
-                if (Physics.Raycast(AlltmpList[k][i], -MeshForawd, out hit, 10.0f , layerMask))
+                int layerMask = 1 << 11;
+                if (Physics.Raycast(AlltmpList[k][i], -MeshForawd, out hit, 10.0f, layerMask))
                 {
-                    Vector3 newVert = AlltmpList[k][i];
-                    newVert = hit.point;
-                    AlltmpList[k][i] = hit.point;
-                    newVertices.Add(newVert);
 
+                    //Vector3 newVert = AlltmpList[k][i];
+                    //newVert = hit.point;
+                    //AlltmpList[k][i] = hit.point;
+                    //newVertices.Add(newVert);
                     GameObject dot = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                    dot.name = ("SufaceSpheare" + k);
+
                     dot.transform.localScale = Vector3.one * 0.005f;
-                    dot.transform.position = newVertices.Last();
-                    //dot.transform.position += dot.transform.forward * -0.1f;
+                    dot.transform.position = hit.point;
+                    ////dot.transform.position += dot.transform.forward * -0.1f;
                     dot.layer = LayerMask.NameToLayer("Ignore Raycast");
 
-                }
-                else
-                {
-                    Vector3 pos2 = AlltmpList[k][i];
-                    pos2.z = 0;
-                    newVertices[i] = pos2;
                 }
             }
             //AlltmpList[0].Clear();
             //AlltmpList[0].AddRange(newVertices);
+            
         }
         Curve_CreateMesh(_vertices , AlltmpList[0]);
     }
@@ -619,34 +622,45 @@ public class Jin_PointDrawer : MonoBehaviour
     private void Curve_CreateMesh(List<Vector3> vertices1 , List<Vector3> vertices2)
     {
         List<Vector3> combineMesh = new List<Vector3>();
-        combineMesh.AddRange(vertices2);
+        for(int g = 0; g<vertices1.Count; g++)
+        {
+            vertices1[g] = transform.TransformPoint (vertices1[g]);      
+        }
+        foreach(Vector3 vec in _vertices)
+        {
+            Debug.Log(vec);
+        }
         combineMesh.AddRange(vertices1);
-
-        //Debug.Log(vertices1.Count);
-        //Debug.Log(vertices2.Count);
-        //foreach(Vector3 vec in vertices2)
-        //    Debug.Log(vec);
+        combineMesh.AddRange(vertices2);
+        Debug.Log(vertices1.Count);
+        Debug.Log(vertices2.Count);
 
         int PorigonArray = combineMesh.Count * 3;
         int[] cmeshTriangles = new int[PorigonArray];
-        //Debug.Log(PorigonArray);
+        
+        
         Mesh cMesh = new Mesh();
         cMesh.SetVertices(combineMesh);
+        //foreach (Vector3 vec in combineMesh)
+        //{
+        //    Debug.Log(vec);
+        //}
 
         int j = 0;
-        for (int i = 0; i < PorigonArray; i += 3)
+        for (int i = 0; i < PorigonArray; i += 6)
         {
             if (!(i == PorigonArray - _JinConst.ORDERTRIANGLES_NUM))
             {
                 cmeshTriangles[i] = j;
                 cmeshTriangles[i + 1] = j + 1;
-                cmeshTriangles[i + 2] = j + vertices2.Count;
+                cmeshTriangles[i + 2] = j + vertices1.Count;
             }
             else
             {
                 cmeshTriangles[i] = j;
                 cmeshTriangles[i + 1] = 0;
-                cmeshTriangles[i + 2] = j + vertices2.Count;
+                cmeshTriangles[i + 2] = j + vertices1.Count;
+                break;
             }
             j++;
         }
@@ -654,18 +668,27 @@ public class Jin_PointDrawer : MonoBehaviour
         for (int i = 3; i < PorigonArray; i += _JinConst.ORDERTRIANGLES_NUM)
         {
             if (!(i == PorigonArray - _JinConst.ORDERTRIANGLES_PORIGON))
-            {
+            {                
                 cmeshTriangles[i] = j + 1;
-                cmeshTriangles[i + 1] = j + vertices2.Count + 1;
-                cmeshTriangles[i + 2] = j + vertices2.Count;
+                cmeshTriangles[i + 1] = j + vertices1.Count + 1;
+                cmeshTriangles[i + 2] = j + vertices1.Count;
             }
             else
             {
+                //Debug.Log("０番");
                 cmeshTriangles[i] = 0;
-                cmeshTriangles[i + 1] = vertices2.Count;
-                cmeshTriangles[i + 2] = j + vertices2.Count;
+                cmeshTriangles[i + 1] = vertices1.Count;
+                cmeshTriangles[i + 2] = j + vertices1.Count;
+                break;
             }
             j++;
+            //Debug.Log(cmeshTriangles[i]);
+            //Debug.Log(cmeshTriangles[i+1]);
+            //Debug.Log(cmeshTriangles[i+2]);
+        }
+        foreach(int i in cmeshTriangles)
+        {
+            Debug.Log(i);
         }
         cMesh.SetTriangles(cmeshTriangles, 0);
 
@@ -673,8 +696,16 @@ public class Jin_PointDrawer : MonoBehaviour
         CombineMeshObj.GetComponent<MeshRenderer>().material = m_Yellow;
         //CombineMeshObj.GetComponent<MeshFilter>().mesh = cMesh;
         //CombineMeshObj.AddComponent<MeshCollider>().convex = true;
+        cMesh.RecalculateNormals ();
         MeshFilter filter = CombineMeshObj.GetComponent<MeshFilter>();
         filter.mesh = cMesh;
+
+        //for(int r=0; r<cMesh.vertices.Length; r++)
+        //{
+        //    Debug.Log(cMesh.vertices[r]);
+        //}
+        //Debug.Log(vertices1.Count);
+        //Debug.Log(vertices2.Count);
     }
 
     /// <summary>
