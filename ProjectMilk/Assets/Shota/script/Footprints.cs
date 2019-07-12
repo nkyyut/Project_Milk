@@ -5,7 +5,8 @@ using System.Linq;
 
 public class Footprints : MonoBehaviour
 {
-
+    [SerializeField] int DotMaxValue;
+    [SerializeField] int LineMaxValue;
     [SerializeField] GameObject footpoints; // 子
     [SerializeField] GameObject FootPoint; // 親
     [SerializeField] GameObject pointDrawer;
@@ -62,19 +63,27 @@ public class Footprints : MonoBehaviour
     {
         _pointDrawerSc = pointDrawer.GetComponent<Jin_PointDrawer>();
         _playerSE = this.gameObject.GetComponent<PlayerSE>();
+        DotMaxValue = 40;
+        LineMaxValue = 5;
     }
 
     void Update()
     {
+        Debug.Log("tennsuu"+_dotList.Count);
         if (Input.GetAxis("RT_Botton") == -1)
         {
+            Debug.Log("Innn");
+            
             if (!isDrawing)
                 CreateLineRoot();
-            isDrawing = true;
+
+                isDrawing = true;
+           
             IsButtonUp = true;
         }
         if (Input.GetAxis("RT_Botton") == 0)
         {
+            
             if (IsButtonUp)
             {                    
                 _playerSE.SE_LineCreate();
@@ -96,19 +105,19 @@ public class Footprints : MonoBehaviour
                 _pointDrawerSc.All_lineList.Add(list);
                 All_dotList.Add(dot);
 
-                //if (_pointDrawerSc.All_lineList.Count > 3)
-                //{
-                //    for (int i = 0; i < _pointDrawerSc.All_lineList[0].Count; i++)
-                //    {
-                //        Destroy(_pointDrawerSc.All_lineList[0][i]);
-                //        Destroy(All_dotList[0][i]);
-                //    }
-                //    foreach (GameObject _dot in All_dotList[0])
-                //        Destroy(_dot);
+                if (_pointDrawerSc.All_lineList.Count > LineMaxValue)
+                {
+                    for (int i = 0; i < _pointDrawerSc.All_lineList[0].Count; i++)
+                    {
+                        Destroy(_pointDrawerSc.All_lineList[0][i]);
+                        Destroy(All_dotList[0][i]);
+                    }
+                    foreach (GameObject _dot in All_dotList[0])
+                        Destroy(_dot);
 
-                //    _pointDrawerSc.All_lineList.Remove(_pointDrawerSc.All_lineList[0]);
-                //    All_dotList.Remove(All_dotList[0]);
-                //}
+                    _pointDrawerSc.All_lineList.Remove(_pointDrawerSc.All_lineList[0]);
+                    All_dotList.Remove(All_dotList[0]);
+                }
 
                 isDrawing = false;
                 VertNum = 0;
@@ -123,7 +132,7 @@ public class Footprints : MonoBehaviour
             }
 
         }
-        if (isDrawing)
+        if (isDrawing&&_dotList.Count< DotMaxValue)
         {
             SetLinePoint(CheckPoint());
         }
@@ -190,7 +199,7 @@ public class Footprints : MonoBehaviour
                     fp.transform.rotation = Quaternion.Slerp(fp.transform.rotation, TargetRotation, 10);
                     GameObject fp2 = Instantiate(footpoints, FootPoint.transform);
                     Vector3 vec = CheckNormal();
-                    fp2.transform.position = fp.transform.position + fp.transform.up * -0.05f;
+                    fp2.transform.position = fp.transform.position + fp.transform.up * -0.1f;
                     fp2.GetComponent<MeshRenderer>().material = blueMa;
                     _pointDrawerSc.AddBackVertex(fp2.transform.position);
                     Destroy(fp2);
@@ -206,7 +215,6 @@ public class Footprints : MonoBehaviour
 
     void CreateLineRoot()
     {
-        Debug.Log("点打つ");
         //新規生成
         OldNormal = CheckNormal();
         OldRotation = this.gameObject.transform.rotation.eulerAngles;

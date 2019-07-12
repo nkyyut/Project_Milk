@@ -72,8 +72,11 @@ public class TimeManager : MonoBehaviour {
             case TIMEMANAGER_STATE.TICK:
                 if (!CheckLimitTime())
                 {
-                    GameOverManager.SetGameOverStart();
-                    SetNowTimeManagerState_IDLE();
+                    GameObject[] Onihitode = GameObject.FindGameObjectsWithTag("Onihitode");
+                    if (Onihitode.Length > 0) { 
+                        GameOverManager.SetGameOverStart();
+                        SetNowTimeManagerState_IDLE();
+                    }
                     break;
                 }
                 TickTimer();
@@ -97,11 +100,15 @@ public class TimeManager : MonoBehaviour {
                 Index = SearchTinAnagoBackmost() - 1;
                 TinAnago_bool[Index] = false;
                 HideCalling(Index);
-                TimeFrameArray[Index - 1].SetActive(true);
+                if (Index - 1 > 0)
+                {
+                    TimeFrameArray[Index - 1].SetActive(true);
+                    TimeTxtArray[Index - 1].GetComponent<ChangeTimeTxt>().ChangeTxt(GameLimitTime - (int)NowPlayTime);
+                }
                 TimeFrameArray[Index].SetActive(false);
                 
                 Debug.Log(NowPlayTime);
-                TimeTxtArray[Index-1].GetComponent<ChangeTimeTxt>().ChangeTxt(GameLimitTime-(int)NowPlayTime);
+
             }   
     }
 

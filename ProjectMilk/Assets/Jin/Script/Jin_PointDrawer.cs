@@ -144,6 +144,7 @@ public class Jin_PointDrawer : MonoBehaviour
 
     private void Update()
     {
+        //Debug.Log("刮目せよ！！！"+_vertices.Count());
         //if (Input.GetKeyDown(KeyCode.Q))
         //{
         //    Clear();
@@ -186,6 +187,11 @@ public class Jin_PointDrawer : MonoBehaviour
     /// </summary>
     public void MeshCreate()
     {
+        if (_vertices.Count() < 5)
+        {
+            return;
+        }
+        Debug.Log(_vertices.Count());
         //Debug.Log("クリエイト");
         dotnum = 0;
         IsChangeDirection = true;
@@ -291,7 +297,7 @@ public class Jin_PointDrawer : MonoBehaviour
         meshob.GetComponent<Subtractor>().maskMaterial = _maskMaterial;
         _meshList.Add(meshob);
 
-        AllRay_CurvedSurface();
+        //AllRay_CurvedSurface();
 
         GameObject AllMeshObject = new GameObject("AllMeshObject", typeof(MeshFilter), typeof(MeshRenderer));
         go.transform.parent = AllMeshObject.transform;
@@ -550,9 +556,9 @@ public class Jin_PointDrawer : MonoBehaviour
             }
             //AlltmpList[0].Clear();
             //AlltmpList[0].AddRange(newVertices);
-            
+
         }
-        Curve_CreateMesh(_vertices , AlltmpList[0]);
+        Curve_CreateMesh(_vertices, AlltmpList[0]);
     }
 
     //多角形の右回り左回りを判定
